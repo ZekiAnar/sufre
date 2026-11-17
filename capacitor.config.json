@@ -1,0 +1,7 @@
+{
+  "appId": "az.sufre.app",
+  "appName": "Süfrə",
+  "webDir": "www",
+  "android": { "backgroundColor": "#f6f4f1" },
+  "ios": { "backgroundColor": "#f6f4f1", "contentInset": "automatic" }
+}

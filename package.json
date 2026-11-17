@@ -1,0 +1,21 @@
+{
+  "name": "sufre-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Süfrə — ailə arıqlama menyusu (Android/iOS, Capacitor)",
+  "scripts": {
+    "android:add": "cap add android",
+    "android:sync": "cap sync android",
+    "ios:add": "cap add ios",
+    "assets": "capacitor-assets generate --iconBackgroundColor '#a3263b' --iconBackgroundColorDark '#a3263b' --splashBackgroundColor '#a3263b' --splashBackgroundColorDark '#a3263b'"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/ios": "8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "4.0.0",
+    "@capacitor/cli": "8.5.3"
+  }
+}

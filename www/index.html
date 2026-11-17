@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#a3263b">
+<title>Süfrə</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Süfrə">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a phone-first app shell — header, one scrolling view, bottom tab bar; sheets slide up for a day or a recipe. */
+:root{
+  --bg:#f6f4f1; --surface:#ffffff; --ink:#1f2328; --muted:#5f6670; --line:#e3ded7;
+  --accent:#a3263b; --saffron:#d99a1e; --herb:#3d7a4c; --sky:#2f6690;
+  --accent-soft:#f5e3e6; --herb-soft:#e4efe6; --saffron-soft:#f8ecd2; --sky-soft:#e1ecf4;
+  --good:#3d7a4c; --warn:#b7791f;
+  --display:"Noto Serif", Georgia, serif;
+  --body:"Noto Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --r:14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171a; --surface:#1e2125; --ink:#eceae6; --muted:#a2a8b0; --line:#30353b;
+    --accent:#e0566c; --saffron:#e8b04a; --herb:#6dbb80; --sky:#6aa6d6;
+    --accent-soft:#3a2026; --herb-soft:#1f3326; --saffron-soft:#3a2f18; --sky-soft:#1c2a36;
+    --good:#6dbb80; --warn:#e8b04a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171a; --surface:#1e2125; --ink:#eceae6; --muted:#a2a8b0; --line:#30353b;
+  --accent:#e0566c; --saffron:#e8b04a; --herb:#6dbb80; --sky:#6aa6d6;
+  --accent-soft:#3a2026; --herb-soft:#1f3326; --saffron-soft:#3a2f18; --sky-soft:#1c2a36;
+  --good:#6dbb80; --warn:#e8b04a; color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1.2;margin:0;text-wrap:balance}
+h1{font-size:1.5rem} h2{font-size:1.25rem} h3{font-size:1.05rem}
+a{color:var(--accent)}
+#app{height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;background:var(--bg)}
+header.bar{padding:calc(10px + env(safe-area-inset-top)) 16px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--bg)}
+header.bar .brand{font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--accent);margin-right:auto}
+.who{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.who::-webkit-scrollbar{display:none}
+.who button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;white-space:nowrap;cursor:pointer}
+.who button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 28px}
+nav.tabs{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);background:var(--surface);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{border:0;background:none;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;font-weight:600;color:var(--muted);cursor:pointer}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--accent)}
+nav.tabs button:focus-visible,.btn:focus-visible,.chip:focus-visible,.ic:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.muted{color:var(--muted)} .small{font-size:.85rem} .tiny{font-size:.75rem}
+.num{font-variant-numeric:tabular-nums}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:9px 14px;font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.plain{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:6px 10px;font-size:.85rem}
+.btn:disabled{opacity:.5;cursor:default}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips.scroll::-webkit-scrollbar{display:none}
+.chips.scroll .chip{white-space:nowrap}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px}
+.p-S{background:var(--saffron-soft)} .p-N{background:var(--herb-soft)} .p-D{background:var(--sky-soft)} .p-Q{background:var(--accent-soft)}
+.ic{border:0;background:none;padding:6px;border-radius:8px;cursor:pointer;color:var(--muted)}
+/* today */
+.hero{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.ring{position:relative;width:120px;height:120px}
+.ring svg{width:120px;height:120px;transform:rotate(-90deg)}
+.ring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring .c b{font-size:1.35rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.datebig{font-family:var(--display);font-size:1.35rem;font-weight:700}
+.meal{display:grid;grid-template-columns:auto 56px 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.meal.next{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.meal.done .mt{text-decoration:line-through;color:var(--muted)}
+.meal .art{width:56px;height:44px} .meal .art svg{width:56px;height:44px}
+.meal .mt{font-weight:600;line-height:1.25;cursor:pointer}
+.meal .ms{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.check{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.check[aria-checked="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.water{display:flex;gap:6px;flex-wrap:wrap}
+.water button{width:30px;height:38px;border:2px solid var(--sky);border-radius:4px 4px 9px 9px;background:transparent;cursor:pointer;padding:0;position:relative;overflow:hidden}
+.water button[aria-pressed="true"]{background:var(--sky)}
+.tipbox{border-left:4px solid var(--saffron);background:var(--saffron-soft);border-radius:8px;padding:10px 12px;font-size:.92rem}
+.warnbox{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.stat span{font-size:.75rem;color:var(--muted)}
+/* calendar */
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.wkh{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;font-size:.7rem;color:var(--muted);text-align:center;font-weight:600;margin-bottom:4px}
+.dc{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 4px;min-height:64px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:.72rem;position:relative}
+.dc .dn{font-weight:700;font-size:1rem;font-variant-numeric:tabular-nums}
+.dc.today{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.dc.past{opacity:.7}
+.dc.out{visibility:hidden}
+.dc .dots{display:flex;gap:2px}
+.dc .dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+.dc .dots i.on{background:var(--good)}
+.mlabel{font-family:var(--display);font-weight:700;margin:14px 0 8px}
+/* recipes */
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.rc{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
+.rc .im{background:var(--bg);display:flex;justify-content:center;padding:6px 0;height:96px;align-items:center}
+.rc .im svg{width:110px;height:80px} .rc .im img{width:100%;height:96px;object-fit:cover}
+.rc .tx{padding:8px 10px}
+.rc .tx b{display:block;font-size:.9rem;line-height:1.25}
+.nat{color:var(--accent)}
+.cu{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.04em;padding:1px 5px;border-radius:5px;color:#fff;background:var(--cu);vertical-align:middle}
+input[type=search],input[type=text],input[type=number],input[type=date],input[type=time],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+label.f{display:block;font-size:.82rem;font-weight:600;margin:10px 0 4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* sheet */
+.sheet-wrap{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center;z-index:30}
+.sheet{background:var(--bg);width:100%;max-width:760px;max-height:92%;border-radius:18px 18px 0 0;display:flex;flex-direction:column;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet .sh{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.sheet .sh h2{flex:1;font-size:1.1rem}
+.sheet .sb{overflow-y:auto;padding:14px 16px calc(24px + env(safe-area-inset-bottom))}
+.hero-img{border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;justify-content:center;align-items:center;min-height:150px;overflow:hidden}
+.hero-img svg{width:200px;height:146px} .hero-img img{width:100%;max-height:260px;object-fit:cover}
+table.ing{width:100%;border-collapse:collapse;font-size:.92rem}
+table.ing td{padding:6px 0;border-bottom:1px dashed var(--line);vertical-align:top}
+table.ing td.g{text-align:right;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums;padding-left:10px}
+ol.steps{padding-left:0;list-style:none;margin:0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+ol.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+ol.steps li.done{color:var(--muted);text-decoration:line-through}
+ol.steps li.done::before{background:var(--good);color:#fff;content:"✓"}
+.macros{display:flex;gap:12px;flex-wrap:wrap;font-variant-numeric:tabular-nums;font-size:.9rem}
+.macros b{font-weight:700}
+.list li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);align-items:center}
+ul.list{list-style:none;margin:0;padding:0}
+.list li.got span:first-child{text-decoration:line-through;color:var(--muted)}
+.list input[type=checkbox]{width:20px;height:20px;accent-color:var(--good);margin-right:8px;flex:none}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--body)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:.9rem;z-index:50;max-width:90%}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}
+.member{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.sec{margin-top:18px}
+.welcome{max-width:520px;margin:20px auto;text-align:center}
+.welcome h1{font-size:2rem;color:var(--accent)}
+details summary{cursor:pointer;font-weight:600}
+.alt{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;text-align:left;width:100%}
+.alt svg{width:56px;height:44px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp 0.8s linear infinite;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="bar">
+    <span class="brand">Süfrə</span>
+    <div class="who" id="who" role="group" aria-label="Profil"></div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav class="tabs" id="tabs" aria-label="Bölmələr"></nav>
+</div>
+<div id="sheet-root"></div>
+<script id="data" type="application/json">{"ing": {"yumurta": {"n": "Yumurta", "k": 143, "p": 12.6, "f": 9.5, "c": 0.7, "g": "Zülal"}, "toyuq_file": {"n": "Toyuq filesi", "k": 120, "p": 22.5, "f": 2.6, "c": 0, "g": "Ət və balıq"}, "toyuq_bud": {"n": "Toyuq budu (dərisiz)", "k": 121, "p": 19.7, "f": 4.1, "c": 0, "g": "Ət və balıq"}, "toyuq_qiyme": {"n": "Toyuq qiyməsi", "k": 143, "p": 17.4, "f": 8.1, "c": 0, "g": "Ət və balıq"}, "ciyer": {"n": "Toyuq ciyəri", "k": 119, "p": 16.9, "f": 4.8, "c": 0.7, "g": "Ət və balıq"}, "mal_eti": {"n": "Yağsız mal əti (bud)", "k": 140, "p": 21.5, "f": 5.5, "c": 0, "g": "Ət və balıq"}, "mal_qiyme": {"n": "Mal qiyməsi (10% yağ)", "k": 176, "p": 20.0, "f": 10.0, "c": 0, "g": "Ət və balıq"}, "quzu": {"n": "Yağsız quzu əti (bud)", "k": 150, "p": 20.0, "f": 7.5, "c": 0, "g": "Ət və balıq"}, "ag_baliq": {"n": "Ağ balıq (sudak, kefal, mintay)", "k": 85, "p": 18.5, "f": 1.0, "c": 0, "g": "Ət və balıq"}, "kutum": {"n": "Kütüm və ya çəki balığı", "k": 127, "p": 17.8, "f": 5.6, "c": 0, "g": "Ət və balıq"}, "qatiq": {"n": "Qatıq 2,5%", "k": 53, "p": 3.3, "f": 2.5, "c": 4.4, "g": "Süd məhsulları"}, "kefir": {"n": "Kefir 1%", "k": 40, "p": 3.0, "f": 1.0, "c": 4.0, "g": "Süd məhsulları"}, "sud": {"n": "Süd 2,5%", "k": 52, "p": 2.9, "f": 2.5, "c": 4.7, "g": "Süd məhsulları"}, "kesmik": {"n": "Kəsmik 5%", "k": 121, "p": 17.2, "f": 5.0, "c": 1.8, "g": "Süd məhsulları"}, "ag_pendir": {"n": "Ağ pendir (motal, şor pendir)", "k": 260, "p": 17.0, "f": 20.0, "c": 1.0, "g": "Süd məhsulları"}, "holland": {"n": "Holland pendiri", "k": 352, "p": 26.0, "f": 26.8, "c": 0, "g": "Süd məhsulları"}, "xama": {"n": "Xama 15%", "k": 160, "p": 2.6, "f": 15.0, "c": 3.0, "g": "Süd məhsulları"}, "kere": {"n": "Kərə yağı", "k": 717, "p": 0.9, "f": 81.0, "c": 0.1, "g": "Yağ və digər"}, "yag": {"n": "Bitki / zeytun yağı", "k": 884, "p": 0, "f": 100, "c": 0, "g": "Yağ və digər"}, "yulaf": {"n": "Yulaf yarması", "k": 375, "p": 13.0, "f": 6.5, "c": 66.0, "g": "Yarma və paxlalılar"}, "qarabasaq": {"n": "Qarabaşaq", "k": 343, "p": 13.3, "f": 3.4, "c": 71.5, "g": "Yarma və paxlalılar"}, "duyu": {"n": "Düyü (uzun)", "k": 360, "p": 6.6, "f": 0.6, "c": 79.0, "g": "Yarma və paxlalılar"}, "bulqur": {"n": "Bulqur", "k": 342, "p": 12.3, "f": 1.3, "c": 76.0, "g": "Yarma və paxlalılar"}, "merci": {"n": "Qırmızı mərcimək", "k": 358, "p": 24.0, "f": 2.2, "c": 63.0, "g": "Yarma və paxlalılar"}, "noxud": {"n": "Noxud", "k": 378, "p": 20.5, "f": 6.0, "c": 63.0, "g": "Yarma və paxlalılar"}, "lobya_qirmizi": {"n": "Qırmızı lobya (quru)", "k": 333, "p": 23.6, "f": 0.8, "c": 60.0, "g": "Yarma və paxlalılar"}, "vermisel": {"n": "Vermişel / əriştə", "k": 371, "p": 13.0, "f": 1.5, "c": 75.0, "g": "Yarma və paxlalılar"}, "un": {"n": "Un", "k": 364, "p": 10.3, "f": 1.0, "c": 76.0, "g": "Yarma və paxlalılar"}, "corek": {"n": "Qara və ya kəpəkli çörək", "k": 250, "p": 8.5, "f": 3.3, "c": 48.0, "g": "Çörək"}, "lavas": {"n": "Lavaş", "k": 280, "p": 9.0, "f": 1.5, "c": 56.0, "g": "Çörək"}, "kartof": {"n": "Kartof", "k": 77, "p": 2.0, "f": 0.1, "c": 17.0, "g": "Tərəvəz"}, "pomidor": {"n": "Pomidor", "k": 18, "p": 0.9, "f": 0.2, "c": 3.9, "g": "Tərəvəz"}, "xiyar": {"n": "Xiyar", "k": 15, "p": 0.7, "f": 0.1, "c": 3.6, "g": "Tərəvəz"}, "bibar": {"n": "Bolqar bibəri", "k": 26, "p": 1.0, "f": 0.3, "c": 6.0, "g": "Tərəvəz"}, "sogan": {"n": "Soğan", "k": 40, "p": 1.1, "f": 0.1, "c": 9.3, "g": "Tərəvəz"}, "kok": {"n": "Kök", "k": 41, "p": 0.9, "f": 0.2, "c": 9.6, "g": "Tərəvəz"}, "kelem": {"n": "Kələm", "k": 25, "p": 1.3, "f": 0.1, "c": 5.8, "g": "Tərəvəz"}, "badimcan": {"n": "Badımcan", "k": 25, "p": 1.0, "f": 0.2, "c": 5.9, "g": "Tərəvəz"}, "balqabaq": {"n": "Balqabaq / qabaq", "k": 22, "p": 1.0, "f": 0.2, "c": 5.0, "g": "Tərəvəz"}, "ispanaq": {"n": "İspanaq", "k": 23, "p": 2.9, "f": 0.4, "c": 3.6, "g": "Göyərti"}, "goyerti": {"n": "Göyərti (keşniş, şüyüd, cəfəri, nanə)", "k": 35, "p": 3.0, "f": 0.6, "c": 6.0, "g": "Göyərti"}, "cugundur": {"n": "Çuğundur", "k": 43, "p": 1.6, "f": 0.2, "c": 9.6, "g": "Tərəvəz"}, "kahi": {"n": "Kahı", "k": 15, "p": 1.4, "f": 0.2, "c": 2.9, "g": "Göyərti"}, "yasil_lobya": {"n": "Yaşıl lobya (təzə və ya dondurulmuş)", "k": 31, "p": 1.8, "f": 0.2, "c": 7.0, "g": "Tərəvəz"}, "yarpaq": {"n": "Üzüm yarpağı (duzlu)", "k": 93, "p": 5.6, "f": 2.1, "c": 17.0, "g": "Tərəvəz"}, "pomidor_pasta": {"n": "Pomidor pastası", "k": 82, "p": 4.3, "f": 0.5, "c": 19.0, "g": "Yağ və digər"}, "qoz": {"n": "Qoz ləpəsi", "k": 654, "p": 15.2, "f": 65.2, "c": 13.7, "g": "Meyvə və qoz-fındıq"}, "findiq": {"n": "Fındıq", "k": 628, "p": 15.0, "f": 61.0, "c": 16.7, "g": "Meyvə və qoz-fındıq"}, "badam": {"n": "Badam", "k": 579, "p": 21.0, "f": 50.0, "c": 21.6, "g": "Meyvə və qoz-fındıq"}, "alma": {"n": "Alma", "k": 52, "p": 0.3, "f": 0.2, "c": 13.8, "g": "Meyvə və qoz-fındıq"}, "armud": {"n": "Armud", "k": 57, "p": 0.4, "f": 0.1, "c": 15.2, "g": "Meyvə və qoz-fındıq"}, "banan": {"n": "Banan", "k": 89, "p": 1.1, "f": 0.3, "c": 22.8, "g": "Meyvə və qoz-fındıq"}, "portagal": {"n": "Portağal / naringi", "k": 47, "p": 0.9, "f": 0.1, "c": 11.8, "g": "Meyvə və qoz-fındıq"}, "nar": {"n": "Nar", "k": 83, "p": 1.7, "f": 1.2, "c": 18.7, "g": "Meyvə və qoz-fındıq"}, "xurma": {"n": "Xurma (persimmon)", "k": 70, "p": 0.6, "f": 0.2, "c": 18.6, "g": "Meyvə və qoz-fındıq"}, "feyxoa": {"n": "Feyxoa", "k": 61, "p": 1.0, "f": 0.4, "c": 15.0, "g": "Meyvə və qoz-fındıq"}, "bal": {"n": "Bal", "k": 304, "p": 0.3, "f": 0, "c": 82.0, "g": "Yağ və digər"}, "quru_erik": {"n": "Quru ərik / kişmiş", "k": 241, "p": 3.4, "f": 0.5, "c": 63.0, "g": "Meyvə və qoz-fındıq"}, "narsherab": {"n": "Narşərab", "k": 250, "p": 0.5, "f": 0, "c": 62.0, "g": "Yağ və digər"}, "albali_lavashana": {"n": "Turşməzə (alça lavaşanası)", "k": 250, "p": 1.0, "f": 0.5, "c": 60.0, "g": "Yağ və digər"}, "makaron": {"n": "Makaron (tam taxıllı, quru)", "k": 352, "p": 13.9, "f": 2.5, "c": 71.0, "g": "Yarma və paxlalılar"}, "soya_sousu": {"n": "Soya sousu", "k": 53, "p": 8.1, "f": 0.6, "c": 4.9, "g": "Yağ və digər"}, "zencefil": {"n": "Zəncəfil (təzə)", "k": 80, "p": 1.8, "f": 0.8, "c": 18.0, "g": "Tərəvəz"}, "brokoli": {"n": "Brokoli (təzə və ya dondurulmuş)", "k": 34, "p": 2.8, "f": 0.4, "c": 6.6, "g": "Tərəvəz"}, "gobelek": {"n": "Göbələk (şampinyon)", "k": 22, "p": 3.1, "f": 0.3, "c": 3.3, "g": "Tərəvəz"}, "mozzarella": {"n": "Mozzarella", "k": 254, "p": 24.0, "f": 16.0, "c": 2.8, "g": "Süd məhsulları"}, "zeytun": {"n": "Zeytun", "k": 115, "p": 0.8, "f": 10.7, "c": 6.0, "g": "Yağ və digər"}, "tuna": {"n": "Tuna konservi (öz suyunda)", "k": 116, "p": 26.0, "f": 1.0, "c": 0, "g": "Ət və balıq"}, "nisasta": {"n": "Nişasta", "k": 381, "p": 0.3, "f": 0.1, "c": 91.0, "g": "Yağ və digər"}, "qargidali": {"n": "Qarğıdalı (konserv)", "k": 86, "p": 3.3, "f": 1.4, "c": 19.0, "g": "Tərəvəz"}, "lobya_konserv": {"n": "Qırmızı lobya (konserv, süzülmüş)", "k": 110, "p": 7.5, "f": 0.5, "c": 20.0, "g": "Yarma və paxlalılar"}, "noxud_konserv": {"n": "Noxud (konserv, süzülmüş)", "k": 139, "p": 7.0, "f": 2.6, "c": 22.0, "g": "Yarma və paxlalılar"}, "yasil_noxud": {"n": "Yaşıl noxud (dondurulmuş)", "k": 81, "p": 5.4, "f": 0.4, "c": 14.0, "g": "Tərəvəz"}, "suzme": {"n": "Süzmə qatıq", "k": 97, "p": 9.0, "f": 5.0, "c": 3.6, "g": "Süd məhsulları"}, "tahin": {"n": "Tahin", "k": 595, "p": 17.0, "f": 54.0, "c": 21.0, "g": "Yağ və digər"}, "limon": {"n": "Limon", "k": 29, "p": 1.1, "f": 0.3, "c": 9.0, "g": "Meyvə və qoz-fındıq"}}, "rec": [{"code": "S1", "cu": "az", "name": "Pomidor-yumurta (pomidor çığırtması)", "meal": "S", "kind": "eggs", "min": 15, "ing": [["yumurta", 165, "3 ədəd"], ["pomidor", 220, "2 orta"], ["kere", 5, "1 çay qaşığı"], ["ag_pendir", 30, "1 dilim"], ["corek", 40, "1 dilim"]], "steps": ["Pomidorun üstünə çarpaz kəsik atın, 30 saniyə qaynar suya salıb soyuq suya keçirin. Qabığı asanlıqla soyulur.", "Pomidoru xırda kublara doğrayın.", "Tavada kərə yağını orta odda əridin, pomidoru əlavə edin. 6–8 dəqiqə suyu çəkilənə və qatı sous olana qədər bişirin. Duz və istiot vurun.", "Yumurtaları birbaşa sousun üstünə sındırın. Yumurtanı ya bütöv saxlayın (qapaqlı, 3 dəqiqə), ya da yavaş-yavaş qarışdırıb 2 dəqiqə bişirin.", "Üstünə doğranmış göyərti səpin. Ağ pendir və 1 dilim çörəklə verin."], "tip": "Yağı ölçün: göz ilə tökülən yağ asanlıqla 2–3 qaşıq olur, bu da əlavə 150–250 kkal deməkdir.", "nat": true, "batch": null}, {"code": "S2", "cu": "az", "name": "İspanaq çığırtması", "meal": "S", "kind": "eggs", "min": 20, "ing": [["yumurta", 165, "3 ədəd"], ["ispanaq", 200, "1 böyük dəstə"], ["sogan", 70, "1 kiçik"], ["kere", 5, "1 çay qaşığı"], ["qatiq", 150, "yarım stəkan"], ["corek", 40, "1 dilim"]], "steps": ["İspanağı bol suda 2–3 dəfə yuyun, qum qalmasın. Qalın saplarını kəsib iri doğrayın.", "Soğanı yarımhalqa doğrayın, kərə yağında 4–5 dəqiqə şəffaflaşana qədər qovurun.", "İspanağı əlavə edin, qarışdıraraq 3–4 dəqiqə, həcmi azalıb suyu çəkilənə qədər bişirin. Duz və istiot vurun.", "Qaşıqla 3 çuxur açın, yumurtaları sındırın. Qapağı bağlayıb zəif odda 4–5 dəqiqə bişirin.", "Qatığa 1 diş əzilmiş sarımsaq qatıb sarımsaqlı qatıq hazırlayın. Çığırtmanı qatıq və çörəklə verin."], "tip": "Qışda dondurulmuş ispanaq da olar: əvvəlcə tavada suyunu çəkdirin.", "nat": true, "batch": null}, {"code": "S3", "cu": "az", "name": "Kəsmikli-göyərtili lavaş dürməyi", "meal": "S", "kind": "wrap", "min": 10, "ing": [["lavas", 60, "1 böyük vərəq"], ["kesmik", 180, "1 qutu"], ["goyerti", 40, "yarım dəstə"], ["pomidor", 120, "1 pomidor"], ["xiyar", 100, "1 xiyar"], ["qoz", 10, "2 ləpə"]], "steps": ["Göyərtini (keşniş, şüyüd, reyhan, yaşıl soğan) yuyub qurulayın və çox xırda doğrayın.", "Kəsmiyi çəngəllə əzin, göyərti, bir çimdik duz və istiotla qarışdırın. Qozu bıçaqla xırdalayıb əlavə edin.", "Lavaşı yayın, kəsmik qarışığını bərabər çəkin, üstünə nazik doğranmış pomidor və xiyar düzün.", "Möhkəm bükün, ortadan çəp kəsin. Quru tavada hər tərəfi 1 dəqiqə qızdırsanız daha dadlı olur."], "tip": "İşə aparmaq üçün folqaya bükün, soyuq halda da yaxşıdır.", "nat": true, "batch": null}, {"code": "S4", "cu": "az", "name": "Kəsmikli yulaf sıyığı", "meal": "S", "kind": "porridge", "min": 10, "ing": [["yulaf", 50, "5 xörək qaşığı"], ["sud", 250, "1 stəkan"], ["kesmik", 80, "4 xörək qaşığı"], ["xurma", 100, "1 kiçik xurma və ya alma"], ["qoz", 10, "2 ləpə"]], "steps": ["Südü kiçik qazanda qaynayana qədər qızdırın (daşmasına diqqət edin).", "Yulafı və bir çimdik duzu əlavə edin, odu zəifləyin. 5–7 dəqiqə ara-sıra qarışdıraraq bişirin.", "Odu söndürün, kəsmiyi qatıb qarışdırın: sıyıq qaymaqlı olur və zülalı ikiqat artır.", "Üstünə doğranmış xurma (və ya alma), xırdalanmış qoz və istəsəniz darçın səpin. Şəkər əlavə etməyin."], "tip": "Tez bişən (instant) yulaf yox, adi yulaf yarması seçin: daha uzun tox saxlayır.", "nat": true, "batch": null}, {"code": "S5", "cu": "az", "name": "Göyərti küküsü (sobada)", "meal": "S", "kind": "kuku", "min": 35, "ing": [["yumurta", 165, "3 ədəd"], ["goyerti", 200, "2 dəstə"], ["yag", 5, "1 çay qaşığı"], ["qatiq", 150, "yarım stəkan"], ["corek", 40, "1 dilim"]], "steps": ["Sobanı 180°C-yə qızdırın.", "Göyərtini (keşniş, şüyüd, ispanaq, yaşıl soğan, cəfəri) yuyun və dəsmalla yaxşı qurulayın. Yaş göyərti kükünü sulu edir.", "Göyərtini çox xırda doğrayın, yumurta, duz, istiot və bir çimdik zəfəranla qarışdırın.", "Kiçik qabı yağlayın, qarışığı tökün, səthini düzləşdirin.", "20–25 dəqiqə üstü qızarana qədər bişirin. Qatıq və çörəklə verin."], "tip": "Soyuq halda da dadlıdır, axşamdan bişirib səhər işə aparmaq olar.", "nat": true, "batch": null}, {"code": "S6", "cu": "az", "name": "Südlü qarabaşaq + yumurta", "meal": "S", "kind": "porridge", "min": 25, "ing": [["qarabasaq", 55, "1/3 stəkan"], ["sud", 200, "4/5 stəkan"], ["yumurta", 110, "2 ədəd"], ["bal", 7, "1 çay qaşığı"]], "steps": ["Qarabaşağı yuyun, 120 ml su və bir çimdik duzla qaynadın.", "Qapağı bağlayıb zəif odda 15 dəqiqə, su çəkilənə qədər bişirin.", "Südü əlavə edib 3–4 dəqiqə də qızdırın.", "Yumurtaları soyuq suya qoyub qaynadın, qaynayandan sonra 8 dəqiqə bişirin.", "Sıyığı balla, yanında yumurta ilə verin."], "tip": "Qarabaşağı axşamdan bişirib soyuducuda saxlasanız, səhər 3 dəqiqəyə hazır olur.", "nat": false, "batch": null}, {"code": "S7", "cu": "az", "name": "Klassik səhər süfrəsi", "meal": "S", "kind": "breakfast", "min": 10, "ing": [["yumurta", 110, "2 ədəd"], ["ag_pendir", 50, "2 dilim"], ["corek", 60, "1,5 dilim"], ["pomidor", 150, "1 pomidor"], ["xiyar", 100, "1 xiyar"], ["goyerti", 30, "bir neçə budaq"], ["qoz", 10, "2 ləpə"]], "steps": ["Yumurtaları soyuq suya qoyun, qaynayandan sonra 8–9 dəqiqə bişirin və soyuq suya salın.", "Pomidor və xiyarı doğrayın, göyərtini yuyub budaq halında qoyun.", "Pendiri nazik dilimləyin. Çox şor pendiri 30 dəqiqə suda saxlamaq olar.", "Hamısını çörək və qozla birlikdə verin. Çayı şəkərsiz için."], "tip": "Bu süfrədə ən çox kalori pendir və çörəkdən gəlir: porsiyanı çəkin.", "nat": true, "batch": null}, {"code": "S8", "cu": "az", "name": "Sobada sırnik (kəsmik küfləsi)", "meal": "S", "kind": "syrniki", "min": 30, "ing": [["kesmik", 250, "1 böyük qutu"], ["yumurta", 55, "1 ədəd"], ["un", 30, "2 xörək qaşığı"], ["qatiq", 100, "4 xörək qaşığı"], ["bal", 7, "1 çay qaşığı"]], "steps": ["Sobanı 180°C-yə qızdırın.", "Kəsmiyi çəngəllə əzin (çox dənəli olarsa ələkdən keçirin).", "Yumurta, un, bir çimdik duz və vanil əlavə edib yoğurun. Kütlə əldə yapışmamalıdır, lazım olsa 1 qaşıq un artırın.", "Islaq əllə 6–7 kiçik yastı küfə düzəldin, pişirmə kağızı döşənmiş sinidə düzün. Yağ lazım deyil.", "20 dəqiqə bişirin, 10-cu dəqiqədə ehtiyatla çevirin. Balla qarışdırılmış qatıqla verin."], "tip": "", "nat": false, "batch": null}, {"code": "S9", "cu": "az", "name": "Lobya çığırtması", "meal": "S", "kind": "eggs", "min": 25, "ing": [["yasil_lobya", 200, "2 ovuc"], ["yumurta", 165, "3 ədəd"], ["sogan", 60, "1 kiçik"], ["kere", 5, "1 çay qaşığı"], ["goyerti", 20, "şüyüd"], ["qatiq", 100, "4 xörək qaşığı"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Lobyanın uclarını kəsin, 3–4 sm-lik parçalara doğrayın.", "Duzlu qaynar suda 7–8 dəqiqə yumşalana qədər bişirib süzün.", "Soğanı kərə yağında 4 dəqiqə qovurun, lobyanı əlavə edib 2 dəqiqə də qovurun.", "Yumurtanı doğranmış şüyüd, duz və istiotla çalıb tavaya tökün. Qapağı bağlayıb zəif odda 4–5 dəqiqə bişirin.", "Sarımsaqlı qatıq və çörəklə verin."], "tip": "Dondurulmuş yaşıl lobya ilin hər vaxtı marketlərdə var və bişməsi daha tezdir.", "nat": true, "batch": null}, {"code": "N1", "cu": "az", "name": "Mərci şorbası", "meal": "N", "kind": "soup", "min": 40, "ing": [["merci", 70, "1/3 stəkan"], ["sogan", 50, "yarım soğan"], ["kok", 50, "yarım kök"], ["yag", 10, "1 xörək qaşığı"], ["pomidor_pasta", 10, "1 çay qaşığı"], ["corek", 40, "1 dilim"], ["qatiq", 100, "4 xörək qaşığı"], ["yumurta", 55, "1 ədəd"]], "steps": ["Mərciməyi su təmizlənənə qədər 3–4 dəfə yuyun.", "Soğan və kökü xırda doğrayıb yağda 5 dəqiqə qovurun, pomidor pastasını əlavə edib 1 dəqiqə də qovurun.", "Mərciməyi və 500 ml qaynar suyu əlavə edin. Qaynayandan sonra zəif odda 20–25 dəqiqə, mərcimək tam əriyənə qədər bişirin.", "Blenderdən keçirin (və ya qaşıqla əzin). Duz, zirə və quru nanə əlavə edin.", "Limon dilimi, çörək, qatıq və qaynadılmış yumurta ilə verin."], "tip": "3 porsiyanı birdən bişirin: soyuducuda 3 gün saxlanılır.", "nat": true, "batch": 3}, {"code": "N2", "cu": "az", "name": "Toyuq şorbası (əriştəli)", "meal": "N", "kind": "soup", "min": 40, "ing": [["toyuq_file", 200, "1 file"], ["kartof", 100, "1 kartof"], ["vermisel", 30, "1 ovuc"], ["kok", 50, "yarım kök"], ["sogan", 30, "1/4 soğan"], ["corek", 40, "1 dilim"], ["qatiq", 150, "yarım stəkan"], ["xiyar", 80, "yarım xiyar"]], "steps": ["Fileni 1 litr soyuq suya qoyun, qaynayanda köpüyünü götürün, 20 dəqiqə zəif odda bişirin.", "Fileni çıxarıb liflərə ayırın.", "Bulyona doğranmış kartof, kök və soğanı əlavə edib 10 dəqiqə bişirin.", "Əriştəni və əti qaytarın, 5 dəqiqə də bişirin. Duz, istiot və doğranmış cəfəri əlavə edin.", "Yanında: xiyarı sürtgəcdən keçirib qatıq, duz və quru nanə ilə qarışdırın (xiyarlı qatıq)."], "tip": "", "nat": true, "batch": 2}, {"code": "N3", "cu": "az", "name": "Yüngül bozbaş (noxudlu)", "meal": "N", "kind": "soup", "min": 100, "ing": [["quzu", 160, "4–5 tikə"], ["noxud", 35, "2 xörək qaşığı"], ["kartof", 150, "1 böyük kartof"], ["sogan", 50, "yarım soğan"], ["pomidor", 80, "1 kiçik"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Noxudu axşamdan suya qoyun.", "Əti 1,5 litr soyuq suya qoyub qaynadın, köpüyünü diqqətlə götürün. Noxudu əlavə edin, zəif odda 1 saat bişirin.", "Soyulmuş bütöv kartofu və iri doğranmış soğanı əlavə edin, 20 dəqiqə bişirin.", "Pomidor, duz, istiot, zəfəran və ya zərdəçal əlavə edin, 5 dəqiqə də bişirin. Sonda quru nanə səpin.", "Ən vacib addım: bulyonun üzündəki yağı qaşıqla yığın. Bu, porsiyadan 80–120 kkal azaldır."], "tip": "Quzunun bud hissəsini və ya yağsız mal ətini seçin, quyruq yağı əlavə etməyin.", "nat": true, "batch": 3}, {"code": "N4", "cu": "az", "name": "Kələm dolması", "meal": "N", "kind": "dolma", "min": 75, "ing": [["mal_qiyme", 150, "6–7 dolmalıq"], ["duyu", 35, "2 xörək qaşığı"], ["kelem", 150, "6–7 yarpaq"], ["sogan", 30, "1/4 soğan"], ["goyerti", 20, "keşniş, şüyüd, nanə"], ["pomidor_pasta", 10, "1 çay qaşığı"], ["qatiq", 150, "yarım stəkan"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Kələmin kötüyünü bıçaqla oyun, bütöv kələmi qaynar suya salıb 5–7 dəqiqə bişirin. Yumşalan yarpaqları bir-bir ayırın, qalın damarları bıçaqla nazildin.", "Qiymə, yuyulmuş düyü, xırda doğranmış soğan, göyərti, duz və istiotu yoğurun.", "Hər yarpağın içinə 1 xörək qaşığı içlik qoyun, kənarlarını içəri qatlayıb bükün.", "Qazanın dibinə bir neçə yarpaq döşəyin, dolmaları sıx düzün. Pomidor pastası qatılmış suyu dolmanı yarıya qədər örtəcək qədər tökün. Yağ əlavə etməyin.", "Üstünə ağır boşqab qoyun, zəif odda 50–60 dəqiqə bişirin.", "Sarımsaqlı qatıqla verin."], "tip": "4 porsiya bişirib 2-sini dondurun: dolma dondurucuda 2 ay qalır.", "nat": true, "batch": 4}, {"code": "N5", "cu": "az", "name": "Yarpaq dolması", "meal": "N", "kind": "dolma", "min": 80, "ing": [["mal_qiyme", 150, "14–15 dolmalıq"], ["duyu", 30, "2 xörək qaşığı"], ["yarpaq", 60, "15 yarpaq"], ["sogan", 30, "1/4 soğan"], ["goyerti", 25, "keşniş, şüyüd, nanə"], ["qatiq", 150, "yarım stəkan"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Duzlu yarpaqları 15 dəqiqə ilıq suda saxlayıb duzunu çıxarın (təzə yarpağı isə 1 dəqiqə qaynar suya salın). Saplarını kəsin.", "Qiymə, yuyulmuş düyü, xırda soğan, çoxlu göyərti, duz və istiotu yoğurun.", "Yarpağın parlaq tərəfini aşağı qoyun, kənara 1 çay qaşığı içlik yerləşdirin, yanları qatlayıb möhkəm bükün.", "Qazana sıx düzün, yarıya qədər qaynar su tökün, üstünə boşqab qoyun.", "Zəif odda 50–60 dəqiqə bişirin. Sarımsaqlı qatıqla verin."], "tip": "", "nat": true, "batch": 4}, {"code": "N6", "cu": "az", "name": "Toyuq buğlaması + qarabaşaq", "meal": "N", "kind": "stew", "min": 50, "ing": [["toyuq_bud", 200, "2 bud (dərisiz)"], ["sogan", 100, "1 soğan"], ["pomidor", 150, "1 böyük"], ["bibar", 100, "1 bibər"], ["yag", 5, "1 çay qaşığı"], ["qarabasaq", 50, "1/4 stəkan"], ["goyerti", 15, "keşniş"]], "steps": ["Budun dərisini soyun, sümükdən ayırıb iri tikələrə doğrayın.", "Qalın dibli qazana yağı çəkin, əti 5 dəqiqə hər tərəfi ağarana qədər qovurun.", "Üstünə qat-qat yarımhalqa soğan, bibər və dilimlənmiş pomidor düzün. Duz, istiot və dəfnə yarpağı əlavə edin. Su tökməyin: buğlama öz suyunda bişir.", "Qapağı möhkəm bağlayıb ən zəif odda 35–40 dəqiqə bişirin.", "Bu vaxt qarabaşağı yuyub 2 qat su və duzla 15 dəqiqə bişirin.", "Buğlamanın üstünə doğranmış keşniş səpib qarabaşaqla verin."], "tip": "Buğlama Azərbaycan mətbəxində yağsız bişirmənin ən yaxşı nümunəsidir: ət tərəvəzin suyunda yumşalır.", "nat": true, "batch": 2}, {"code": "N7", "cu": "az", "name": "Az yağlı toyuq plovu", "meal": "N", "kind": "plov", "min": 60, "ing": [["duyu", 55, "1/4 stəkan"], ["toyuq_file", 150, "1 kiçik file"], ["kok", 50, "yarım kök"], ["sogan", 40, "yarım soğan"], ["yag", 10, "1 xörək qaşığı"], ["quru_erik", 20, "5–6 ərik və ya bir ovuc kişmiş"], ["qatiq", 150, "yarım stəkan"]], "steps": ["Düyünü 4–5 dəfə yuyun, 30 dəqiqə ilıq duzlu suda isladın.", "Bol duzlu suda düyünü 6–7 dəqiqə, yarı bişənə qədər qaynadın və süzün (süzmə üsul).", "Toyuğu tikələyin, soğan və kökü zolaq doğrayın. Tavada yağla toyuğu 5 dəqiqə, sonra soğan, kök və ərikləri əlavə edib 5 dəqiqə qovurun. Bu, plovun qarasıdır.", "Qazanın dibinə 2 qaşıq su tökün, düyünü konus şəklində yığın, sapla 3–4 dəlik açın. Üstünə 2 qaşıq zəfəran suyu çiləyin.", "Qapağı dəsmalla bağlayıb ən zəif odda 25–30 dəqiqə dəmə qoyun.", "Düyünü boşqaba çəkin, qaranı üstünə qoyun. Qatıq və salatla verin."], "tip": "Ənənəvi plovda bir porsiyada 40–60 q kərə yağı olur. Burada 10 q bitki yağı var, dad qaradan və zəfərandan gəlir.", "nat": true, "batch": null}, {"code": "N8", "cu": "az", "name": "Toyuq lülə kababı + lavaş", "meal": "N", "kind": "kebab", "min": 35, "ing": [["toyuq_qiyme", 200, "4 lülə"], ["lavas", 50, "yarım vərəq"], ["sogan", 60, "1 kiçik soğan"], ["pomidor", 120, "1 pomidor"], ["bibar", 80, "1 kiçik bibər"], ["qatiq", 100, "4 xörək qaşığı"]], "steps": ["Soğanın yarısını sürtgəcdən keçirib suyunu sıxın, qiyməyə qatın. Duz və istiot vurub 3–4 dəqiqə yoğurun: lülə şişdən düşməsin deyə qiymə yapışqan olmalıdır.", "20 dəqiqə soyuducuda saxlayın.", "Islaq əllə şişə və ya şişsiz uzun lülələr düzəldin.", "Manqalda, qril tavasında və ya sobada (220°C, 15–18 dəqiqə, bir dəfə çevirin) bişirin. Pomidor və bibəri də yanında qızardın.", "Qalan soğanı nazik doğrayıb sumaq və göyərti ilə qarışdırın. Lavaş və qatıqla verin."], "tip": "Hazır toyuq qiyməsi bəzən dərisi ilə çəkilir. Mümkünsə qiyməni budun ətindən özünüz çəkdirin.", "nat": true, "batch": null}, {"code": "N9", "cu": "az", "name": "Mal əti tikə kababı + bulqur", "meal": "N", "kind": "kebab", "min": 30, "ing": [["mal_eti", 170, "5–6 tikə"], ["sogan", 60, "1 kiçik"], ["pomidor", 120, "1 pomidor"], ["bibar", 80, "1 bibər"], ["bulqur", 60, "1/3 stəkan"], ["yag", 5, "1 çay qaşığı (bulqura)"], ["goyerti", 15, "keşniş, reyhan"]], "steps": ["Əti 3 sm-lik tikələrə doğrayın. Sürtgəcdən keçirilmiş soğan, duz və istiotla qarışdırıb ən azı 2 saat (axşamdan daha yaxşı) soyuducuda saxlayın.", "Tikələri şişə düzün, aralarına soğan halqası qoymaq olar.", "Manqalda 10–12 dəqiqə, ya da qril tavasında hər tərəfi 3–4 dəqiqə bişirin. Pomidor və bibəri də yanında qızardın.", "Bulquru yuyub 2 qat su və duzla qaynadın, zəif odda 12–15 dəqiqə bişirin, 5 dəqiqə dəmə qoyun.", "Kababı sumaqlı soğan, göyərti və bulqurla verin."], "tip": "", "nat": true, "batch": null}, {"code": "N10", "cu": "az", "name": "Balıq buğlaması + kartof", "meal": "N", "kind": "fish", "min": 40, "ing": [["ag_baliq", 220, "2 tikə file"], ["sogan", 100, "1 soğan"], ["pomidor", 150, "1 böyük"], ["bibar", 80, "1 kiçik"], ["yag", 5, "1 çay qaşığı"], ["kartof", 200, "2 orta kartof"], ["corek", 40, "1 dilim"], ["goyerti", 15, "şüyüd, keşniş"]], "steps": ["Kartofu qabığı ilə yuyub duzlu suda 20 dəqiqə qaynadın.", "Balığı iri tikələrə bölün, duz, istiot və limon suyu ilə ovuşdurun.", "Tavanın dibinə yağı çəkin, qat-qat soğan, balıq, bibər və pomidor düzün. Üstünə duz və istiot səpin.", "Qapağı bağlayıb zəif odda 20 dəqiqə öz suyunda bişirin. Su əlavə etməyin.", "Göyərti səpib kartofla verin."], "tip": "Dondurulmuş mintay və ya heyk filesi ucuz və sümüksüzdür, bu resept üçün uyğundur.", "nat": true, "batch": null}, {"code": "N11", "cu": "az", "name": "Mal əti qovurması + düyü", "meal": "N", "kind": "stew", "min": 55, "ing": [["mal_eti", 150, "4–5 tikə"], ["badimcan", 100, "yarım badımcan"], ["bibar", 80, "1 bibər"], ["pomidor", 100, "1 pomidor"], ["sogan", 50, "yarım soğan"], ["yag", 10, "1 xörək qaşığı"], ["duyu", 40, "2,5 xörək qaşığı"]], "steps": ["Əti 2 sm-lik tikələrə doğrayın.", "Qazanda yağı qızdırın, əti yüksək odda 5 dəqiqə qovurun.", "Soğanı əlavə edin, sonra yarım stəkan su töküb qapağı bağlayın. Zəif odda 30–35 dəqiqə ət yumşalana qədər bişirin.", "Kublara doğranmış badımcan (əvvəlcədən 15 dəqiqə duzlu suda saxlanmış), bibər və pomidoru əlavə edin, 10–12 dəqiqə bişirin. Duz və istiot vurun.", "Düyünü yuyub 2 qat su ilə 15 dəqiqə bişirin. Göyərti ilə verin."], "tip": "", "nat": true, "batch": 2}, {"code": "N12", "cu": "az", "name": "Toyuq soyutması", "meal": "N", "kind": "soup", "min": 50, "ing": [["toyuq_file", 220, "1 böyük file"], ["kartof", 120, "1 kartof"], ["kok", 50, "yarım kök"], ["sogan", 50, "yarım soğan"], ["corek", 40, "1 dilim"], ["pomidor", 100, "1 pomidor"], ["xiyar", 100, "1 xiyar"]], "steps": ["Toyuğu 1 litr soyuq suya qoyun, qaynayanda köpüyünü götürün.", "Bütöv soğan, kök, dəfnə yarpağı və istiot dənələri əlavə edib zəif odda 25 dəqiqə bişirin.", "Kartofu iri doğrayıb əlavə edin, 15 dəqiqə də bişirin. Sonda duz vurun.", "Əti və tərəvəzi boşqaba çəkin, üstünə bir az bulyon tökün, doğranmış cəfəri səpin.", "Pomidor-xiyar salatı və çörəklə verin. Qalan bulyonu ertəsi gün şorba üçün saxlayın."], "tip": "Soyutma Azərbaycanda suda bişirilən ət yeməklərinin ümumi adıdır. Qızartma olmadığı üçün çox az yağlıdır.", "nat": true, "batch": null}, {"code": "D1", "cu": "az", "name": "Toyuq çığırtması", "meal": "D", "kind": "stew", "min": 40, "ing": [["toyuq_file", 180, "1 file"], ["sogan", 100, "1 soğan"], ["yumurta", 110, "2 ədəd"], ["kere", 5, "1 çay qaşığı"], ["pomidor", 150, "salat üçün"], ["xiyar", 100, "salat üçün"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Fileni iri tikələrə doğrayıb az suda 15 dəqiqə bişirin (yarım stəkan bulyonu saxlayın).", "Soğanı yarımhalqa doğrayıb kərə yağında 5–6 dəqiqə qızılı rəngə qədər qovurun.", "Toyuğu, yarım stəkan bulyonu, 1 xörək qaşığı limon suyu və zəfəran suyunu əlavə edin. Zəif odda 10 dəqiqə bişirin.", "Yumurtaları duz və istiotla çalıb toyuğun üstünə tökün, qapağı bağlayıb 4–5 dəqiqə bişirin.", "Pomidor-xiyar salatı və çörəklə verin."], "tip": "Ənənəvi resept bütöv toyuqla bişirilir. Burada dərisiz fileni götürdük ki, yağ azalsın.", "nat": true, "batch": null}, {"code": "D2", "cu": "az", "name": "Balıq kababı + narşərab", "meal": "D", "kind": "fish", "min": 35, "ing": [["kutum", 220, "2 tikə (kütüm, çəki və ya forel)"], ["narsherab", 10, "2 çay qaşığı"], ["lavas", 30, "1/4 vərəq"], ["pomidor", 150, "1 pomidor"], ["xiyar", 100, "1 xiyar"], ["sogan", 30, "bir neçə halqa"], ["yag", 5, "1 çay qaşığı"]], "steps": ["Balığı təmizləyib 4–5 sm-lik tikələrə bölün. Duz, istiot və limon suyu ilə 20 dəqiqə saxlayın.", "Tikələri şişə düzün və ya qril tavasına qoyun.", "Manqalda hər tərəfi 5–6 dəqiqə, ya da sobada 200°C-də 18–20 dəqiqə bişirin. Bir az yağla fırçalayın ki, qurumasın.", "Pomidor, xiyar və nazik soğandan salat hazırlayın.", "Balığın üstünə narşərab tökün, lavaş və salatla verin."], "tip": "Kütüm noyabr-mart aylarında bazarlarda olur. Tapılmasa forel və ya çəki balığı da olar.", "nat": true, "batch": null}, {"code": "D3", "cu": "az", "name": "Üç bacı dolması (badımcan, bibər, pomidor)", "meal": "D", "kind": "dolma", "min": 60, "ing": [["mal_qiyme", 150, "3 dolmalıq"], ["duyu", 30, "2 xörək qaşığı"], ["badimcan", 120, "1 kiçik badımcan"], ["bibar", 100, "1 bibər"], ["pomidor", 150, "1 böyük pomidor"], ["sogan", 30, "1/4 soğan"], ["goyerti", 20, "keşniş, reyhan, nanə"], ["yag", 5, "1 çay qaşığı"], ["qatiq", 100, "4 xörək qaşığı"]], "steps": ["Badımcanın başını kəsib qaşıqla içini oyun, 15 dəqiqə duzlu suda saxlayın ki, acılığı getsin.", "Bibərin başını kəsib toxumlarını, pomidorun başını kəsib içini çıxarın. Pomidorun içini atmayın.", "Qiymə, yuyulmuş düyü, xırda soğan, göyərti, duz və istiotu yoğurun.", "Tərəvəzləri doldurub kəsdiyiniz başlarını qapaq kimi üstünə qoyun.", "Qazanın dibinə yağ və pomidorun içini qoyun, dolmaları düzün, 1/3 stəkan su əlavə edin.", "Qapaqlı, zəif odda 40–45 dəqiqə bişirin. Sarımsaqlı qatıqla verin."], "tip": "Payızda badımcan qiyməti qalxırsa, onun yerinə ikinci bibər götürün.", "nat": true, "batch": null}, {"code": "D4", "cu": "az", "name": "Küftəli dovğa", "meal": "D", "kind": "dovga", "min": 50, "ing": [["qatiq", 300, "1 stəkan + 4 qaşıq"], ["duyu", 25, "1,5 xörək qaşığı"], ["yumurta", 55, "1 ədəd"], ["un", 10, "1 xörək qaşığı"], ["goyerti", 150, "1,5 dəstə (keşniş, şüyüd, ispanaq, nanə)"], ["noxud", 15, "1 xörək qaşığı quru"], ["mal_qiyme", 80, "8–10 kiçik küftə"]], "steps": ["Noxudu axşamdan isladıb 1 saat bişirin (və ya hazır konserv noxud götürün).", "Qiyməni duz və istiotla yoğurub fındıq boyda küftələr düzəldin, ayrıca duzlu suda 10 dəqiqə bişirin.", "Qazanda qatığı, yumurtanı, unu və 200 ml suyu çalğı ilə hamar olana qədər çalın, sonra düyünü əlavə edin.", "Orta odda qoyun və qaynayana qədər eyni istiqamətdə dayanmadan qarışdırın, yoxsa qatıq çürüyür (laxtalanır).", "Qaynayandan sonra doğranmış göyərtini əlavə edin, zəif odda 10 dəqiqə qarışdıraraq bişirin.", "Noxud və küftələri qatın. Duzu ən sonda, oddan götürəndə vurun. İsti və ya soyuq verin."], "tip": "Dovğa ənənəvi olaraq yeməklər arasında həzm üçün verilir. Küftə əlavə etdik ki, tam şam yeməyi olsun.", "nat": true, "batch": null}, {"code": "D5", "cu": "az", "name": "Sobada toyuq ləvəngisi (yüngül)", "meal": "D", "kind": "roast", "min": 55, "ing": [["toyuq_bud", 220, "2 bud filesi (dərisiz)"], ["qoz", 20, "4–5 ləpə"], ["sogan", 80, "1 kiçik"], ["albali_lavashana", 10, "1 kiçik parça"], ["pomidor", 150, "salat üçün"], ["kahi", 80, "salat üçün"], ["yag", 5, "1 çay qaşığı"]], "steps": ["Sobanı 190°C-yə qızdırın.", "Soğanı sürtgəcdən keçirib suyunu sıxın. Qozu döyün, soğan, xırdalanmış turşməzə (lavaşana), duz və istiotla qarışdırıb pasta halına salın.", "Bud filesini açıb döyəcləyin, içinə ləvəngi pastasını çəkin, bükün və diş çöpü ilə bərkidin.", "Yağlanmış qaba qoyub folqa ilə örtün, 30 dəqiqə bişirin. Folqanı götürüb 10–15 dəqiqə də qızardın.", "Kahı-pomidor salatı ilə verin."], "tip": "Ənənəvi ləvəngidə 100–150 q qoz olur. Burada 20 q qoyduq: dad qalır, kalori 3–4 dəfə az olur.", "nat": true, "batch": null}, {"code": "D6", "cu": "az", "name": "Kəsmikli göyərti qutabı + ayran", "meal": "D", "kind": "qutab", "min": 50, "ing": [["un", 70, "yarım stəkan"], ["goyerti", 150, "1,5 dəstə"], ["kesmik", 120, "yarım qutu"], ["sogan", 30, "yaşıl soğan"], ["kere", 5, "1 çay qaşığı"], ["qatiq", 200, "ayran üçün"]], "steps": ["Un, bir çimdik duz və 40 ml su ilə bərk xəmir yoğurun, 20 dəqiqə örtülü saxlayın.", "Göyərtini (ispanaq, keşniş, şüyüd, yaşıl soğan) yuyub qurulayın, xırda doğrayın. Kəsmik, duz və istiotla qarışdırın. Göyərtini qızdırmağa ehtiyac yoxdur.", "Xəmiri 3 kündəyə bölüb hər birini 1 mm qalınlığında, boşqab boyda nazik yayın.", "Yarısına içlik çəkin, üstünü qatlayıb kənarlarını sıxın.", "Quru (yağsız) tavada və ya sacda hər tərəfi 2–3 dəqiqə bişirin. Hazır qutabın üstünə yalnız nazik kərə yağı çəkin.", "Ayran: qatığı 100 ml soyuq su və duzla çalın. Qutabı sumaq səpib ayranla verin."], "tip": "Qutab yağsız tavada bişirilir. Kalori yağdan deyil, xəmirin nazikliyindən asılıdır: nə qədər nazik, o qədər yüngül.", "nat": true, "batch": null}, {"code": "D7", "cu": "az", "name": "Ciyər qovurması + qarabaşaq", "meal": "D", "kind": "stew", "min": 30, "ing": [["ciyer", 200, "10–12 parça"], ["sogan", 80, "1 kiçik"], ["yag", 5, "1 çay qaşığı"], ["qarabasaq", 45, "3 xörək qaşığı"], ["pomidor", 100, "salat"], ["xiyar", 100, "salat"]], "steps": ["Ciyəri yuyun, ağ damarlarını və öd ləkələrini təmizləyin.", "Soğanı yarımhalqa doğrayıb yağda 5 dəqiqə qovurun.", "Ciyəri əlavə edib orta odda 7–8 dəqiqə bişirin. İçi azca çəhrayı qala bilər, çox bişirsəniz bərkiyir.", "Duzu ən sonda vurun: əvvəl vursanız ciyər suyunu buraxıb sərtləşir.", "Qarabaşağı 2 qat su ilə 15 dəqiqə bişirin. Göyərti və salatla verin."], "tip": "Ciyər dəmir və B12 vitamini ilə çox zəngindir, həftədə 1 dəfə kifayətdir.", "nat": false, "batch": null}, {"code": "D8", "cu": "az", "name": "Mal əti buğlaması", "meal": "D", "kind": "stew", "min": 90, "ing": [["mal_eti", 170, "5–6 tikə"], ["sogan", 100, "1 soğan"], ["pomidor", 150, "1 böyük"], ["bibar", 100, "1 bibər"], ["badimcan", 100, "yarım badımcan"], ["yag", 5, "1 çay qaşığı"], ["corek", 40, "1 dilim"], ["goyerti", 15, "keşniş"]], "steps": ["Əti 3 sm-lik tikələrə doğrayın, qalın dibli qazanda yağla 5 dəqiqə qovurun.", "Üstünə qat-qat soğan, badımcan, bibər və pomidor düzün. Duz, istiot və dəfnə yarpağı əlavə edin.", "Qapağı möhkəm bağlayın (buxar çıxmasın deyə qapağın altına folqa qoymaq olar).", "Ən zəif odda 70–80 dəqiqə, ət yumşalana qədər öz suyunda bişirin. Su əlavə etməyin.", "Keşniş səpib çörəklə verin."], "tip": "", "nat": true, "batch": 2}, {"code": "D9", "cu": "az", "name": "Qatıqlı toyuq tikə kababı", "meal": "D", "kind": "kebab", "min": 30, "ing": [["toyuq_file", 220, "6–7 tikə"], ["qatiq", 80, "3 xörək qaşığı marinad üçün"], ["bibar", 120, "1 bibər"], ["balqabaq", 130, "yarım qabaq"], ["sogan", 50, "yarım soğan"], ["lavas", 40, "1/3 vərəq"]], "steps": ["Fileni 4 sm-lik tikələrə doğrayın.", "Qatıq, sürtgəcdən keçirilmiş soğan, sarımsaq, duz, istiot və paprika ilə qarışdırıb ən azı 1 saat soyuducuda saxlayın. Qatıq əti yumşaldır.", "Tikələri bibər və qabaq dilimləri ilə növbələyərək şişə düzün.", "Manqalda, qril tavasında və ya sobada (220°C, 15–18 dəqiqə) bişirin.", "Lavaş və göyərti ilə verin."], "tip": "Marinadda yağ olmadığı üçün bu kabab adi toyuq kababından təxminən 100 kkal yüngüldür.", "nat": true, "batch": null}, {"code": "D10", "cu": "az", "name": "Lobyalı ət (qırmızı lobya ilə)", "meal": "D", "kind": "stew", "min": 90, "ing": [["mal_eti", 120, "3–4 tikə"], ["lobya_qirmizi", 50, "1/4 stəkan quru"], ["sogan", 50, "yarım soğan"], ["pomidor", 100, "1 pomidor"], ["yag", 5, "1 çay qaşığı"], ["goyerti", 20, "keşniş, reyhan"], ["qatiq", 100, "4 xörək qaşığı"]], "steps": ["Lobyanı axşamdan suya qoyun.", "Lobyanı təzə suda 50–60 dəqiqə yumşalana qədər bişirin (konserv lobya ilə bu addım yoxdur).", "Əti doğrayıb yağla 5 dəqiqə qovurun, soğanı əlavə edin. Yarım stəkan su töküb 30 dəqiqə bişirin.", "Lobya və doğranmış pomidoru qatıb 15 dəqiqə də bişirin. Duz, istiot və zirə vurun.", "Bol keşniş və reyhan səpib qatıqla verin."], "tip": "", "nat": true, "batch": 2}, {"code": "Q1", "cu": "all", "name": "Kəsmik + bal + qoz", "meal": "Q", "kind": "snack", "min": 3, "ing": [["kesmik", 150, "yarım qutudan çox"], ["bal", 7, "1 çay qaşığı"], ["qoz", 10, "2 ləpə"]], "steps": ["Kəsmiyi qaba çəkin, üstünə bal və xırdalanmış qoz səpin."], "tip": "", "nat": true, "batch": null}, {"code": "Q2", "cu": "all", "name": "Qatıq + alma", "meal": "Q", "kind": "snack", "min": 2, "ing": [["qatiq", 250, "1 stəkan"], ["alma", 150, "1 orta alma"]], "steps": ["Qatığı stəkana tökün, almanı dilimləyin. İstəsəniz darçın səpin."], "tip": "", "nat": true, "batch": null}, {"code": "Q3", "cu": "all", "name": "Ayran + armud", "meal": "Q", "kind": "snack", "min": 3, "ing": [["qatiq", 200, "ayran üçün"], ["armud", 150, "1 armud"]], "steps": ["Qatığı 100 ml soyuq su və bir çimdik duzla çalın, istəsəniz quru nanə əlavə edin."], "tip": "", "nat": true, "batch": null}, {"code": "Q4", "cu": "all", "name": "2 yumurta + tərəvəz", "meal": "Q", "kind": "snack", "min": 10, "ing": [["yumurta", 110, "2 ədəd"], ["xiyar", 100, "1 xiyar"], ["pomidor", 100, "1 pomidor"], ["corek", 20, "yarım dilim"]], "steps": ["Yumurtaları qaynadın (8–9 dəqiqə), tərəvəzi doğrayın. Bir gün əvvəldən bişirib aparmaq olar."], "tip": "", "nat": true, "batch": null}, {"code": "Q5", "cu": "all", "name": "Nar + qoz", "meal": "Q", "kind": "snack", "min": 5, "ing": [["nar", 150, "1 orta nar"], ["qoz", 15, "3 ləpə"]], "steps": ["Narı dənələyin, qozla birlikdə yeyin. Nar noyabr-dekabr aylarında ən dadlı vaxtındadır."], "tip": "", "nat": true, "batch": null}, {"code": "Q6", "cu": "all", "name": "Xurma + kəsmik", "meal": "Q", "kind": "snack", "min": 3, "ing": [["xurma", 150, "1 böyük xurma"], ["kesmik", 100, "yarım qutu"]], "steps": ["Yetişmiş yumşaq xurmanı yarıya bölün, qaşıqla kəsmiklə birlikdə yeyin."], "tip": "Payızın yerli meyvəsi, təbii şirinliyi ilə şirniyyat istəyini azaldır.", "nat": true, "batch": null}, {"code": "Q7", "cu": "all", "name": "Feyxoa və ya naringi + badam", "meal": "Q", "kind": "snack", "min": 2, "ing": [["feyxoa", 200, "4–5 feyxoa və ya 3 naringi"], ["badam", 15, "10–12 ədəd"]], "steps": ["Feyxoanı yarıya bölüb qaşıqla yeyin. Lənkəran feyxoası noyabrda bazarlardadır."], "tip": "", "nat": true, "batch": null}, {"code": "Q8", "cu": "all", "name": "Pendir + xiyar + lavaş", "meal": "Q", "kind": "snack", "min": 3, "ing": [["ag_pendir", 30, "1 dilim"], ["xiyar", 150, "1 böyük xiyar"], ["lavas", 30, "1/4 vərəq"], ["goyerti", 20, "bir neçə budaq"]], "steps": ["Lavaşa pendir, xiyar və göyərti qoyub bükün (dürmək)."], "tip": "", "nat": true, "batch": null}, {"code": "Q9", "cu": "all", "name": "Kefir + banan", "meal": "Q", "kind": "snack", "min": 1, "ing": [["kefir", 300, "1 böyük stəkan"], ["banan", 100, "1 kiçik banan"]], "steps": ["Kefiri için, bananı yanında yeyin. Və ya blenderdə qarışdırıb kokteyl hazırlayın."], "tip": "", "nat": true, "batch": null}, {"code": "TR1", "cu": "tr", "name": "Menemen", "meal": "S", "kind": "eggs", "min": 15, "ing": [["yumurta", 165, "3 ədəd"], ["pomidor", 200, "2 pomidor"], ["bibar", 80, "1 yaşıl bibər"], ["sogan", 40, "yarım kiçik soğan"], ["yag", 5, "1 çay qaşığı"], ["ag_pendir", 30, "1 dilim"], ["corek", 40, "1 dilim"]], "steps": ["Soğanı və yaşıl bibəri xırda doğrayın. Pomidorun qabığını soyub kublara kəsin.", "Tavada yağı qızdırın, soğan və bibəri 4–5 dəqiqə yumşalana qədər qovurun.", "Pomidoru əlavə edin, 5–6 dəqiqə suyu azalana qədər bişirin. Duz, istiot və bir çimdik pul biber vurun.", "Yumurtaları sındırıb yavaş-yavaş qarışdırın, 2–3 dəqiqə yumşaq qalana qədər bişirin.", "Üstünə xırdalanmış ağ pendir səpib çörəklə verin."], "tip": "Türkiyədə menemen soğanlı və soğansız bişirilir, hər ikisi olar.", "nat": false, "batch": null}, {"code": "TR2", "cu": "tr", "name": "Türk səhər süfrəsi (kahvaltı)", "meal": "S", "kind": "breakfast", "min": 10, "ing": [["yumurta", 110, "2 ədəd"], ["ag_pendir", 40, "1,5 dilim"], ["zeytun", 20, "6–7 zeytun"], ["pomidor", 150, "1 pomidor"], ["xiyar", 100, "1 xiyar"], ["corek", 50, "1 dilim"], ["goyerti", 20, "cəfəri, nanə"]], "steps": ["Yumurtaları qaynayandan sonra 7 dəqiqə bişirin (sarısı azca yumşaq qalır), soyuq suya salın.", "Pomidor və xiyarı dilimləyin, göyərtini budaq halında qoyun.", "Pendiri və zeytunu kiçik qablara qoyun.", "Hamısını çörəklə birlikdə süfrəyə düzün. Çayı şəkərsiz için."], "tip": "Zeytun yağlı olduğu üçün porsiyanı 6–7 ədəddən artıq etməyin.", "nat": false, "batch": null}, {"code": "TR3", "cu": "tr", "name": "Ezogelin şorbası + yumurta", "meal": "N", "kind": "soup", "min": 40, "ing": [["merci", 60, "1/3 stəkan"], ["bulqur", 20, "1 xörək qaşığı"], ["duyu", 10, "1 çay qaşığı"], ["sogan", 40, "yarım soğan"], ["pomidor_pasta", 15, "1 xörək qaşığı"], ["yag", 7, "2 çay qaşığı"], ["qatiq", 150, "yarım stəkan"], ["yumurta", 110, "2 ədəd"], ["limon", 20, "2 dilim"]], "steps": ["Mərcimək, bulqur və düyünü birlikdə yuyun.", "Qazanda yağı qızdırın, xırda soğanı 4 dəqiqə qovurun, pomidor pastasını əlavə edib 1 dəqiqə də qarışdırın.", "Yarmaları və 600 ml qaynar suyu əlavə edin. Zəif odda 25–30 dəqiqə, mərcimək əriyənə qədər bişirin.", "Duz, quru nanə və pul biber vurun. İstəsəniz blenderdən keçirin.", "Limon dilimləri, qaynadılmış yumurta və qatıqla verin."], "tip": "Ezogelin Türkiyənin ən sevilən şorbalarındandır. 3 porsiya bişirib saxlamaq olar.", "nat": false, "batch": 3}, {"code": "TR4", "cu": "tr", "name": "Tavuk şiş + bulqur pilavı", "meal": "N", "kind": "kebab", "min": 35, "ing": [["toyuq_file", 200, "6–7 tikə"], ["qatiq", 50, "2 xörək qaşığı marinad"], ["bibar", 80, "1 bibər"], ["sogan", 40, "yarım soğan"], ["bulqur", 60, "1/3 stəkan"], ["yag", 5, "1 çay qaşığı"], ["pomidor", 100, "1 pomidor"]], "steps": ["Fileni 3–4 sm-lik tikələrə doğrayın. Qatıq, pomidor pastası, sarımsaq, duz, pul biber və kəklikotu ilə 1 saat marinad edin.", "Tikələri bibər və soğan parçaları ilə növbələyərək şişə düzün.", "Qril tavasında hər tərəfi 4–5 dəqiqə və ya sobada 220°C-də 15–18 dəqiqə bişirin.", "Bulgur pilavı: yağda 1 qaşıq pomidor pastasını qızdırın, yuyulmuş bulquru əlavə edib 1 dəqiqə qarışdırın, 2 qat qaynar su və duz töküb zəif odda 15 dəqiqə bişirin.", "Pilavı 5 dəqiqə dəmə qoyub şişlə və pomidorla verin."], "tip": "", "nat": false, "batch": null}, {"code": "TR5", "cu": "tr", "name": "Sobada İzmir köftəsi", "meal": "N", "kind": "stew", "min": 50, "ing": [["mal_qiyme", 170, "6 köftə"], ["corek", 20, "1 kiçik dilimin içi"], ["sogan", 30, "1/4 soğan"], ["kartof", 150, "1 böyük kartof"], ["bibar", 80, "1 yaşıl bibər"], ["pomidor", 150, "1 pomidor"], ["yag", 5, "1 çay qaşığı"]], "steps": ["Sobanı 200°C-yə qızdırın.", "Qiyməyə islanmış çörək içi, sürtgəcdən keçirilmiş soğan, duz, istiot və zirə qatıb yoğurun. 6 uzunsov köftə düzəldin.", "Kartofu dilimləyib yağla qarışdırın. Siniyə kartof, köftə və bibəri növbə ilə düzün, 20 dəqiqə bişirin.", "Pomidoru rəndələyib 1 qaşıq pomidor pastası və yarım stəkan su ilə qarışdırın, sininin üstünə tökün.", "15 dəqiqə də bişirin, kartof yumşalana qədər."], "tip": "", "nat": false, "batch": null}, {"code": "TR6", "cu": "tr", "name": "Etli kuru fasulye", "meal": "D", "kind": "stew", "min": 40, "ing": [["mal_eti", 100, "3 tikə"], ["lobya_konserv", 200, "1 banka"], ["sogan", 50, "yarım soğan"], ["pomidor_pasta", 15, "1 xörək qaşığı"], ["yag", 5, "1 çay qaşığı"], ["bulqur", 30, "2 xörək qaşığı"], ["goyerti", 15, "cəfəri"]], "steps": ["Əti kiçik kublara doğrayın, yağla 5 dəqiqə qovurun, soğanı əlavə edin.", "Pomidor pastasını qatıb 1 dəqiqə qarışdırın, 1 stəkan su töküb 25 dəqiqə zəif odda bişirin.", "Konserv lobyanı süzüb yuyun, ətə əlavə edin, 10 dəqiqə də bişirin. Duz və pul biber vurun.", "Bulquru ayrıca 2 qat suda 15 dəqiqə bişirin.", "Cəfəri səpib bulqurla verin."], "tip": "Quru lobya ilə bişirsəniz, 60 q lobyanı axşamdan isladıb 1 saat bişirin.", "nat": false, "batch": null}, {"code": "TR7", "cu": "tr", "name": "Sebzeli tavuk sote", "meal": "D", "kind": "stew", "min": 25, "ing": [["toyuq_file", 200, "1 file"], ["bibar", 100, "1 bibər"], ["gobelek", 100, "5–6 göbələk"], ["pomidor", 120, "1 pomidor"], ["sogan", 50, "yarım soğan"], ["yag", 7, "2 çay qaşığı"], ["corek", 40, "1 dilim"]], "steps": ["Fileni zolaq doğrayın, göbələyi dilimləyin, bibər və soğanı iri doğrayın.", "Geniş tavada yağı yaxşı qızdırın, toyuğu yüksək odda 5 dəqiqə qovurun.", "Soğan, bibər və göbələyi əlavə edin, 5 dəqiqə qarışdıraraq bişirin.", "Pomidoru qatın, duz, istiot və kəklikotu vurun, 5 dəqiqə də bişirin.", "Çörəklə verin."], "tip": "", "nat": false, "batch": null}, {"code": "TR8", "cu": "tr", "name": "Fırında balıq + roka salatı", "meal": "D", "kind": "fish", "min": 30, "ing": [["ag_baliq", 230, "1 balıq və ya 2 file (levrek, dorado)"], ["limon", 30, "yarım limon"], ["kartof", 150, "1 kartof"], ["kahi", 100, "roka və ya kahı"], ["pomidor", 100, "1 pomidor"], ["yag", 7, "2 çay qaşığı"]], "steps": ["Sobanı 200°C-yə qızdırın. Kartofu dilimləyib yarım yağla qarışdırın, siniyə düzüb 15 dəqiqə bişirin.", "Balığı duz, istiot və limon suyu ilə ovuşdurun, içinə limon dilimi qoyun.", "Balığı kartofun yanına qoyub 18–20 dəqiqə bişirin.", "Roka və pomidoru doğrayın, qalan yağ, limon və duzla qarışdırın.", "Balığı salat və kartofla verin."], "tip": "Levrek və dorado Bakının balıq bazarlarında və böyük marketlərdə olur.", "nat": false, "batch": null}, {"code": "GE1", "cu": "ge", "name": "Yüngül xaçapuri (lavaşda)", "meal": "S", "kind": "qutab", "min": 20, "ing": [["lavas", 70, "1 vərəq"], ["kesmik", 150, "yarım qutudan çox"], ["ag_pendir", 30, "1 dilim (suluquni)"], ["yumurta", 55, "1 ədəd"], ["goyerti", 10, "şüyüd"]], "steps": ["Kəsmiyi xırdalanmış pendir, yumurtanın yarısı və doğranmış şüyüdlə qarışdırın.", "Lavaşı qatlayıb boşqab boyda kvadrat edin, ortasına içlik qoyub kənarlarını üstünə qatlayın.", "Üstünə qalan yumurtanı fırça ilə çəkin.", "Quru tavada qapaq altında hər tərəfi 3–4 dəqiqə və ya sobada 200°C-də 10 dəqiqə qızardın."], "tip": "Əsl xaçapuri xəmirlə və çoxlu pendirlə bişirilir, 600–800 kkal olur. Lavaşlı variant yarı kaloridir.", "nat": false, "batch": null}, {"code": "GE2", "cu": "ge", "name": "Çaxoxbili", "meal": "N", "kind": "stew", "min": 45, "ing": [["toyuq_bud", 220, "2 bud (dərisiz)"], ["sogan", 100, "1 soğan"], ["pomidor", 250, "2 böyük pomidor"], ["yag", 5, "1 çay qaşığı"], ["goyerti", 20, "keşniş, reyhan"], ["corek", 40, "1 dilim"]], "steps": ["Budu dərisindən təmizləyib 3–4 hissəyə bölün.", "Qalın dibli qazanda yağsız və ya çox az yağda toyuğu hər tərəfdən 6–7 dəqiqə qızardın.", "Yarımhalqa soğanı əlavə edib 5 dəqiqə bişirin.", "Qabığı soyulmuş, doğranmış pomidoru, sarımsaq, duz, istiot və xmeli-suneli əlavə edin. Qapaqlı 25 dəqiqə bişirin.", "Sonda bol keşniş və reyhan qatıb 2 dəqiqə dəmə qoyun. Çörəklə verin."], "tip": "Xmeli-suneli Gürcü ədviyyat qarışığıdır, Bakı bazarlarında satılır.", "nat": false, "batch": 2}, {"code": "GE3", "cu": "ge", "name": "Lobio (qozlu lobya)", "meal": "N", "kind": "stew", "min": 25, "ing": [["lobya_konserv", 220, "1 banka"], ["sogan", 50, "yarım soğan"], ["qoz", 15, "3 ləpə"], ["goyerti", 20, "keşniş"], ["yag", 5, "1 çay qaşığı"], ["corek", 50, "1 dilim"], ["ag_pendir", 30, "1 dilim"]], "steps": ["Soğanı xırda doğrayıb yağda 5 dəqiqə qovurun.", "Süzülmüş lobyanı və yarım stəkan su əlavə edin, 10 dəqiqə bişirin. Lobyanın bir hissəsini qaşıqla əzin.", "Döyülmüş qoz, sarımsaq, xmeli-suneli, duz və 1 çay qaşığı sirkə əlavə edin.", "Bol keşniş qatıb oddan götürün.", "Pendir və çörəklə (və ya mçadi ilə) verin."], "tip": "", "nat": false, "batch": null}, {"code": "GE4", "cu": "ge", "name": "Xarço şorbası", "meal": "N", "kind": "soup", "min": 90, "ing": [["mal_eti", 150, "4–5 tikə"], ["duyu", 35, "2 xörək qaşığı"], ["sogan", 50, "yarım soğan"], ["pomidor_pasta", 15, "1 xörək qaşığı"], ["qoz", 10, "2 ləpə"], ["albali_lavashana", 10, "1 parça (tkemali əvəzi)"], ["goyerti", 20, "keşniş"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Əti 1,2 litr suda köpüyünü götürərək 60 dəqiqə bişirin.", "Yuyulmuş düyünü əlavə edib 10 dəqiqə bişirin.", "Ayrıca tavada soğanı 1 çay qaşığı bulyon yağı ilə qovurub pomidor pastasını qatın, şorbaya əlavə edin.", "Döyülmüş qoz, turşməzə, sarımsaq, xmeli-suneli və duz əlavə edib 5 dəqiqə bişirin.", "Bol keşnişlə verin. Bulyonun üzündəki yağı yığın."], "tip": "", "nat": false, "batch": 3}, {"code": "GE5", "cu": "ge", "name": "Mtsvadi (quzu kababı) + salat", "meal": "D", "kind": "kebab", "min": 30, "ing": [["quzu", 170, "5–6 tikə"], ["sogan", 50, "yarım soğan"], ["pomidor", 150, "1 pomidor"], ["xiyar", 100, "1 xiyar"], ["goyerti", 20, "keşniş, reyhan"], ["lavas", 30, "1/4 vərəq"], ["narsherab", 10, "2 çay qaşığı"]], "steps": ["Əti iri tikələrə doğrayıb soğan, duz və istiotla axşamdan marinad edin.", "Şişə düzüb manqalda və ya qril tavasında hər tərəfi 4–5 dəqiqə bişirin.", "Pomidor-xiyar salatını doğranmış göyərti ilə hazırlayın.", "Kababın üstünə nazik soğan halqaları və narşərab tökün, lavaşla verin."], "tip": "", "nat": false, "batch": null}, {"code": "GE6", "cu": "ge", "name": "Qozlu badımcan rulonu + toyuq", "meal": "D", "kind": "roast", "min": 40, "ing": [["badimcan", 200, "1 badımcan"], ["qoz", 20, "4 ləpə"], ["goyerti", 20, "keşniş"], ["yag", 5, "1 çay qaşığı"], ["toyuq_file", 150, "1 kiçik file"], ["nar", 30, "bir ovuc dən"]], "steps": ["Badımcanı uzununa nazik dilimləyin, duzlu suda 15 dəqiqə saxlayın.", "Dilimləri qurulayıb yağla fırçalayın, qril tavasında və ya sobada (200°C, 12 dəq) yumşalana qədər bişirin.", "Qozu sarımsaq, keşniş, duz və 2 qaşıq su ilə əzib pasta düzəldin.", "Hər badımcan diliminə pasta çəkib bükün, üstünə nar dənələri səpin.", "Fileni duz-istiotla qril tavasında hər tərəfi 5 dəqiqə bişirib yanına qoyun."], "tip": "", "nat": false, "batch": null}, {"code": "GE7", "cu": "ge", "name": "Kuçmaçi (narlı ciyər)", "meal": "D", "kind": "stew", "min": 30, "ing": [["ciyer", 200, "10–12 parça"], ["sogan", 60, "1 kiçik soğan"], ["qoz", 10, "2 ləpə"], ["nar", 40, "bir ovuc dən"], ["yag", 5, "1 çay qaşığı"], ["corek", 30, "1 kiçik dilim"], ["goyerti", 15, "keşniş"]], "steps": ["Ciyəri təmizləyib iri doğrayın.", "Yağda soğanı 4 dəqiqə qovurun, ciyəri əlavə edib 7–8 dəqiqə bişirin.", "Döyülmüş qoz, sarımsaq, xmeli-suneli və 1 qaşıq sirkə əlavə edin. Duzu sonda vurun.", "Üstünə nar dənələri və keşniş səpib çörəklə verin."], "tip": "Ciyər dəmirlə zəngindir, nardakı C vitamini dəmirin mənimsənilməsinə kömək edir.", "nat": false, "batch": null}, {"code": "IT1", "cu": "it", "name": "Tərəvəzli frittata", "meal": "S", "kind": "kuku", "min": 20, "ing": [["yumurta", 165, "3 ədəd"], ["bibar", 80, "yarım bibər"], ["ispanaq", 60, "1 ovuc"], ["sogan", 40, "yarım kiçik soğan"], ["holland", 20, "1 dilim (parmezan əvəzi)"], ["yag", 5, "1 çay qaşığı"], ["corek", 40, "1 dilim"]], "steps": ["Sobanı 180°C-yə qızdırın (və ya qapaqlı tava istifadə edin).", "Soğan və bibəri sobaya davamlı tavada yağla 4 dəqiqə qovurun, ispanağı əlavə edin.", "Yumurtaları duz, istiot və sürtgəcdən keçirilmiş pendirin yarısı ilə çalıb tavaya tökün.", "2 dəqiqə ocaqda, sonra 10 dəqiqə sobada bişirin. Qalan pendiri üstünə səpin.", "Dilimləyib çörəklə verin. Soyuq halda da yeyilir."], "tip": "", "nat": false, "batch": null}, {"code": "IT2", "cu": "it", "name": "Pomidorlu brusketta (kəsmikli)", "meal": "S", "kind": "breakfast", "min": 10, "ing": [["corek", 70, "2 dilim kəpəkli çörək"], ["kesmik", 150, "yarım qutudan çox (rikotta əvəzi)"], ["pomidor", 150, "1 pomidor"], ["goyerti", 10, "reyhan"], ["yag", 5, "1 çay qaşığı"], ["yumurta", 55, "1 ədəd"]], "steps": ["Çörəyi quru tavada və ya tosterdə qızardın, bir diş sarımsaqla ovuşdurun.", "Pomidoru xırda doğrayıb reyhan, duz və zeytun yağı ilə qarışdırın.", "Kəsmiyi duz və istiotla əzib çörəyə çəkin, üstünə pomidor qoyun.", "Yanında qaynadılmış yumurta ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "IT3", "cu": "it", "name": "Toyuqlu pomodoro makaron", "meal": "N", "kind": "pasta", "min": 25, "ing": [["makaron", 75, "1 kiçik boşqab"], ["toyuq_file", 160, "1 file"], ["pomidor", 250, "2 böyük pomidor"], ["sogan", 40, "yarım soğan"], ["yag", 7, "2 çay qaşığı"], ["holland", 15, "sürtgəcdən"], ["goyerti", 10, "reyhan"]], "steps": ["Makaronu bol duzlu suda qutuda yazılan müddətdən 1 dəqiqə az bişirin (al dente). Yarım stəkan suyunu saxlayın.", "Fileni kublara doğrayıb yağla 6 dəqiqə qovurun, çıxarın.", "Həmin tavada soğan və sarımsağı 3 dəqiqə qovurun, rəndələnmiş pomidoru əlavə edib 8 dəqiqə sous bişirin.", "Toyuğu və makaronu sousa qatın, lazım olsa makaron suyundan əlavə edin.", "Pendir və reyhanla verin."], "tip": "Makaron porsiyası quru halda 75 q-dır, bişəndə 2,5 qat artır.", "nat": false, "batch": null}, {"code": "IT4", "cu": "it", "name": "Toyuqlu minestrone", "meal": "N", "kind": "soup", "min": 40, "ing": [["toyuq_file", 100, "yarım file"], ["lobya_konserv", 100, "yarım banka"], ["makaron", 30, "kiçik makaron"], ["kartof", 80, "1 kiçik kartof"], ["kok", 60, "1 kiçik kök"], ["balqabaq", 100, "yarım qabaq"], ["pomidor", 120, "1 pomidor"], ["sogan", 40, "yarım soğan"], ["yag", 7, "2 çay qaşığı"], ["holland", 15, "sürtgəcdən"]], "steps": ["Bütün tərəvəzi kiçik kublara doğrayın, toyuğu kiçik tikələrə kəsin.", "Qazanda yağla soğan və kökü 5 dəqiqə qovurun, toyuğu əlavə edin.", "Kartof, qabaq, pomidor və 1 litr su əlavə edib 15 dəqiqə bişirin.", "Lobya və makaronu qatın, 10 dəqiqə də bişirin. Duz, istiot və reyhan vurun.", "Üstünə pendir səpib verin."], "tip": "", "nat": false, "batch": 3}, {"code": "IT5", "cu": "it", "name": "Toyuq kaçatori + bulqur", "meal": "N", "kind": "stew", "min": 45, "ing": [["toyuq_bud", 220, "2 bud (dərisiz)"], ["pomidor", 200, "2 pomidor"], ["bibar", 100, "1 bibər"], ["gobelek", 100, "5–6 göbələk"], ["sogan", 60, "1 kiçik soğan"], ["zeytun", 15, "5 zeytun"], ["yag", 7, "2 çay qaşığı"], ["bulqur", 50, "1/4 stəkan"]], "steps": ["Budu duz-istiotla ovuşdurub qazanda yağla hər tərəfi qızarana qədər bişirin, çıxarın.", "Soğan, bibər və göbələyi 5 dəqiqə qovurun.", "Rəndələnmiş pomidor, kəklikotu, rozmarin və toyuğu qaytarın. Qapaqlı 25 dəqiqə bişirin.", "Sonda doğranmış zeytunu əlavə edin.", "Bulquru 2 qat suda 15 dəqiqə bişirib yanında verin."], "tip": "", "nat": false, "batch": 2}, {"code": "IT6", "cu": "it", "name": "Sobada balıq, pomidor və zeytunla", "meal": "D", "kind": "fish", "min": 30, "ing": [["ag_baliq", 230, "2 file"], ["pomidor", 200, "albalı pomidor və ya 2 pomidor"], ["zeytun", 20, "6–7 zeytun"], ["sogan", 40, "yarım qırmızı soğan"], ["yag", 7, "2 çay qaşığı"], ["kartof", 150, "1 kartof"], ["goyerti", 10, "cəfəri"]], "steps": ["Sobanı 200°C-yə qızdırın. Kartofu nazik dilimləyib qabın dibinə düzün, 10 dəqiqə bişirin.", "Balığı duz, istiot və limonla ovuşdurub kartofun üstünə qoyun.", "Ətrafına pomidor, soğan və zeytun düzün, yağ çiləyin.", "18–20 dəqiqə bişirin. Cəfəri ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "IT7", "cu": "it", "name": "Limonlu toyuq (pikata) + qril tərəvəz", "meal": "D", "kind": "roast", "min": 30, "ing": [["toyuq_file", 200, "1 file"], ["un", 10, "1 xörək qaşığı"], ["yag", 7, "2 çay qaşığı"], ["limon", 40, "yarım limon"], ["balqabaq", 150, "yarım qabaq"], ["bibar", 100, "1 bibər"], ["badimcan", 100, "yarım badımcan"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Fileni uzununa ikiyə bölüb döyəcləyin, duz-istiotlayıb una bulayın.", "Tavada yağı qızdırın, fileni hər tərəfi 3–4 dəqiqə bişirin.", "Limon suyu və 3 qaşıq su əlavə edib 1 dəqiqə sous qatılaşana qədər saxlayın, kapari varsa qatın.", "Tərəvəzi dilimləyib qril tavasında yağsız qızardın, duz və zeytun yağı ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "IT8", "cu": "it", "name": "Tunalı İtalyan salatı", "meal": "D", "kind": "salad", "min": 15, "ing": [["tuna", 150, "1 banka"], ["kahi", 100, "yarım baş"], ["pomidor", 150, "1 pomidor"], ["xiyar", 100, "1 xiyar"], ["zeytun", 15, "5 zeytun"], ["yumurta", 55, "1 ədəd"], ["lobya_konserv", 60, "3 xörək qaşığı"], ["yag", 7, "2 çay qaşığı"], ["corek", 40, "1 dilim"]], "steps": ["Yumurtanı qaynadıb dörd yerə bölün.", "Kahını, pomidoru və xiyarı doğrayın.", "Tunanı süzün, lobyanı yuyun.", "Hamısını qarışdırıb zeytun yağı, limon suyu, duz və istiotla sousladın.", "Qızardılmış çörəklə verin."], "tip": "Tunanı yağda deyil, öz suyunda seçin: 150 q-da 150 kkal fərq var.", "nat": false, "batch": null}, {"code": "GR1", "cu": "gr", "name": "Süzmə qatıq + alma + qoz", "meal": "S", "kind": "porridge", "min": 5, "ing": [["suzme", 250, "1 böyük qab"], ["alma", 100, "yarım böyük alma"], ["qoz", 15, "3 ləpə"], ["bal", 7, "1 çay qaşığı"], ["yulaf", 20, "2 xörək qaşığı"]], "steps": ["Süzmə qatığı qaba çəkin.", "Almanı kublara doğrayın, qozu xırdalayın.", "Üstünə alma, qoz, yulaf və bal əlavə edin. Darçın səpin."], "tip": "Süzmə qatıq adi qatıqdan 3 dəfə çox zülal verir.", "nat": false, "batch": null}, {"code": "GR2", "cu": "gr", "name": "İspanaqlı-pendirli omlet", "meal": "S", "kind": "eggs", "min": 15, "ing": [["yumurta", 165, "3 ədəd"], ["ispanaq", 150, "1 dəstə"], ["ag_pendir", 30, "1 dilim (feta)"], ["sogan", 30, "yaşıl soğan"], ["yag", 5, "1 çay qaşığı"], ["corek", 40, "1 dilim"]], "steps": ["İspanağı yuyub doğrayın, yaşıl soğanı xırdalayın.", "Tavada yağla soğanı 1 dəqiqə, ispanağı 2–3 dəqiqə suyu çəkilənə qədər bişirin.", "Yumurtanı şüyüd, istiot və az duzla çalıb tökün (pendir şor olduğu üçün).", "Üstünə xırdalanmış pendir səpib qapaq altında 4 dəqiqə bişirin.", "Çörəklə verin."], "tip": "", "nat": false, "batch": null}, {"code": "GR3", "cu": "gr", "name": "Toyuq suvlaki + tzatziki", "meal": "N", "kind": "kebab", "min": 35, "ing": [["toyuq_file", 200, "6–7 tikə"], ["suzme", 100, "4 xörək qaşığı"], ["xiyar", 100, "1 xiyar"], ["lavas", 50, "yarım vərəq (pita əvəzi)"], ["pomidor", 100, "1 pomidor"], ["sogan", 30, "qırmızı soğan"], ["yag", 5, "1 çay qaşığı"], ["limon", 20, "2 dilim"]], "steps": ["Fileni kublara doğrayıb limon suyu, yağ, sarımsaq, kəklikotu, duz və istiotla 30 dəqiqə marinad edin.", "Şişə düzüb qril tavasında və ya sobada 15 dəqiqə bişirin.", "Tzatziki: xiyarı rəndələyib suyunu sıxın, süzmə qatıq, sarımsaq, şüyüd və duzla qarışdırın.", "Lavaşa toyuq, pomidor, soğan və tzatziki qoyub bükün."], "tip": "", "nat": false, "batch": null}, {"code": "GR4", "cu": "gr", "name": "Fasolada (lobya şorbası) + feta", "meal": "N", "kind": "soup", "min": 35, "ing": [["lobya_konserv", 200, "1 banka"], ["kok", 60, "1 kiçik kök"], ["sogan", 50, "yarım soğan"], ["pomidor", 150, "1 pomidor"], ["yag", 7, "2 çay qaşığı"], ["corek", 40, "1 dilim"], ["ag_pendir", 40, "1,5 dilim (feta)"]], "steps": ["Soğan, kök və kərəvizi (varsa) xırda doğrayıb yağla 6 dəqiqə qovurun.", "Rəndələnmiş pomidor, süzülmüş lobya və 700 ml su əlavə edin.", "Zəif odda 20 dəqiqə bişirin. Duz, istiot və dəfnə yarpağı vurun.", "Feta pendiri və çörəklə verin."], "tip": "", "nat": false, "batch": 3}, {"code": "GR5", "cu": "gr", "name": "Toyuqlu Yunan salatı", "meal": "N", "kind": "salad", "min": 20, "ing": [["toyuq_file", 180, "1 file"], ["pomidor", 150, "1 pomidor"], ["xiyar", 150, "1 xiyar"], ["bibar", 50, "yarım bibər"], ["sogan", 30, "qırmızı soğan"], ["zeytun", 20, "6–7 zeytun"], ["ag_pendir", 40, "1 dilim (feta)"], ["yag", 7, "2 çay qaşığı"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Fileni kəklikotu, duz və istiotla qril tavasında hər tərəfi 5 dəqiqə bişirib dilimləyin.", "Pomidor, xiyar, bibər və soğanı iri doğrayın.", "Zeytunu əlavə edib yağ, sirkə və oreqano ilə qarışdırın.", "Üstünə feta və toyuq qoyub çörəklə verin."], "tip": "", "nat": false, "batch": null}, {"code": "GR6", "cu": "gr", "name": "Sobada balıq, limonlu kartofla", "meal": "D", "kind": "fish", "min": 35, "ing": [["ag_baliq", 230, "2 file"], ["kartof", 150, "1 kartof"], ["pomidor", 150, "1 pomidor"], ["sogan", 50, "yarım soğan"], ["yag", 7, "2 çay qaşığı"], ["limon", 30, "yarım limon"], ["goyerti", 10, "cəfəri"]], "steps": ["Sobanı 200°C-yə qızdırın. Kartofu dilimləyib limon suyu, yağ və oreqano ilə qarışdırın, 15 dəqiqə bişirin.", "Soğan və pomidoru dilimləyib kartofun üstünə düzün.", "Balığı duz-istiotlayıb ən üstə qoyun, 18–20 dəqiqə bişirin.", "Cəfəri səpib verin."], "tip": "", "nat": false, "batch": null}, {"code": "GR7", "cu": "gr", "name": "Keftedes (sobada) + tzatziki", "meal": "D", "kind": "stew", "min": 35, "ing": [["mal_qiyme", 160, "8 küftə"], ["sogan", 30, "1/4 soğan"], ["goyerti", 15, "nanə, cəfəri"], ["yumurta", 30, "yarım yumurta"], ["suzme", 80, "3 xörək qaşığı"], ["xiyar", 80, "yarım xiyar"], ["kahi", 80, "salat"], ["pomidor", 100, "1 pomidor"]], "steps": ["Sobanı 200°C-yə qızdırın.", "Qiyməni rəndələnmiş soğan, nanə, cəfəri, yumurta, oreqano, duz və istiotla yoğurun.", "8 kiçik küftə düzəldib kağız döşənmiş sinidə 18–20 dəqiqə bişirin.", "Tzatziki hazırlayın (xiyar, süzmə, sarımsaq, şüyüd).", "Küftəni tzatziki və salatla verin."], "tip": "", "nat": false, "batch": null}, {"code": "GR8", "cu": "gr", "name": "İspanaqlı noxud güveci + yumurta", "meal": "D", "kind": "stew", "min": 25, "ing": [["noxud_konserv", 180, "1 banka"], ["ispanaq", 150, "1 dəstə"], ["sogan", 50, "yarım soğan"], ["pomidor", 100, "1 pomidor"], ["yag", 7, "2 çay qaşığı"], ["yumurta", 110, "2 ədəd"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Soğanı yağda 5 dəqiqə qovurun, zirə və paprika əlavə edin.", "Pomidor və süzülmüş noxudu qatıb 1/2 stəkan su ilə 10 dəqiqə bişirin.", "İspanağı əlavə edib 3 dəqiqə saxlayın, limon sıxın.", "Yanında qaynadılmış yumurta və çörəklə verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN1", "cu": "cn", "name": "Toyuqlu düyü sıyığı (konji)", "meal": "S", "kind": "porridge", "min": 40, "ing": [["duyu", 50, "3 xörək qaşığı"], ["toyuq_file", 100, "yarım file"], ["zencefil", 5, "1 dilim"], ["yumurta", 55, "1 ədəd"], ["soya_sousu", 10, "2 çay qaşığı"], ["goyerti", 10, "yaşıl soğan"]], "steps": ["Düyünü yuyub 700 ml su, zəncəfil və toyuqla qaynadın.", "Zəif odda 30–35 dəqiqə, düyü əriyib sıyıq olana qədər, ara-sıra qarışdıraraq bişirin.", "Toyuğu çıxarıb liflərə ayırın və qaytarın. Duz vurun.", "Qaba çəkib üstünə qaynadılmış yumurta, soya sousu və yaşıl soğan qoyun."], "tip": "Axşamdan bişirib səhər qızdırmaq olar.", "nat": false, "batch": null}, {"code": "CN2", "cu": "cn", "name": "Buxarda yumurta + xiyar salatı", "meal": "S", "kind": "eggs", "min": 20, "ing": [["yumurta", 165, "3 ədəd"], ["soya_sousu", 8, "1,5 çay qaşığı"], ["xiyar", 150, "1 böyük xiyar"], ["yag", 3, "yarım çay qaşığı (küncüt yağı)"], ["corek", 60, "1,5 dilim"]], "steps": ["Yumurtaları 1,5 qat ilıq su və bir çimdik duzla yavaşca çalın, ələkdən keçirin.", "Qaba töküb üstünü folqa və ya boşqabla örtün, qaynar suyun üstündə 12 dəqiqə buxarda bişirin.", "Xiyarı bıçağın yan tərəfi ilə əzib doğrayın, sirkə, sarımsaq və yağla qarışdırın.", "Yumurtanın üstünə soya sousu və yaşıl soğan tökün, çörəklə verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN3", "cu": "cn", "name": "Kunq pao toyuq + düyü", "meal": "N", "kind": "wok", "min": 30, "ing": [["toyuq_file", 180, "1 file"], ["bibar", 100, "1 bibər"], ["sogan", 40, "yaşıl soğan"], ["findiq", 15, "bir ovuc (araxis əvəzi)"], ["soya_sousu", 15, "1 xörək qaşığı"], ["nisasta", 5, "1 çay qaşığı"], ["zencefil", 5, "1 dilim"], ["yag", 8, "2 çay qaşığı"], ["duyu", 50, "3 xörək qaşığı"]], "steps": ["Düyünü 2 qat suda 15 dəqiqə bişirin.", "Toyuğu kublara doğrayıb soya sousunun yarısı və nişasta ilə qarışdırın.", "Sous: qalan soya sousu, 1 qaşıq sirkə, 1 çay qaşığı bal və 3 qaşıq su.", "Wok və ya geniş tavada yağı çox qızdırın, zəncəfil, sarımsaq və quru acı bibəri 30 saniyə qovurun. Toyuğu 5 dəqiqə qovurun.", "Bibəri, sousu və fındığı əlavə edib 2 dəqiqə qarışdırın. Düyü ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN4", "cu": "cn", "name": "Brokolili mal əti + düyü", "meal": "N", "kind": "wok", "min": 30, "ing": [["mal_eti", 160, "nazik zolaqlar"], ["brokoli", 200, "yarım baş"], ["soya_sousu", 15, "1 xörək qaşığı"], ["zencefil", 5, "1 dilim"], ["nisasta", 5, "1 çay qaşığı"], ["yag", 8, "2 çay qaşığı"], ["duyu", 50, "3 xörək qaşığı"]], "steps": ["Əti liflərə qarşı nazik zolaqlar doğrayın, soya sousunun yarısı və nişasta ilə 15 dəqiqə saxlayın.", "Brokolini çiçəklərə ayırıb 2 dəqiqə qaynar suda pörtləyin.", "Tavada yağı çox qızdırın, əti 2–3 dəqiqə yüksək odda qovurub çıxarın.", "Zəncəfil və sarımsağı 30 saniyə qovurun, brokoli, ət, qalan soya sousu və 3 qaşıq su əlavə edin, 1 dəqiqə qarışdırın.", "Düyü ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN5", "cu": "cn", "name": "Toyuqlu əriştə şorbası", "meal": "N", "kind": "soup", "min": 30, "ing": [["toyuq_file", 150, "1 kiçik file"], ["vermisel", 50, "əriştə"], ["yumurta", 55, "1 ədəd"], ["gobelek", 80, "4 göbələk"], ["kelem", 80, "Çin kələmi və ya adi kələm"], ["zencefil", 5, "1 dilim"], ["soya_sousu", 10, "2 çay qaşığı"], ["goyerti", 10, "yaşıl soğan"]], "steps": ["Toyuğu 1 litr suda zəncəfillə 20 dəqiqə bişirin, çıxarıb liflərə ayırın.", "Bulyona doğranmış göbələk və kələmi əlavə edib 5 dəqiqə bişirin.", "Əriştəni qatıb 4 dəqiqə bişirin.", "Çalınmış yumurtanı nazik axınla qarışdıraraq tökün (yumurta lentləri əmələ gəlir).", "Toyuğu qaytarın, soya sousu və yaşıl soğanla verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN6", "cu": "cn", "name": "Zəncəfilli buxar balığı + düyü", "meal": "D", "kind": "fish", "min": 25, "ing": [["ag_baliq", 230, "2 file"], ["zencefil", 10, "2 dilim"], ["goyerti", 20, "yaşıl soğan"], ["soya_sousu", 15, "1 xörək qaşığı"], ["yag", 5, "1 çay qaşığı"], ["duyu", 40, "2,5 xörək qaşığı"], ["brokoli", 150, "yarım baş"]], "steps": ["Düyünü bişirin. Brokolini 4 dəqiqə buxarda bişirin.", "Balığı boşqaba qoyub üstünə zəncəfil zolaqları düzün.", "Qaynar suyun üstündə qapaqlı qabda 8–10 dəqiqə buxarda bişirin.", "Üstünə yaşıl soğan və soya sousu tökün, ən sonda qızmar yağı soğanın üstünə çiləyin.", "Düyü və brokoli ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN7", "cu": "cn", "name": "Tərəvəzli toyuq (wok)", "meal": "D", "kind": "wok", "min": 25, "ing": [["toyuq_bud", 200, "2 bud filesi"], ["brokoli", 100, "bir neçə çiçək"], ["bibar", 100, "1 bibər"], ["kok", 60, "1 kiçik kök"], ["gobelek", 80, "4 göbələk"], ["soya_sousu", 15, "1 xörək qaşığı"], ["zencefil", 5, "1 dilim"], ["nisasta", 5, "1 çay qaşığı"], ["yag", 8, "2 çay qaşığı"], ["duyu", 35, "2 xörək qaşığı"]], "steps": ["Bütün tərəvəzi nazik doğrayın, toyuğu zolaqlara kəsin.", "Toyuğu soya sousunun yarısı və nişasta ilə qarışdırın.", "Tavada yağı çox qızdırın, toyuğu 5 dəqiqə qovurub kənara çəkin.", "Əvvəl kök və brokoli, sonra bibər və göbələyi 3–4 dəqiqə qovurun. Toyuğu, zəncəfili və qalan sousu qatın.", "Az düyü ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "CN8", "cu": "cn", "name": "Göbələkli mal əti + kələm salatı", "meal": "D", "kind": "wok", "min": 30, "ing": [["mal_eti", 150, "nazik zolaqlar"], ["gobelek", 150, "8 göbələk"], ["sogan", 60, "1 kiçik soğan"], ["kelem", 150, "salat üçün"], ["soya_sousu", 15, "1 xörək qaşığı"], ["yag", 8, "2 çay qaşığı"], ["zencefil", 5, "1 dilim"], ["duyu", 35, "2 xörək qaşığı"]], "steps": ["Əti nazik zolaq doğrayıb soya sousunun yarısı ilə qarışdırın.", "Tavada əti yüksək odda 3 dəqiqə qovurub çıxarın.", "Soğan və göbələyi 5 dəqiqə qovurun, əti, zəncəfili və qalan sousu qaytarın.", "Kələmi nazik doğrayıb sirkə, duz və küncüt yağı ilə əzin.", "Az düyü və salatla verin."], "tip": "", "nat": false, "batch": null}, {"code": "IN1", "cu": "in", "name": "Masala omlet", "meal": "S", "kind": "eggs", "min": 15, "ing": [["yumurta", 165, "3 ədəd"], ["sogan", 40, "yarım kiçik soğan"], ["pomidor", 80, "1 kiçik pomidor"], ["bibar", 40, "yaşıl bibər"], ["goyerti", 10, "keşniş"], ["yag", 5, "1 çay qaşığı"], ["lavas", 50, "yarım vərəq"]], "steps": ["Soğan, pomidor, bibər və keşnişi çox xırda doğrayın.", "Yumurtanı tərəvəz, duz, zərdəçal və bir çimdik acı bibərlə çalın.", "Tavada yağı qızdırıb tökün, 2–3 dəqiqə bir tərəfi, 1 dəqiqə o biri tərəfi bişirin.", "Lavaşa büküb verin."], "tip": "", "nat": false, "batch": null}, {"code": "IN2", "cu": "in", "name": "Tərəvəzli bulqur upması", "meal": "S", "kind": "porridge", "min": 20, "ing": [["bulqur", 60, "1/3 stəkan"], ["kok", 40, "yarım kök"], ["yasil_noxud", 50, "2 xörək qaşığı"], ["sogan", 30, "1/4 soğan"], ["yag", 7, "2 çay qaşığı"], ["qatiq", 150, "yarım stəkan"], ["yumurta", 55, "1 ədəd"]], "steps": ["Tavada yağı qızdırın, xardal dənəsi (varsa) və zirəni 30 saniyə qovurun.", "Soğan və kökü 3 dəqiqə qovurun, bulqur və noxudu əlavə edin.", "2 qat qaynar su və duz töküb qapaqlı 12–15 dəqiqə bişirin.", "Keşniş və limon suyu ilə, yanında qatıq və qaynadılmış yumurta ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "IN3", "cu": "in", "name": "Toyuq tikka masala (yüngül) + düyü", "meal": "N", "kind": "stew", "min": 45, "ing": [["toyuq_file", 200, "1 file"], ["qatiq", 100, "4 xörək qaşığı"], ["pomidor", 200, "2 pomidor"], ["sogan", 60, "1 kiçik soğan"], ["zencefil", 5, "1 dilim"], ["yag", 7, "2 çay qaşığı"], ["duyu", 50, "3 xörək qaşığı"]], "steps": ["Toyuğu kublara doğrayıb qatığın yarısı, zərdəçal, paprika, garam masala və duzla 30 dəqiqə marinad edin.", "Qril tavasında toyuğu 6–7 dəqiqə qızardın.", "Qazanda yağla soğan, zəncəfil və sarımsağı 5 dəqiqə qovurun, ədviyyat və rəndələnmiş pomidoru əlavə edib 10 dəqiqə sous bişirin.", "Toyuğu sousa qatın, oddan götürüb qalan qatığı qarışdırın (qaymaq əvəzinə).", "Düyü ilə verin."], "tip": "Restoran variantında qaymaq və kərə yağı olur, 800+ kkal. Bu variant iki dəfə yüngüldür.", "nat": false, "batch": null}, {"code": "IN4", "cu": "in", "name": "Dal (mərcimək) + düyü + qatıq", "meal": "N", "kind": "soup", "min": 35, "ing": [["merci", 70, "1/3 stəkan"], ["sogan", 50, "yarım soğan"], ["pomidor", 100, "1 pomidor"], ["zencefil", 5, "1 dilim"], ["yag", 7, "2 çay qaşığı"], ["duyu", 40, "2,5 xörək qaşığı"], ["qatiq", 150, "yarım stəkan"], ["ispanaq", 100, "1 ovuc"]], "steps": ["Mərciməyi zərdəçal və 400 ml su ilə 20 dəqiqə bişirin.", "Tavada yağla zirə, soğan, zəncəfil və sarımsağı 5 dəqiqə qovurun, pomidor əlavə edin.", "Qızartmanı və ispanağı mərciməyə qatıb 5 dəqiqə bişirin. Duz və limon əlavə edin.", "Düyü və qatıqla verin."], "tip": "", "nat": false, "batch": 3}, {"code": "IN5", "cu": "in", "name": "Noxud köri (çana masala) + yumurta", "meal": "N", "kind": "stew", "min": 30, "ing": [["noxud_konserv", 200, "1 banka"], ["sogan", 60, "1 kiçik soğan"], ["pomidor", 150, "1 pomidor"], ["zencefil", 5, "1 dilim"], ["yag", 7, "2 çay qaşığı"], ["yumurta", 110, "2 ədəd"], ["lavas", 40, "1/3 vərəq"]], "steps": ["Soğanı yağda 6 dəqiqə qovurun, zəncəfil, sarımsaq, zirə, keşniş toxumu və garam masala əlavə edin.", "Pomidoru qatıb 5 dəqiqə bişirin.", "Noxudu və yarım stəkan su əlavə edib 10 dəqiqə bişirin, bir hissəsini əzin.", "Keşniş və limonla, yanında yumurta və lavaşla verin."], "tip": "", "nat": false, "batch": null}, {"code": "IN6", "cu": "in", "name": "Sobada tandır toyuq + rayta", "meal": "D", "kind": "roast", "min": 50, "ing": [["toyuq_bud", 230, "2 bud (dərisiz)"], ["qatiq", 150, "yarım stəkan"], ["xiyar", 100, "1 xiyar"], ["sogan", 40, "qırmızı soğan"], ["kahi", 60, "salat"], ["yag", 3, "yarım çay qaşığı"]], "steps": ["Budu bıçaqla bir neçə yerdən kəsin. Qatığın yarısı, limon, paprika, garam masala, zəncəfil, sarımsaq və duzla 2 saat marinad edin.", "Sobanı 220°C-yə qızdırın, budu barmaqlıq üstündə 30–35 dəqiqə bişirin.", "Rayta: qalan qatığa rəndələnmiş xiyar, zirə, nanə və duz qatın.", "Soğan halqaları və salatla verin."], "tip": "", "nat": false, "batch": null}, {"code": "IN7", "cu": "in", "name": "Balıq körisi + brokoli", "meal": "D", "kind": "fish", "min": 30, "ing": [["ag_baliq", 220, "2 file"], ["pomidor", 150, "1 pomidor"], ["sogan", 50, "yarım soğan"], ["zencefil", 5, "1 dilim"], ["yag", 7, "2 çay qaşığı"], ["brokoli", 150, "yarım baş"], ["duyu", 30, "2 xörək qaşığı"]], "steps": ["Soğanı yağda 5 dəqiqə qovurun, zəncəfil, sarımsaq, zərdəçal, köri tozu əlavə edin.", "Pomidor və yarım stəkan su ilə 8 dəqiqə sous bişirin.", "Balıq tikələrini sousa qoyub qapaqlı 8–10 dəqiqə bişirin.", "Buxarda bişmiş brokoli və az düyü ilə verin."], "tip": "", "nat": false, "batch": null}, {"code": "IN8", "cu": "in", "name": "İspanaq-kəsmik (palak paneer üslubu)", "meal": "D", "kind": "stew", "min": 25, "ing": [["ispanaq", 250, "2 dəstə"], ["kesmik", 150, "yarım qutudan çox (paneer əvəzi)"], ["sogan", 50, "yarım soğan"], ["pomidor", 80, "1 kiçik pomidor"], ["zencefil", 5, "1 dilim"], ["yag", 7, "2 çay qaşığı"], ["lavas", 40, "1/3 vərəq"]], "steps": ["İspanağı 2 dəqiqə qaynar suda pörtləyib blenderdə püre edin.", "Yağda zirə, soğan, zəncəfil və sarımsağı 5 dəqiqə qovurun, pomidoru əlavə edin.", "İspanaq pürəsini qatıb 5 dəqiqə bişirin, garam masala və duz vurun.", "Kəsmiyi (və ya kubik doğranmış ağ pendiri) əlavə edib 2 dəqiqə qızdırın. Lavaşla verin."], "tip": "Dəmirlə zəngin yeməkdir: limon sıxın, çayı 1–2 saat sonra için.", "nat": false, "batch": null}, {"code": "MX1", "cu": "mx", "name": "Huevos rancheros", "meal": "S", "kind": "eggs", "min": 20, "ing": [["yumurta", 110, "2 ədəd"], ["lobya_konserv", 80, "4 xörək qaşığı"], ["pomidor", 150, "1 pomidor"], ["sogan", 30, "1/4 soğan"], ["bibar", 40, "yarım bibər"], ["lavas", 40, "1/3 vərəq"], ["goyerti", 10, "keşniş"]], "steps": ["Soğan, bibər və pomidoru doğrayıb az yağda 6 dəqiqə salsa bişirin, zirə və acı bibər vurun.", "Lobyanı əzib ayrıca qızdırın.", "Yumurtaları salsanın içində qapaq altında 3–4 dəqiqə bişirin.", "Lavaşı qızdırıb üstünə lobya, yumurta və salsa qoyun, keşniş səpin."], "tip": "", "nat": false, "batch": null}, {"code": "MX2", "cu": "mx", "name": "Səhər burritosu", "meal": "S", "kind": "wrap", "min": 15, "ing": [["lavas", 60, "yarım vərəq"], ["yumurta", 110, "2 ədəd"], ["kesmik", 80, "4 xörək qaşığı"], ["pomidor", 80, "1 kiçik pomidor"], ["bibar", 40, "yarım bibər"]], "steps": ["Bibəri xırda doğrayıb tavada 2 dəqiqə qovurun.", "Yumurtanı kəsmiklə çalıb tökün, yumşaq qayğanaq kimi bişirin.", "Lavaşa qayğanaq və doğranmış pomidor qoyun, acı sous istəyə görə.", "Büküb quru tavada hər tərəfi 1 dəqiqə qızardın."], "tip": "", "nat": false, "batch": null}, {"code": "MX3", "cu": "mx", "name": "Toyuq fahitas", "meal": "N", "kind": "wrap", "min": 25, "ing": [["toyuq_file", 180, "1 file"], ["bibar", 150, "1,5 bibər (rəngli)"], ["sogan", 80, "1 soğan"], ["yag", 7, "2 çay qaşığı"], ["lavas", 60, "yarım vərəq"], ["qatiq", 60, "xama əvəzi"], ["pomidor", 80, "salsa üçün"]], "steps": ["Toyuğu zolaqlara doğrayıb zirə, paprika, sarımsaq, limon suyu və duzla qarışdırın.", "Bibər və soğanı nazik zolaqlar doğrayın.", "Çox qızmış tavada toyuğu 5 dəqiqə, sonra tərəvəzi 4 dəqiqə qovurun.", "Pomidordan, soğandan və keşnişdən salsa hazırlayın.", "Lavaşa toyuq-tərəvəz, qatıq və salsa qoyub bükün."], "tip": "", "nat": false, "batch": null}, {"code": "MX4", "cu": "mx", "name": "Çili kon karne + düyü", "meal": "N", "kind": "stew", "min": 40, "ing": [["mal_qiyme", 130, "qiymə"], ["lobya_konserv", 150, "2/3 banka"], ["pomidor", 200, "2 pomidor"], ["sogan", 50, "yarım soğan"], ["bibar", 60, "yarım bibər"], ["yag", 5, "1 çay qaşığı"], ["duyu", 35, "2 xörək qaşığı"]], "steps": ["Soğan və bibəri yağda 4 dəqiqə qovurun, qiyməni əlavə edib rəngi dəyişənə qədər qovurun.", "Zirə, paprika, acı bibər və sarımsaq əlavə edin.", "Rəndələnmiş pomidor və lobyanı qatıb 20 dəqiqə zəif odda bişirin.", "Az düyü və keşnişlə verin."], "tip": "", "nat": false, "batch": 3}, {"code": "MX5", "cu": "mx", "name": "Burrito boşqabı", "meal": "N", "kind": "bowl", "min": 30, "ing": [["toyuq_file", 160, "1 kiçik file"], ["duyu", 45, "3 xörək qaşığı"], ["lobya_konserv", 100, "yarım banka"], ["qargidali", 60, "3 xörək qaşığı"], ["pomidor", 100, "1 pomidor"], ["kahi", 60, "salat"], ["qatiq", 50, "2 xörək qaşığı"]], "steps": ["Düyünü bişirib limon suyu və keşnişlə qarışdırın.", "Toyuğu zirə-paprika ilə qril tavasında bişirib dilimləyin.", "Lobya və qarğıdalını qızdırın, pomidordan salsa hazırlayın.", "Qaba düyü, lobya, qarğıdalı, toyuq, salat, salsa və qatığı bölmə-bölmə düzün."], "tip": "", "nat": false, "batch": null}, {"code": "MX6", "cu": "mx", "name": "Balıq takosu + kələm salatı", "meal": "D", "kind": "wrap", "min": 25, "ing": [["ag_baliq", 200, "2 file"], ["kelem", 150, "salat üçün"], ["qatiq", 60, "sous üçün"], ["lavas", 50, "2 kiçik dairə"], ["pomidor", 80, "1 kiçik pomidor"], ["yag", 5, "1 çay qaşığı"]], "steps": ["Balığı zirə, paprika, duz və limonla ovuşdurub qril tavasında hər tərəfi 3 dəqiqə bişirin.", "Kələmi nazik doğrayıb limon, duz və keşnişlə əzin.", "Qatığa sarımsaq və bir az acı sous qatın.", "Lavaşı qızdırıb balıq, kələm, pomidor və sousla doldurun."], "tip": "", "nat": false, "batch": null}, {"code": "MX7", "cu": "mx", "name": "Meksika toyuq şorbası", "meal": "D", "kind": "soup", "min": 35, "ing": [["toyuq_file", 180, "1 file"], ["kartof", 100, "1 kartof"], ["qargidali", 60, "3 xörək qaşığı"], ["pomidor", 150, "1 pomidor"], ["sogan", 50, "yarım soğan"], ["bibar", 50, "yarım bibər"], ["goyerti", 15, "keşniş"], ["yag", 5, "1 çay qaşığı"]], "steps": ["Soğan, bibər və sarımsağı yağda 4 dəqiqə qovurun, zirə əlavə edin.", "Pomidor, kartof, toyuq və 1 litr su əlavə edib 20 dəqiqə bişirin.", "Toyuğu çıxarıb liflərə ayırın, qarğıdalı ilə birlikdə qaytarın, 5 dəqiqə bişirin.", "Keşniş və limonla verin."], "tip": "", "nat": false, "batch": 2}, {"code": "MX8", "cu": "mx", "name": "Qiymə və lobya ilə doldurulmuş bibər", "meal": "D", "kind": "dolma", "min": 45, "ing": [["bibar", 250, "2 böyük bibər"], ["mal_qiyme", 120, "qiymə"], ["lobya_konserv", 80, "4 xörək qaşığı"], ["pomidor", 100, "1 pomidor"], ["holland", 20, "1 dilim"], ["sogan", 30, "1/4 soğan"]], "steps": ["Sobanı 200°C-yə qızdırın. Bibərləri uzununa yarıya bölüb toxumlarını təmizləyin.", "Qiyməni soğanla qovurub zirə, paprika, pomidor və lobyanı qatın, 5 dəqiqə bişirin.", "Bibərləri doldurub qaba düzün, dibinə 3 qaşıq su tökün, folqa ilə örtüb 20 dəqiqə bişirin.", "Folqanı götürüb üstünə pendir səpin, 8 dəqiqə də bişirin."], "tip": "", "nat": false, "batch": null}, {"code": "AZ1", "cu": "az", "name": "İspanaq boranisi + yumurta", "meal": "S", "kind": "eggs", "min": 20, "ing": [["ispanaq", 200, "1 dəstə"], ["qatiq", 150, "yarım stəkan"], ["yumurta", 110, "2 ədəd"], ["sogan", 30, "1/4 soğan"], ["kere", 5, "1 çay qaşığı"], ["corek", 40, "1 dilim"]], "steps": ["İspanağı yuyub doğrayın, kərə yağında soğanla 4 dəqiqə bişirin.", "Soyudub sarımsaqlı qatıqla qarışdırın, duz və istiot vurun.", "Yumurtaları qaynadın və ya üstə bişirin.", "Boranini yumurta və çörəklə verin."], "tip": "", "nat": true, "batch": null}, {"code": "AZ2", "cu": "az", "name": "Toyuq bozartması", "meal": "N", "kind": "stew", "min": 45, "ing": [["toyuq_bud", 220, "2 bud (dərisiz)"], ["sogan", 120, "1 böyük soğan"], ["pomidor", 150, "1 pomidor"], ["yag", 5, "1 çay qaşığı"], ["kartof", 120, "1 kartof"], ["goyerti", 15, "keşniş"]], "steps": ["Budu hissələrə bölüb qazanda az yağla hər tərəfi qızarana qədər bişirin.", "Yarımhalqa soğanı əlavə edib 6–7 dəqiqə qızardın.", "Kartofu iri doğrayıb əlavə edin, yarım stəkan su töküb qapaqlı 20 dəqiqə bişirin.", "Pomidoru, duz, istiot və zəfəranı qatıb 10 dəqiqə də bişirin. Keşnişlə verin."], "tip": "", "nat": true, "batch": 2}, {"code": "AZ3", "cu": "az", "name": "Düşbərə (yüngül)", "meal": "N", "kind": "soup", "min": 70, "ing": [["un", 55, "3,5 xörək qaşığı"], ["mal_qiyme", 110, "qiymə"], ["sogan", 30, "1/4 soğan"], ["yumurta", 20, "yumurtanın 1/3-i"], ["goyerti", 10, "quru nanə"], ["qatiq", 100, "yanına"]], "steps": ["Un, yumurta, duz və su ilə bərk xəmir yoğurub 20 dəqiqə saxlayın.", "Qiyməni rəndələnmiş soğan, duz və istiotla qarışdırın.", "Xəmiri çox nazik yayıb 2 sm-lik kvadratlara kəsin, hər birinə noxud boyda içlik qoyub qulaqcıq kimi bükün.", "Duzlu qaynar suda və ya bulyonda 8–10 dəqiqə bişirin.", "Quru nanə, sirkəli sarımsaq və qatıqla verin."], "tip": "Düşbərəni bir dəfəyə çox bükün və dondurun: dondurulmuşdan birbaşa bişirmək olar.", "nat": true, "batch": null}, {"code": "AZ4", "cu": "az", "name": "Yüngül sabzı qovurma", "meal": "D", "kind": "stew", "min": 70, "ing": [["quzu", 150, "4–5 tikə"], ["goyerti", 200, "2 dəstə (keşniş, cəfəri, şüyüd, ispanaq, yaşıl soğan)"], ["sogan", 60, "1 kiçik soğan"], ["yag", 10, "1 xörək qaşığı"], ["lobya_konserv", 80, "4 xörək qaşığı"], ["corek", 30, "1 kiçik dilim"]], "steps": ["Əti yağla 6 dəqiqə qovurun, soğanı əlavə edin, yarım stəkan su töküb 40 dəqiqə bişirin.", "Göyərtini xırda doğrayıb ayrıca quru tavada suyunu çəkdirin (yağ əlavə etməyin).", "Göyərtini və lobyanı ətə qatıb 15 dəqiqə bişirin. Duz, istiot və 1 qaşıq turşməzə vurun.", "Çörəklə verin."], "tip": "Ənənəvi sabzı qovurmada 50–80 q yağ olur. Burada 10 q-dır, göyərti quru tavada bişirilir.", "nat": true, "batch": null}, {"code": "AZ5", "cu": "az", "name": "Balıq ləvəngisi (sobada)", "meal": "D", "kind": "fish", "min": 50, "ing": [["kutum", 220, "1 balıq və ya 2 tikə"], ["qoz", 20, "4 ləpə"], ["sogan", 60, "1 kiçik soğan"], ["albali_lavashana", 10, "1 parça"], ["yag", 5, "1 çay qaşığı"], ["pomidor", 150, "salat"], ["kahi", 80, "salat"]], "steps": ["Sobanı 190°C-yə qızdırın.", "Soğanı rəndələyib suyunu sıxın, döyülmüş qoz, turşməzə, duz və istiotla pasta düzəldin.", "Balığı təmizləyib içinə pasta doldurun, üstünə də bir az çəkin, yağlanmış qaba qoyun.", "Folqa ilə örtüb 25 dəqiqə, sonra açıq 10 dəqiqə bişirin.", "Salatla verin."], "tip": "Lənkəran mətbəxinin klassik yeməyidir. Qoz azaldıldığı üçün yüngüldür.", "nat": true, "batch": null}, {"code": "Q10", "cu": "all", "name": "Humus + tərəvəz çubuqları", "meal": "Q", "kind": "snack", "min": 10, "ing": [["noxud_konserv", 100, "yarım banka"], ["tahin", 10, "2 çay qaşığı"], ["limon", 20, "yarım limonun suyu"], ["kok", 80, "1 kök"], ["xiyar", 100, "1 xiyar"]], "steps": ["Noxudu tahin, limon suyu, sarımsaq, zirə, duz və 2–3 qaşıq su ilə blenderdə hamar püre edin.", "Kök və xiyarı çubuqlar şəklində doğrayın, humusa batıraraq yeyin."], "tip": "", "nat": false, "batch": null}, {"code": "Q11", "cu": "all", "name": "Süzmə qatıq + qoz + darçın", "meal": "Q", "kind": "snack", "min": 2, "ing": [["suzme", 150, "yarım qab"], ["qoz", 10, "2 ləpə"]], "steps": ["Süzmə qatığa xırdalanmış qoz və darçın səpin."], "tip": "", "nat": false, "batch": null}, {"code": "Q12", "cu": "all", "name": "Mozzarella + pomidor (kaprese)", "meal": "Q", "kind": "snack", "min": 5, "ing": [["mozzarella", 60, "2 dilim"], ["pomidor", 150, "1 pomidor"], ["goyerti", 5, "reyhan"]], "steps": ["Pomidor və mozzarellanı dilimləyib növbə ilə düzün, reyhan, duz və istiotla verin."], "tip": "", "nat": false, "batch": null}], "subs": [["Kəsmik 5%", "Süzmə qatıq və ya yunan qatığı", "Eyni çəki. Zülal bir az az olur."], ["Qatıq 2,5%", "Kefir və ya süzmə qatıq + su", "Dovğa üçün yalnız qatıq və ya süzmə qatıq yararlıdır."], ["Ağ pendir (motal, şor pendir)", "Feta, brınza; holland pendiri", "Holland pendirindən yarısı qədər götürün, çünki daha kalorilidir."], ["Toyuq filesi", "Hinduşka filesi", "Eyni çəki."], ["Toyuq budu (dərisiz)", "Toyuq filesi", "Kalorisi bir az az, ətri bir az quru olur."], ["Toyuq qiyməsi", "Hinduşka qiyməsi və ya fileni özünüz çəkin", "Hazır qiymədə dəri ola bilər, mümkünsə özünüz çəkdirin."], ["Yağsız mal əti (bud)", "Dana əti və ya yağsız quzu budu", "Eyni çəki. Qabırğa və brisket kimi yağlı hissələri götürməyin."], ["Mal qiyməsi 10%", "Yarı toyuq, yarı mal qiyməsi", "Kalori ~15% az olur."], ["Kütüm", "Çəki, sazan, forel", "Eyni çəki, kalorisi yaxındır."], ["Ağ balıq (sudak, kefal)", "Dondurulmuş mintay, heyk, treska", "Ucuz və sümüksüzdür. Donunu soyuducuda açın."], ["Qarabaşaq", "Bulqur və ya düyü", "Eyni quru çəki. Düyüdə zülal azdır."], ["Bulqur", "Qarabaşaq və ya düyü", "Eyni quru çəki."], ["Qırmızı mərcimək", "Yaşıl və ya qəhvəyi mərcimək", "Bişməsi 35–40 dəqiqə çəkir və tam əriməz."], ["Noxud (quru)", "Konserv noxud", "40 q quru noxud ≈ 100 q konserv noxud. İslatmaq lazım deyil."], ["Qırmızı lobya (quru)", "Konserv qırmızı lobya", "50 q quru lobya ≈ 120 q konserv lobya. Suyunu süzün."], ["Yulaf yarması", "Qarabaşaq lopası və ya qarabaşaq", "Eyni quru çəki."], ["Lavaş", "Qara və ya kəpəkli çörək", "Eyni çəki."], ["Üzüm yarpağı", "Kələm yarpağı", "Yarpaq dolması kələm dolması olur."], ["Yaşıl lobya", "Brokoli, gül kələm, qabaq", "Eyni çəki."], ["İspanaq", "Əvəlik, dondurulmuş ispanaq, çuğundur yarpağı", "Dondurulmuşu əvvəlcə tavada suyunu çəkdirin."], ["Badımcan", "Qabaq (balqabaq) və ya bibər", "Eyni çəki. Duzlu suda saxlamağa ehtiyac yoxdur."], ["Göyərti (keşniş, şüyüd, nanə)", "İstənilən təzə göyərti; qışda dondurulmuş", "Quru nanə və reyhan da olar: təzəsinin 1/5-i qədər."], ["Feyxoa", "Naringi və ya kivi", "Eyni çəki."], ["Xurma (persimmon)", "Alma və ya armud", "1 ədəd."], ["Nar", "Portağal və ya alma", "1 ədəd."], ["Narşərab", "Limon suyu + bir çimdik sumaq", "Kalori demək olar dəyişmir."], ["Turşməzə (lavaşana)", "Quru alça və ya limon suyu", "Ləvəngiyə turşməzə ilə yanaşı bir az nar dənəsi də qatmaq olar."], ["Zəfəran", "Zərdəçal", "Rəng üçün 1/4 çay qaşığı kifayətdir."], ["Qoz", "Fındıq və ya badam", "Eyni çəki."], ["Bal", "Çıxarmaq olar", "Bir çay qaşığı ~20 kkal azalır. Şəkərlə əvəz etməyin."], ["Kərə yağı", "Bitki və ya zeytun yağı", "Eyni miqdar."], ["Xama 15%", "Qatıq", "Kalori 3 dəfə az olur."], ["Soya sousu", "Duz + bir az narşərab", "Dad fərqli olur, amma yemək alınır."], ["Zəncəfil", "Quru zəncəfil tozu", "Təzəsinin 1/4-i qədər."], ["Brokoli", "Gül kələm və ya yaşıl lobya", "Eyni çəki."], ["Göbələk (şampinyon)", "Badımcan və ya qabaq", "Eyni çəki."], ["Mozzarella", "Holland pendiri", "Yarısı qədər götürün."], ["Tuna konservi", "Qaynadılmış toyuq filesi", "Eyni çəki."], ["Süzmə qatıq", "Kəsmik 5% və ya adi qatığı süzün", "Qatığı tənziflə 3–4 saat süzün."], ["Tahin", "Xırdalanmış küncüt və ya qoz", "Eyni çəki."], ["Makaron (tam taxıllı)", "Adi makaron və ya bulqur", "Eyni quru çəki."], ["Qarğıdalı (konserv)", "Yaşıl noxud", "Eyni çəki."]], "basePlan": [{"S": "S8", "N": "N10", "D": "D1", "Q": "Q4"}, {"S": "S5", "N": "N2", "D": "D9", "Q": "Q1"}, {"S": "S7", "N": "N7", "D": "D5", "Q": "Q6"}, {"S": "S2", "N": "N5", "D": "D4", "Q": "Q9"}, {"S": "S4", "N": "N3", "D": "D6", "Q": "Q8"}, {"S": "S9", "N": "N1", "D": "D3", "Q": "Q1"}, {"S": "S8", "N": "N4", "D": "D8", "Q": "Q5"}, {"S": "S3", "N": "N2", "D": "D1", "Q": "Q2"}, {"S": "S1", "N": "N7", "D": "D4", "Q": "Q7"}, {"S": "S7", "N": "N9", "D": "D6", "Q": "Q3"}, {"S": "S4", "N": "N6", "D": "D3", "Q": "Q4"}, {"S": "S5", "N": "N4", "D": "D7", "Q": "Q1"}, {"S": "S2", "N": "N8", "D": "D4", "Q": "Q6"}, {"S": "S8", "N": "N1", "D": "D2", "Q": "Q5"}, {"S": "S6", "N": "N2", "D": "D6", "Q": "Q2"}, {"S": "S3", "N": "N5", "D": "D5", "Q": "Q4"}, {"S": "S7", "N": "N3", "D": "D10", "Q": "Q1"}, {"S": "S4", "N": "N10", "D": "D1", "Q": "Q9"}, {"S": "S9", "N": "N7", "D": "D3", "Q": "Q7"}, {"S": "S5", "N": "N12", "D": "D4", "Q": "Q6"}, {"S": "S8", "N": "N11", "D": "D6", "Q": "Q8"}, {"S": "S1", "N": "N2", "D": "D8", "Q": "Q4"}, {"S": "S2", "N": "N1", "D": "D5", "Q": "Q5"}, {"S": "S3", "N": "N4", "D": "D7", "Q": "Q1"}, {"S": "S7", "N": "N5", "D": "D9", "Q": "Q6"}, {"S": "S4", "N": "N3", "D": "D1", "Q": "Q3"}, {"S": "S6", "N": "N7", "D": "D3", "Q": "Q9"}, {"S": "S8", "N": "N1", "D": "D2", "Q": "Q7"}]}</script>
+<script>
+(function(){
+"use strict";
+const D=JSON.parse(document.getElementById('data').textContent);
+const R={}; D.rec.forEach(r=>R[r.code]=r);
+const ING=D.ing;
+const MEALS=['S','N','Q','D'];
+const MEAL={S:'Səhər yeməyi',N:'Nahar',Q:'Qəlyanaltı',D:'Şam yeməyi'};
+const MEALS_SHORT={S:'Səhər',N:'Nahar',Q:'Qəlyanaltı',D:'Şam'};
+const AYLAR=['yanvar','fevral','mart','aprel','may','iyun','iyul','avqust','sentyabr','oktyabr','noyabr','dekabr'];
+const GUN=['Bazar','Bazar ertəsi','Çərşənbə axşamı','Çərşənbə','Cümə axşamı','Cümə','Şənbə'];
+const GUNQ=['B.e','Ç.a','Ç','C.a','C','Ş','B'];
+const PLAN_DAYS=28;
+const CUIS={az:['Azərbaycan','AZ','#a3263b'],tr:['Türk','TR','#c2410c'],ge:['Gürcü','GE','#7c3aed'],it:['İtalyan','IT','#15803d'],gr:['Yunan','GR','#1d4ed8'],cn:['Çin','ÇN','#b91c1c'],in:['Hind','HN','#b45309'],mx:['Meksika','MX','#0f766e']};
+const CU_KEYS=Object.keys(CUIS);
+const cuTag=k=>CUIS[k]?`<span class="cu" style="--cu:${CUIS[k][2]}">${CUIS[k][1]}</span>`:'';
+const fmt=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+const fmt1=n=>(Math.round(n*10)/10).toString().replace('.',',');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parseISO=s=>{const [y,m,dd]=s.split('-').map(Number);return new Date(y,m-1,dd);};
+const addDays=(s,n)=>{const d=parseISO(s);d.setDate(d.getDate()+n);return iso(d);};
+const diffDays=(a,b)=>Math.round((parseISO(b)-parseISO(a))/864e5);
+const todayISO=()=>iso(new Date());
+const dShort=s=>{const d=parseISO(s);return d.getDate()+' '+AYLAR[d.getMonth()];};
+const dLong=s=>{const d=parseISO(s);return d.getDate()+' '+AYLAR[d.getMonth()]+', '+GUN[d.getDay()];};
+const ordinal=n=>{ // Azerbaijani ordinal suffix by vowel harmony of the last spoken word
+  const U={1:'ci',2:'ci',3:'cü',4:'cü',5:'ci',6:'cı',7:'ci',8:'ci',9:'cu'};
+  const T={10:'cu',20:'ci',30:'cu',40:'cı',50:'ci',60:'cı',70:'ci',80:'ci',90:'cı'};
+  const u=n%10, tn=n%100-u; return n+'-'+(u?U[u]:(tn?T[tn]:'cü'));
+};
+
+function art(kind){
+  const P={eggs:`<ellipse cx="75" cy="62" rx="58" ry="34" fill="var(--line)"/><ellipse cx="75" cy="58" rx="52" ry="29" fill="#c8452f" opacity=".85"/><ellipse cx="55" cy="55" rx="16" ry="11" fill="#fff"/><circle cx="55" cy="55" r="6" fill="var(--saffron)"/><ellipse cx="90" cy="50" rx="16" ry="11" fill="#fff"/><circle cx="90" cy="50" r="6" fill="var(--saffron)"/><ellipse cx="82" cy="70" rx="15" ry="10" fill="#fff"/><circle cx="82" cy="70" r="5.5" fill="var(--saffron)"/><rect x="128" y="56" width="22" height="7" rx="3" fill="var(--muted)"/><circle cx="62" cy="72" r="2.5" fill="var(--herb)"/><circle cx="104" cy="62" r="2.5" fill="var(--herb)"/>`,
+  wrap:`<ellipse cx="75" cy="84" rx="60" ry="14" fill="var(--line)"/><rect x="25" y="40" width="100" height="36" rx="18" fill="#e8d3a6" transform="rotate(-8 75 58)"/><ellipse cx="122" cy="51" rx="10" ry="17" fill="#f3f0e8" transform="rotate(-8 122 51)"/><circle cx="121" cy="47" r="3" fill="var(--herb)"/><circle cx="124" cy="55" r="3" fill="#c8452f"/>`,
+  porridge:`<ellipse cx="75" cy="90" rx="52" ry="10" fill="var(--line)"/><path d="M23 52 h104 a52 40 0 0 1 -104 0z" fill="var(--sky)"/><ellipse cx="75" cy="52" rx="52" ry="12" fill="#efe4cc"/><circle cx="62" cy="50" r="5" fill="#e0882a"/><circle cx="80" cy="48" r="5" fill="#e0882a"/><path d="M90 52 q6 -6 12 0" stroke="#8a5a32" stroke-width="4" fill="none"/>`,
+  kuku:`<ellipse cx="75" cy="86" rx="58" ry="12" fill="var(--line)"/><path d="M30 40 L120 40 L112 78 L38 78 Z" fill="var(--herb)"/><path d="M30 40 L120 40 L116 48 L34 48 Z" fill="#c6a23d"/><circle cx="55" cy="62" r="3" fill="#2c5a37"/><circle cx="80" cy="66" r="3" fill="#2c5a37"/><circle cx="98" cy="58" r="3" fill="#2c5a37"/>`,
+  breakfast:`<ellipse cx="75" cy="60" rx="62" ry="38" fill="var(--line)"/><ellipse cx="75" cy="57" rx="56" ry="33" fill="#fff"/><ellipse cx="52" cy="50" rx="12" ry="9" fill="#fff" stroke="var(--line)"/><circle cx="52" cy="50" r="5" fill="var(--saffron)"/><rect x="72" y="38" width="26" height="18" rx="3" fill="#f2efe6" stroke="var(--line)"/><circle cx="108" cy="62" r="9" fill="#c8452f"/><circle cx="90" cy="72" r="7" fill="#7fb069"/><rect x="40" y="66" width="30" height="10" rx="5" fill="#a87b4f"/>`,
+  syrniki:`<ellipse cx="75" cy="88" rx="56" ry="11" fill="var(--line)"/><ellipse cx="75" cy="74" rx="38" ry="10" fill="#d99a4e"/><ellipse cx="75" cy="64" rx="38" ry="10" fill="#e6ad5f"/><ellipse cx="75" cy="54" rx="38" ry="10" fill="#efc078"/><path d="M60 48 q15 10 30 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>`,
+  soup:`<ellipse cx="75" cy="92" rx="52" ry="9" fill="var(--line)"/><path d="M22 50 h106 a53 42 0 0 1 -106 0z" fill="var(--accent)"/><ellipse cx="75" cy="50" rx="53" ry="12" fill="#e7a14a"/><circle cx="60" cy="49" r="4" fill="#f3d9a6"/><circle cx="86" cy="51" r="4" fill="#f3d9a6"/><circle cx="74" cy="46" r="2.5" fill="var(--herb)"/><path d="M58 30 q-6 -8 0 -16 M75 30 q-6 -8 0 -16 M92 30 q-6 -8 0 -16" stroke="var(--muted)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".6"/>`,
+  dolma:`<ellipse cx="75" cy="66" rx="62" ry="32" fill="var(--line)"/><ellipse cx="75" cy="62" rx="56" ry="27" fill="#fff"/><rect x="38" y="46" width="30" height="16" rx="8" fill="#5f8c3e"/><rect x="72" y="44" width="30" height="16" rx="8" fill="#6c9a48"/><rect x="52" y="62" width="30" height="16" rx="8" fill="#557f37"/><rect x="86" y="62" width="30" height="16" rx="8" fill="#5f8c3e"/><path d="M40 54 h26 M74 52 h26 M54 70 h26 M88 70 h26" stroke="#3f6a29" stroke-width="1.5"/><circle cx="112" cy="50" r="7" fill="#f4f0e6" stroke="var(--line)"/>`,
+  stew:`<ellipse cx="75" cy="94" rx="50" ry="8" fill="var(--line)"/><rect x="26" y="44" width="98" height="44" rx="12" fill="var(--sky)"/><rect x="18" y="50" width="12" height="7" rx="3" fill="var(--sky)"/><rect x="120" y="50" width="12" height="7" rx="3" fill="var(--sky)"/><ellipse cx="75" cy="45" rx="49" ry="10" fill="#b8442c"/><rect x="50" y="38" width="14" height="10" rx="3" fill="#7a3b22"/><rect x="78" y="40" width="14" height="10" rx="3" fill="#7a3b22"/><circle cx="68" cy="44" r="3" fill="var(--herb)"/><path d="M98 42 q5 -4 10 0" stroke="#e7b84a" stroke-width="3" fill="none"/>`,
+  plov:`<ellipse cx="75" cy="72" rx="62" ry="26" fill="var(--line)"/><ellipse cx="75" cy="70" rx="56" ry="21" fill="#fff"/><path d="M35 72 Q75 20 115 72 Z" fill="#f4e3b5"/><path d="M50 62 Q75 40 100 62" stroke="var(--saffron)" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="62" cy="60" r="4" fill="#e0882a"/><circle cx="86" cy="58" r="4" fill="#e0882a"/><rect x="70" y="48" width="12" height="8" rx="2" fill="#b07a4a"/>`,
+  kebab:`<ellipse cx="75" cy="82" rx="62" ry="14" fill="var(--line)"/><rect x="10" y="57" width="132" height="3" rx="1.5" fill="var(--muted)"/><rect x="24" y="47" width="22" height="22" rx="6" fill="#8b4a2b"/><circle cx="56" cy="58" r="9" fill="#c8452f"/><rect x="66" y="47" width="22" height="22" rx="6" fill="#8b4a2b"/><rect x="92" y="49" width="14" height="18" rx="4" fill="#7fb069"/><rect x="108" y="47" width="22" height="22" rx="6" fill="#8b4a2b"/>`,
+  fish:`<ellipse cx="75" cy="72" rx="62" ry="22" fill="var(--line)"/><ellipse cx="75" cy="68" rx="56" ry="18" fill="#fff"/><path d="M38 66 Q70 40 104 66 Q70 90 38 66 Z" fill="#c9cdd2"/><path d="M104 66 L122 54 L122 78 Z" fill="#aeb3ba"/><circle cx="50" cy="63" r="2.5" fill="var(--ink)"/><path d="M62 60 l6 6 M74 58 l6 6 M86 60 l6 6" stroke="#9aa0a7" stroke-width="2"/><circle cx="116" cy="84" r="6" fill="var(--saffron)"/><circle cx="34" cy="80" r="4" fill="var(--accent)"/><circle cx="42" cy="84" r="4" fill="var(--accent)"/>`,
+  roast:`<ellipse cx="75" cy="72" rx="62" ry="22" fill="var(--line)"/><ellipse cx="75" cy="68" rx="56" ry="18" fill="#fff"/><ellipse cx="66" cy="64" rx="26" ry="14" fill="#b86b2f"/><ellipse cx="66" cy="62" rx="12" ry="5" fill="#6e4a2d"/><circle cx="104" cy="62" r="8" fill="#7fb069"/><circle cx="104" cy="76" r="6" fill="#c8452f"/>`,
+  dovga:`<ellipse cx="75" cy="92" rx="52" ry="9" fill="var(--line)"/><path d="M22 50 h106 a53 42 0 0 1 -106 0z" fill="var(--saffron)"/><ellipse cx="75" cy="50" rx="53" ry="12" fill="#e9efdc"/><circle cx="56" cy="49" r="3" fill="var(--herb)"/><circle cx="70" cy="52" r="3" fill="var(--herb)"/><circle cx="86" cy="47" r="3" fill="var(--herb)"/><circle cx="98" cy="51" r="3" fill="var(--herb)"/><circle cx="78" cy="49" r="4.5" fill="#9a5a34"/><circle cx="62" cy="46" r="4.5" fill="#9a5a34"/>`,
+  qutab:`<ellipse cx="75" cy="80" rx="62" ry="16" fill="var(--line)"/><path d="M20 72 A55 42 0 0 1 130 72 Z" fill="#e9c98f"/><path d="M28 72 A47 34 0 0 1 122 72" stroke="var(--herb)" stroke-width="5" fill="none" opacity=".55"/><circle cx="60" cy="52" r="2" fill="#b0402f"/><circle cx="80" cy="46" r="2" fill="#b0402f"/><circle cx="96" cy="56" r="2" fill="#b0402f"/>`,
+  pasta:`<ellipse cx="75" cy="72" rx="62" ry="24" fill="var(--line)"/><ellipse cx="75" cy="68" rx="56" ry="19" fill="#fff"/><path d="M42 66 q10 -14 20 0 t20 0 t20 0" stroke="#e8c27a" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M48 74 q10 -12 20 0 t20 0 t16 -2" stroke="#d9ac5e" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="62" cy="60" r="7" fill="#c8452f"/><circle cx="88" cy="62" r="6" fill="#c8452f"/><circle cx="76" cy="56" r="3" fill="var(--herb)"/>`,
+  wok:`<ellipse cx="72" cy="88" rx="52" ry="8" fill="var(--line)"/><path d="M18 52 Q72 108 126 52 Z" fill="#3a3f45"/><rect x="124" y="48" width="24" height="7" rx="3" fill="#8a5a32"/><ellipse cx="72" cy="54" rx="53" ry="10" fill="#4a3426"/><rect x="44" y="46" width="12" height="8" rx="2" fill="#d9a066"/><rect x="74" y="44" width="12" height="8" rx="2" fill="#d9a066"/><circle cx="62" cy="52" r="5" fill="#3d8a4c"/><circle cx="92" cy="52" r="5" fill="#3d8a4c"/><path d="M50 56 l10 -2 M84 57 l12 -3" stroke="#e07a3a" stroke-width="4" stroke-linecap="round"/>`,
+  salad:`<ellipse cx="75" cy="92" rx="50" ry="8" fill="var(--line)"/><path d="M24 52 h102 a51 38 0 0 1 -102 0z" fill="#f4f0e6" stroke="var(--line)" stroke-width="2"/><ellipse cx="58" cy="50" rx="18" ry="9" fill="#7fb069"/><ellipse cx="90" cy="48" rx="18" ry="9" fill="#6c9a48"/><circle cx="70" cy="46" r="6" fill="#c8452f"/><circle cx="100" cy="54" r="5" fill="#c8452f"/><circle cx="50" cy="56" r="4" fill="#2b2b2b"/><rect x="78" y="52" width="12" height="9" rx="2" fill="#fff" stroke="var(--line)"/>`,
+  bowl:`<ellipse cx="75" cy="92" rx="50" ry="8" fill="var(--line)"/><path d="M24 50 h102 a51 40 0 0 1 -102 0z" fill="var(--sky)"/><ellipse cx="75" cy="50" rx="51" ry="11" fill="#f4e9cf"/><path d="M40 50 a14 7 0 0 1 28 0z" fill="#8b2e2e"/><path d="M70 49 a12 6 0 0 1 24 0z" fill="#f2c94c"/><rect x="96" y="44" width="16" height="9" rx="2" fill="#c08a5b"/><circle cx="58" cy="44" r="3" fill="var(--herb)"/>`,
+  snack:`<ellipse cx="75" cy="86" rx="58" ry="12" fill="var(--line)"/><circle cx="58" cy="58" r="22" fill="var(--accent)"/><path d="M58 36 l-4 -8 l8 0z" fill="#7a2030"/><circle cx="98" cy="64" r="16" fill="#f0a32b"/><path d="M96 48 q4 -8 10 -6" stroke="var(--herb)" stroke-width="3" fill="none"/><ellipse cx="80" cy="82" rx="7" ry="5" fill="#9a6a3e"/>`};
+  return `<svg viewBox="0 0 150 110" role="img" aria-hidden="true">${P[kind]||P.snack}</svg>`;
+}
+
+/* ================= profile math ================= */
+const ACTS=[[1.2,'Oturaq (ofis, ev)'],[1.375,'Yüngül aktiv (tələbə, 1–3 dəfə idman)'],[1.55,'Orta aktiv (3–5 dəfə idman)'],[1.725,'Çox aktiv (fiziki iş, hər gün idman)']];
+const GOALS={lose:'Arıqlamaq',light:'Yüngül arıqlamaq',keep:'Çəkini saxlamaq',gain:'Çəki almaq'};
+const bmr=m=>10*m.w+6.25*m.h-5*m.age+(m.sex==='m'?5:-161);
+const tdee=m=>bmr(m)*m.act;
+function target(m){
+  const t=tdee(m); let d=0;
+  if(m.goal==='lose') d=Math.min(t*0.25,600);
+  else if(m.goal==='light') d=Math.min(t*0.15,300);
+  else if(m.goal==='gain') d=-300;
+  if(m.anemia&&d>350) d=350;
+  if(m.age<18&&d>200) d=200;
+  const floor=m.sex==='m'?1500:1200;
+  return Math.round(Math.max(floor,t-d));
+}
+const bmi=m=>m.w/((m.h/100)**2);
+
+/* ================= state ================= */
+const LS='sufre-state-v1', LSP='sufre-photos-v1';
+const DEF_TIMES={S:'08:00',N:'13:00',Q:'16:30',D:'19:30'};
+let S=null, PH={};
+function blank(){return {v:1,members:[],active:null,prefs:{start:todayISO(),cuisines:['az'],quick:false,excl:[],times:{...DEF_TIMES}},plan:null,seed:1,log:{},bought:{},updated:0};}
+try{S=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){S=null;}
+if(!S||S.v!==1) S=blank();
+try{PH=JSON.parse(localStorage.getItem(LSP)||'{}')||{};}catch(e){PH={};}
+function migrate(){ const p=S.prefs; if(!p.cuisines){ p.cuisines=['az']; delete p.cuisine; } if(S.plan) S.plan.forEach(d=>{ if(!d.cu) d.cu=(R[d.N]&&R[d.N].cu)||'az'; }); }
+migrate();
+let DB=null, UID=null, saveTimer=null, saving=Promise.resolve(), syncNote='Məlumatlar bu cihazda saxlanılır.';
+function save(){
+  S.updated=Date.now();
+  try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}
+  if(DB&&UID){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ const body={json:JSON.stringify(S),t:S.updated}; saving=saving.then(()=>DB.doc('data/users/'+UID+'/state').set(body)).catch(()=>{}); },1200); }
+}
+const uid=()=>Math.random().toString(36).slice(2,9);
+const member=()=>S.members.find(m=>m.id===S.active)||S.members[0];
+
+/* ================= recipes per member ================= */
+const TAGS={baliq:['ag_baliq','kutum'],ciyer:['ciyer'],quzu:['quzu'],mal:['mal_eti','mal_qiyme'],toyuq:['toyuq_file','toyuq_bud','toyuq_qiyme'],sud:['qatiq','kefir','sud','kesmik','ag_pendir','holland','xama','kere'],yumurta:['yumurta'],qoz:['qoz','findiq','badam'],gluten:['un','vermisel','bulqur','corek','lavas']};
+const TAGN={baliq:'Balıq',ciyer:'Ciyər',quzu:'Quzu əti',mal:'Mal əti',toyuq:'Toyuq',sud:'Süd məhsulları',yumurta:'Yumurta',qoz:'Qoz-fındıq',gluten:'Un və çörək (qlüten)'};
+const kc=(c,g)=>ING[c].k*g/100;
+function core(r,c){const tot=r.ing.reduce((a,[x,g])=>a+kc(x,g),0); const i=r.ing.findIndex(x=>x[0]===c); const share=kc(c,r.ing[i][1])/tot; return i<2||share>=0.25;}
+function exclSet(){const s=new Set(); (S.prefs.excl||[]).forEach(t=>(TAGS[t]||[]).forEach(c=>s.add(c))); return s;}
+function okExcl(r){ const ex=exclSet(); return !r.ing.some(([c])=>ex.has(c)&&core(r,c)); }
+function eligible(r){ return okExcl(r)&&(r.cu==='all'||S.prefs.cuisines.includes(r.cu)); }
+const INS_MUL={bal:0,quru_erik:0,kartof:0.5,duyu:0.6,lavas:0.6,corek:0.6,un:0.7,vermisel:0.7,nar:0.5,banan:0,xurma:0};
+// adjusted ingredient list (base grams, before portion factor) for a member
+const ADJ_CACHE=new Map();
+function adj(code,m){
+  const key=code+'|'+(m?m.id+(m.insulin?'i':''):'')+'|'+(S.prefs.excl||[]).join(',');
+  if(ADJ_CACHE.has(key)) return ADJ_CACHE.get(key);
+  const r=R[code], ex=exclSet(), notes=[]; let ing=[]; let reduced=false;
+  r.ing.forEach(([c,g,h])=>{
+    if(ex.has(c)){ notes.push(ING[c].n+' çıxarılıb (istisna)'); return; }
+    let mul=1;
+    if(m&&m.insulin&&c in INS_MUL){ mul=INS_MUL[c]; }
+    if(mul===0){
+      if(c==='banan'||c==='xurma'){ ing.push(['alma',Math.round(g*0.75),'']); notes.push(ING[c].n+' əvəzinə alma'); }
+      else notes.push(ING[c].n+' çıxarılıb');
+      reduced=true; return;
+    }
+    if(mul<1){ notes.push(ING[c].n+' '+(mul===0.5?'yarıya endirilib':'azaldılıb')); reduced=true; }
+    ing.push([c,g*mul,mul===1?h:'']);
+  });
+  if(reduced&&(r.meal==='N'||r.meal==='D')){ ing.push(['pomidor',80,'salat']); ing.push(['xiyar',80,'salat']); notes.push('yanına pomidor-xiyar salatı əlavə olunub'); }
+  const v={ing,notes,k:0,p:0,f:0,c:0};
+  ing.forEach(([c,g])=>{v.k+=ING[c].k*g/100;v.p+=ING[c].p*g/100;v.f+=ING[c].f*g/100;v.c+=ING[c].c*g/100;});
+  ADJ_CACHE.set(key,v); return v;
+}
+// per-member factor for a plan day
+function dayInfo(i,m){
+  const day=S.plan[i]; let k=0;
+  MEALS.forEach(x=>k+=adj(day[x],m).k);
+  let f=target(m)/k; f=Math.min(1.5,Math.max(0.5,f));
+  const out={f,k:k*f,p:0,fat:0,c:0};
+  MEALS.forEach(x=>{const a=adj(day[x],m); out.p+=a.p*f; out.fat+=a.f*f; out.c+=a.c*f;});
+  return out;
+}
+const r5=g=>Math.max(5,Math.round(g/5)*5);
+
+/* ================= plan generation ================= */
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function isDefaultPrefs(){const c=S.prefs.cuisines; return c.length===1&&c[0]==='az'&&!S.prefs.quick&&!(S.prefs.excl||[]).length&&S.seed===1;}
+const baseK=code=>R[code].ing.reduce((a,[c,g])=>a+kc(c,g),0);
+function dayCuisines(){
+  const sel=S.prefs.cuisines.length?S.prefs.cuisines:['az']; const out=[];
+  const others=sel.filter(c=>c!=='az');
+  for(let d=0;d<PLAN_DAYS;d++){
+    if(sel.length===1) out.push(sel[0]);
+    else if(sel.includes('az')) out.push(d%2===0?'az':others[Math.floor(d/2)%others.length]);
+    else out.push(sel[d%sel.length]);
+  }
+  return out;
+}
+// choose S,N,D,Q for one day of cuisine cu
+function pickDay(cu,d,ctx,rnd,keepQ){
+  const pool=m=>{ let p=D.rec.filter(r=>r.meal===m&&okExcl(r)&&(m==='Q'?(r.cu==='all'||S.prefs.cuisines.includes(r.cu)||r.cu===cu):r.cu===cu)); if(!p.length) p=D.rec.filter(r=>r.meal===m&&okExcl(r)&&(r.cu==='az'||r.cu==='all')); return p; };
+  const Sp=pool('S').concat(D.rec.filter(r=>r.meal==='S'&&okExcl(r)&&r.cu!==cu&&S.prefs.cuisines.includes(r.cu)));
+  const Np=pool('N'), Dp=pool('D'), Qp=keepQ?[R[keepQ]]:pool('Q');
+  const wd=parseISO(addDays(S.prefs.start,d)).getDay(); const weekday=wd>=1&&wd<=5;
+  const cnt=ctx.cnt, last=ctx.last; let best=null,bs=1e9;
+  for(const s of Sp) for(const n of Np) for(const dd of Dp) for(const q of Qp){
+    let sc=Math.abs(baseK(s.code)+baseK(n.code)+baseK(dd.code)+baseK(q.code)-1910)/15;
+    sc+=((cnt[s.code]||0)+(cnt[n.code]||0)+(cnt[dd.code]||0))*5+(cnt[q.code]||0)*3;
+    if(s.cu!==cu) sc+=12;
+    if(last.S.slice(-2).includes(s.code)) sc+=40;
+    if(last.N.slice(-3).includes(n.code)) sc+=60;
+    if(last.D.slice(-3).includes(dd.code)) sc+=60;
+    if(!keepQ&&last.Q.slice(-1).includes(q.code)) sc+=15;
+    if(n.kind===dd.kind) sc+=20;
+    if(S.prefs.quick&&weekday&&(n.min>45||dd.min>45)) sc+=80;
+    sc+=rnd()*6;
+    if(sc<bs){bs=sc;best={S:s.code,N:n.code,D:dd.code,Q:q.code,cu};}
+  }
+  return best;
+}
+function generate(){
+  ADJ_CACHE.clear();
+  if(isDefaultPrefs()){ S.plan=D.basePlan.map(d=>({...d,cu:'az'})); return; }
+  const rnd=rng(S.seed*9973+7), cus=dayCuisines();
+  const ctx={cnt:{},last:{S:[],N:[],D:[],Q:[]}}, plan=[];
+  for(let d=0; d<PLAN_DAYS; d++){
+    const best=pickDay(cus[d],d,ctx,rnd);
+    plan.push(best); MEALS.forEach(m=>{ctx.cnt[best[m]]=(ctx.cnt[best[m]]||0)+1; ctx.last[m].push(best[m]);});
+  }
+  S.plan=plan;
+}
+function setDayCuisine(i,cu){
+  const ctx={cnt:{},last:{S:[],N:[],D:[],Q:[]}};
+  S.plan.forEach((d,k)=>{ if(k===i) return; MEALS.forEach(m=>ctx.cnt[d[m]]=(ctx.cnt[d[m]]||0)+1); });
+  for(let k=Math.max(0,i-3);k<i;k++) MEALS.forEach(m=>ctx.last[m].push(S.plan[k][m]));
+  const p=pickDay(cu,i,ctx,rng(Date.now()%100000),S.plan[i].Q);
+  S.plan[i]={...p,Q:S.plan[i].Q,cu};
+}
+
+/* ================= day helpers ================= */
+const dayIdx=dateISO=>diffDays(S.prefs.start,dateISO);
+const planIdx=dateISO=>{const i=dayIdx(dateISO); if(i<0) return -1; return i%PLAN_DAYS;};
+function log(mid,date){S.log[mid]=S.log[mid]||{}; return S.log[mid][date]=S.log[mid][date]||{e:{},w:0,x:[]};}
+function getLog(mid,date){return (S.log[mid]||{})[date]||{e:{},w:0,x:[]};}
+function eatenK(m,date){
+  const i=planIdx(date); if(i<0) return 0; const L=getLog(m.id,date), di=dayInfo(i,m); let k=0;
+  MEALS.forEach(x=>{ if(L.e[x]) k+=adj(S.plan[i][x],m).k*di.f; });
+  (L.x||[]).forEach(e=>k+=+e.k||0); return k;
+}
+function streak(m){
+  let n=0, d=todayISO();
+  const full=date=>{const L=getLog(m.id,date); return MEALS.every(x=>L.e[x]);};
+  if(!full(d)) d=addDays(d,-1);
+  while(dayIdx(d)>=0&&full(d)){n++; d=addDays(d,-1);}
+  return n;
+}
+function nextMeal(){
+  const now=new Date(), mins=now.getHours()*60+now.getMinutes();
+  const t=S.prefs.times; let pick=null;
+  for(const x of MEALS){const [h,mm]=t[x].split(':').map(Number); if(h*60+mm+60>=mins){pick=x;break;}}
+  return pick;
+}
+
+/* ================= UI shell ================= */
+const view=document.getElementById('view');
+const ICONS={
+ today:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+ book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>',
+ cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 4h2l2.5 11h11L21 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>',
+ chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19h16"/><path d="M5 15l4-4 4 3 6-7"/></svg>',
+ user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 6 5"/></svg>',
+ x:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ ok:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg>'
+};
+const TABS=[['today','Bu gün','today'],['menu','Menyu','cal'],['recipes','Reseptlər','book'],['shop','Alış-veriş','cart'],['progress','Proqres','chart'],['family','Ailə','user']];
+let tab='today';
+function setTab(t){ tab=t; try{history.replaceState(null,'','#'+t);}catch(e){} render(); view.scrollTop=0; }
+document.getElementById('tabs').innerHTML=TABS.map(([id,l,ic])=>`<button data-tab="${id}">${ICONS[ic]}<span>${l}</span></button>`).join('');
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) setTab(b.dataset.tab);});
+function toast(t){const el=document.createElement('div');el.className='toast';el.setAttribute('role','status');el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}
+
+function renderWho(){
+  const w=document.getElementById('who');
+  w.innerHTML=S.members.map(m=>`<button data-id="${m.id}" aria-pressed="${m.id===member().id}">${esc(m.name)}</button>`).join('');
+}
+document.getElementById('who').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; S.active=b.dataset.id; save(); render();});
+
+function render(){
+  document.getElementById('tabs').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===tab?'page':'false'));
+  if(!S.members.length){ document.getElementById('who').innerHTML=''; document.getElementById('tabs').style.display='none'; renderWelcome(); return; }
+  document.getElementById('tabs').style.display='';
+  if(!S.plan) {generate(); save();}
+  renderWho();
+  ({today:renderToday,menu:renderMenu,recipes:renderRecipes,shop:renderShop,progress:renderProgress,family:renderFamily}[tab]||renderToday)();
+}
+
+/* ================= welcome / onboarding ================= */
+function renderWelcome(){
+  view.innerHTML=`<div class="welcome stack">
+    <h1>Süfrə</h1>
+    <p class="muted">Azərbaycan, Türk, İtalyan, Çin və digər mətbəxlərlə şəxsi arıqlama menyusu. Boyunuzu, çəkinizi və həyat tərzinizi yazın, app sizin üçün tarixli 28 günlük menyu, reseptlər və alış-veriş siyahısı hazırlasın. Ailə üzvlərini də əlavə etsəniz, hamı eyni yeməkləri yeyir, porsiyalar isə hər kəsə ayrıca hesablanır.</p>
+    <div class="card stack" style="text-align:left"><b>Hansı mətbəxlərdən yeməklər olsun?</b><div class="chips" id="wcu">${CU_KEYS.map(k=>`<button class="chip" data-wcu="${k}" aria-pressed="${S.prefs.cuisines.includes(k)}">${CUIS[k][0]}</button>`).join('')}</div><p class="tiny muted" style="margin:0">Sonra hər günün mətbəxini ayrıca dəyişə bilərsiniz.</p></div>
+    <button class="btn" id="w-new">Profil yarat</button>
+    <p class="tiny muted">Ailə üzvlərini sonra "Ailə" bölməsində əlavə edə bilərsiniz.</p>
+  </div>`;
+  document.getElementById('w-new').onclick=()=>memberForm(null);
+  view.querySelectorAll('[data-wcu]').forEach(b=>b.onclick=()=>{const k=b.dataset.wcu, p=S.prefs; if(p.cuisines.includes(k)){ if(p.cuisines.length===1) return; p.cuisines=p.cuisines.filter(x=>x!==k);} else p.cuisines=[...p.cuisines,k]; S.plan=null; save(); renderWelcome();});
+}
+
+/* ================= sheets ================= */
+let sheetStack=[];
+function openSheet(title,html,onMount){
+  const root=document.getElementById('sheet-root');
+  const wrap=document.createElement('div'); wrap.className='sheet-wrap';
+  wrap.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="sh"><h2>${esc(title)}</h2><button class="ic" data-close aria-label="Bağla">${ICONS.x}</button></div><div class="sb">${html}</div></div>`;
+  root.appendChild(wrap); sheetStack.push(wrap);
+  wrap.addEventListener('click',e=>{ if(e.target===wrap||e.target.closest('[data-close]')) closeSheet(wrap); });
+  if(onMount) onMount(wrap.querySelector('.sb'),wrap);
+  const f=wrap.querySelector('[data-close]'); if(f) f.focus();
+  return wrap;
+}
+function closeSheet(w){ w=w||sheetStack[sheetStack.length-1]; if(!w) return; w.remove(); sheetStack=sheetStack.filter(x=>x!==w); render(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&sheetStack.length) closeSheet(); });
+
+/* ================= TODAY ================= */
+function ringSVG(frac,color){const r=52,c=2*Math.PI*r,f=Math.max(0,Math.min(1,frac));return `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--line)" stroke-width="10"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c*f} ${c}" ${f<=0?'opacity="0"':''}/></svg>`;}
+const TIPS=[
+  'Yağı qaşıqla ölçün: 1 xörək qaşığı yağ ~90 kkal-dır.',
+  'Çayı şəkərsiz için. Gündə 5 stəkan çaya 2 qənd ~200 kkal edir.',
+  'Əvvəl salatı və əti, sonra çörəyi və ya yarmanı yeyin.',
+  'Şam yeməyi yatmazdan 2–3 saat əvvəl bitsin.',
+  'Yeməkdən sonra 10–15 dəqiqə gəzinti qan şəkərini aşağı salır.',
+  'Həftədə bir dəfə, eyni gün səhər ac qarına çəkilin.',
+  'Bazar günü şorba və dolmanı bir neçə porsiyalıq bişirib saxlayın.',
+  'Şirin içkilər və şirələr yoxdur: 1 litr şirə ~450 kkal-dır.',
+  'Qonaqlıq günü səhər və naharı yüngül edin.',
+  'Mətbəx tərəzisi ilk həftələrdə ən yaxşı köməkçidir.'
+];
+function renderToday(){
+  const m=member(), t=todayISO(), i=dayIdx(t), tg=target(m);
+  if(i<0){ view.innerHTML=`<div class="card stack"><div class="datebig">${dLong(t)}</div><p>Menyu <b>${dLong(S.prefs.start)}</b> tarixindən başlayır (${-i} gün sonra).</p><button class="btn" id="startnow">Bu gündən başlat</button></div>`; document.getElementById('startnow').onclick=()=>{S.prefs.start=t; generate(); save(); render();}; return; }
+  const pi=i%PLAN_DAYS, cycle=Math.floor(i/PLAN_DAYS), day=S.plan[pi], di=dayInfo(pi,m), L=getLog(m.id,t);
+  const eaten=eatenK(m,t), nm=nextMeal();
+  const wg=Math.min(12,Math.max(6,Math.round(m.w*30/250)));
+  const st=streak(m), tip=TIPS[(i+m.name.length)%TIPS.length];
+  let html=`<div class="stack">
+   <div class="card hero">
+     <div class="ring">${ringSVG(eaten/tg,'var(--accent)')}<div class="c"><b>${fmt(eaten)}</b><span class="tiny muted">/ ${fmt(tg)} kkal</span></div></div>
+     <div><div class="datebig">${dLong(t)}</div>
+       <div class="muted">${ordinal(pi+1)} gün / ${PLAN_DAYS}${cycle?` · ${ordinal(cycle+1)} dövr`:''}</div>
+       <div class="small" style="margin-top:4px">${cuTag(day.cu)} ${CUIS[day.cu]?CUIS[day.cu][0]+' mətbəxi':''} · <button class="btn plain sm" id="chcu" style="padding:2px 8px">Dəyiş</button></div>
+       <div class="small" style="margin-top:6px">Qalıb: <b class="num">${fmt(Math.max(0,tg-eaten))} kkal</b> · Zülal hədəfi <b class="num">${fmt(di.p)} q</b></div>
+       ${st?`<div class="small" style="margin-top:4px">Ardıcıllıq: <b>${st} gün</b> bütün yeməklər yerinə yetirilib</div>`:''}
+     </div>
+   </div>
+   ${pi===PLAN_DAYS-1?`<div class="tipbox">Bu gün 28 günlük menyunun son günüdür. Sabahdan menyu təkrarlanacaq. İstəsəniz "Ailə" bölməsində yeni menyu yarada bilərsiniz.</div>`:''}
+   ${m.anemia?`<div class="warnbox"><b>Anemiya:</b> çayı və qəhvəni yeməkdən 1–2 saat sonra için, yeməyə limon sıxın.</div>`:''}
+   <div class="row between"><h2>Bu günün menyusu</h2><button class="btn plain sm" id="openday">Günün detalı</button></div>
+   <div class="stack" id="meals">`+MEALS.map(x=>{
+      const r=R[day[x]], a=adj(day[x],m), done=!!L.e[x];
+      return `<div class="meal ${done?'done':''} ${!done&&x===nm?'next':''}">
+        <button class="check" role="checkbox" aria-checked="${done}" data-eat="${x}" aria-label="${MEAL[x]} yeyildi">${done?ICONS.ok:''}</button>
+        <div class="art">${photoOrArt(r)}</div>
+        <div><span class="pill p-${x}">${S.prefs.times[x]} · ${MEALS_SHORT[x]}</span>${!done&&x===nm?' <span class="tiny" style="color:var(--accent);font-weight:700">Növbəti</span>':''}
+          <div class="mt" data-r="${r.code}">${esc(r.name)}</div>
+          <div class="ms">${fmt(a.k*di.f)} kkal · ${fmt(a.p*di.f)} q zülal · ${r.min} dəq</div></div>
+        <button class="ic" data-r="${r.code}" aria-label="Resepti aç">›</button>
+      </div>`;}).join('')+`</div>
+   ${(L.x||[]).length?`<div class="card"><b>Əlavə yeyilənlər</b><ul class="list">${L.x.map((e,j)=>`<li><span>${esc(e.n)}</span><span class="row"><span class="num">${fmt(e.k)} kkal</span><button class="ic" data-delx="${j}" aria-label="Sil">${ICONS.x}</button></span></li>`).join('')}</ul></div>`:''}
+   <button class="btn plain" id="addx">+ Menyudan kənar yediyimi əlavə et</button>
+   <div class="card stack"><div class="row between"><b>Su</b><span class="small muted num">${L.w||0} / ${wg} stəkan (250 ml)</span></div>
+     <div class="water" id="water">${Array.from({length:wg},(_,j)=>`<button aria-pressed="${j<(L.w||0)}" data-w="${j+1}" aria-label="${j+1} stəkan"></button>`).join('')}</div></div>
+   <div class="tipbox"><b>Günün məsləhəti:</b> ${esc(tip)}</div>
+  </div>`;
+  view.innerHTML=html;
+  view.querySelectorAll('[data-eat]').forEach(b=>b.onclick=()=>{const x=b.dataset.eat; const l=log(m.id,t); l.e[x]=!l.e[x]; save(); render(); if(l.e[x]&&MEALS.every(y=>l.e[y])) toast('Əla! Bu günün bütün yeməkləri yerinə yetirildi');});
+  view.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>openRecipe(b.dataset.r));
+  view.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const l=log(m.id,t); const n=+b.dataset.w; l.w=(l.w===n)?n-1:n; save(); render();});
+  view.querySelectorAll('[data-delx]').forEach(b=>b.onclick=()=>{const l=log(m.id,t); l.x.splice(+b.dataset.delx,1); save(); render();});
+  document.getElementById('openday').onclick=()=>openDay(t);
+  document.getElementById('chcu').onclick=()=>openDay(t);
+  document.getElementById('addx').onclick=()=>addExtra(t);
+}
+function addExtra(date){
+  const m=member();
+  openSheet('Əlavə yemək',`<div class="stack"><p class="small muted">Menyudan kənar nə yemisinizsə, adını və təxmini kalorisini yazın. Bu, günün hesabına əlavə olunacaq.</p>
+   <div><label class="f" for="xn">Nə yediniz?</label><input id="xn" type="text" placeholder="Məsələn: 1 dilim paxlava"></div>
+   <div><label class="f" for="xk">Kalori (kkal)</label><input id="xk" type="number" min="0" max="3000" placeholder="Məsələn: 250"></div>
+   <div class="chips">${[['1 dilim paxlava',230],['1 şəkərbura',180],['1 stəkan çay, 2 qənd',40],['1 qutab (yağlı)',250],['1 porsiya plov (ənənəvi)',700],['1 ovuc tum',160]].map(([n,k])=>`<button class="chip" data-q="${esc(n)}|${k}">${esc(n)} · ${k}</button>`).join('')}</div>
+   <button class="btn" id="xsave">Əlavə et</button></div>`,sb=>{
+    sb.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{const [n,k]=b.dataset.q.split('|'); sb.querySelector('#xn').value=n; sb.querySelector('#xk').value=k;});
+    sb.querySelector('#xsave').onclick=()=>{const n=sb.querySelector('#xn').value.trim(), k=+sb.querySelector('#xk').value; if(!n||!(k>0)){toast('Adı və kalorini yazın');return;} const l=log(m.id,date); l.x=l.x||[]; l.x.push({n,k}); save(); closeSheet(); toast('Əlavə olundu');};
+  });
+}
+
+/* ================= DAY sheet ================= */
+function openDay(date){
+  const m=member(), i=planIdx(date);
+  if(i<0){toast('Bu tarix menyunun başlanğıcından əvvəldir');return;}
+  const day=S.plan[i], di=dayInfo(i,m), L=getLog(m.id,date);
+  openSheet(dLong(date),`<div class="stack">
+    <div class="muted small">${ordinal(i+1)} gün · ${esc(m.name)} · ${CUIS[day.cu]?CUIS[day.cu][0]+' mətbəxi':''}</div>
+    <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:0 0 6px">Bu günün mətbəxi</span><div class="chips">${CU_KEYS.map(k=>`<button class="chip" data-dcu="${k}" aria-pressed="${day.cu===k}">${CUIS[k][0]}</button>`).join('')}</div></div>
+    <div><span class="macros"><span><b>${fmt(di.k)}</b> kkal</span><span><b>${fmt(di.p)} q</b> zülal</span><span><b>${fmt(di.fat)} q</b> yağ</span><span><b>${fmt(di.c)} q</b> karb.</span></span></div>
+    ${MEALS.map(x=>{const r=R[day[x]], a=adj(day[x],m); return `<div class="meal ${L.e[x]?'done':''}">
+      <button class="check" role="checkbox" aria-checked="${!!L.e[x]}" data-eat="${x}" aria-label="${MEAL[x]} yeyildi">${L.e[x]?ICONS.ok:''}</button>
+      <div class="art">${photoOrArt(r)}</div>
+      <div><span class="pill p-${x}">${S.prefs.times[x]} · ${MEALS_SHORT[x]}</span><div class="mt" data-r="${r.code}">${esc(r.name)}</div><div class="ms">${fmt(a.k*di.f)} kkal · ${r.min} dəq</div></div>
+      <button class="btn plain sm" data-swap="${x}">Dəyiş</button></div>`;}).join('')}
+    <p class="tiny muted">Mətbəxi seçəndə səhər, nahar və şam yeməyi həmin mətbəxdən avtomatik seçilir. "Dəyiş" bir yeməyi əvəz edir. Dəyişiklik bütün ailə üçündür, alış-veriş siyahısı avtomatik yenilənir.</p>
+  </div>`,(sb,wrap)=>{
+    sb.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>openRecipe(b.dataset.r));
+    sb.querySelectorAll('[data-eat]').forEach(b=>b.onclick=()=>{const x=b.dataset.eat; const l=log(m.id,date); l.e[x]=!l.e[x]; save(); closeSheet(wrap); openDay(date);});
+    sb.querySelectorAll('[data-swap]').forEach(b=>b.onclick=()=>swapMeal(date,i,b.dataset.swap,wrap));
+    sb.querySelectorAll('[data-dcu]').forEach(b=>b.onclick=()=>{ if(b.dataset.dcu===S.plan[i].cu) return; setDayCuisine(i,b.dataset.dcu); save(); closeSheet(wrap); openDay(date); toast(CUIS[b.dataset.dcu][0]+' menyusu seçildi'); });
+  });
+}
+function swapMeal(date,i,x,parent){
+  const m=member(), cur=S.plan[i][x];
+  const dcu=S.plan[i].cu;
+  const alts=D.rec.filter(r=>r.meal===x&&r.code!==cur&&okExcl(r)).sort((a,b)=>((a.cu===dcu||a.cu==='all')?0:1)-((b.cu===dcu||b.cu==='all')?0:1)||Math.abs(adj(a.code,m).k-adj(cur,m).k)-Math.abs(adj(b.code,m).k-adj(cur,m).k));
+  openSheet(MEALS_SHORT[x]+' üçün alternativ',`<div class="stack">${alts.map(r=>`<button class="alt" data-c="${r.code}"><span>${photoOrArt(r)}</span><span>${cuTag(r.cu)} <b>${esc(r.name)}</b><br><span class="small muted">${fmt(adj(r.code,m).k)} kkal (əsas porsiya) · ${r.min} dəq</span></span><span class="muted">›</span></button>`).join('')}</div>`,(sb,w)=>{
+    sb.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{S.plan[i][x]=b.dataset.c; save(); closeSheet(w); if(parent) closeSheet(parent); openDay(date); toast('Yemək dəyişdirildi');});
+  });
+}
+
+/* ================= RECIPE sheet ================= */
+function photoOrArt(r){ return PH[r.code]?`<img src="${PH[r.code]}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`:art(r.kind); }
+const STEPDONE={};
+function relevantSubs(r){const names=r.ing.map(([c])=>ING[c].n.toLowerCase()); return D.subs.filter(s=>names.some(n=>n.startsWith(s[0].toLowerCase().split(' (')[0].split(',')[0])||s[0].toLowerCase().startsWith(n.split(' (')[0])));}
+function openRecipe(code,scope){
+  const r=R[code], m=member(); scope=scope||'me';
+  const a=adj(code,m);
+  // member's typical factor = target / avg day kcal
+  const avgF=(()=>{let s=0;for(let i=0;i<PLAN_DAYS;i++) s+=dayInfo(i,m).f; return s/PLAN_DAYS;})();
+  let rows;
+  const showH=Math.abs(avgF-1)<0.08;
+  if(scope==='me') rows=a.ing.map(([c,g,h])=>[c,g*avgF,showH?h:'']);
+  else{ const acc={},ord=[]; S.members.forEach(mm=>{let f=0;for(let i=0;i<PLAN_DAYS;i++) f+=dayInfo(i,mm).f; f/=PLAN_DAYS; adj(code,mm).ing.forEach(([c,g])=>{if(!(c in acc)){acc[c]=0;ord.push(c);} acc[c]+=g*f;});}); rows=ord.map(c=>[c,acc[c],'']); }
+  const health=[];
+  if(a.notes.length) health.push('<b>Sizin porsiyanızda:</b> '+esc(a.notes.join('; '))+'.');
+  if(m.anemia&&r.ing.some(([c])=>['ciyer','mal_eti','mal_qiyme','quzu','merci','ispanaq','lobya_qirmizi','yumurta'].includes(c))) health.push('<b>Anemiya:</b> bu yemək dəmir verir. Limon sıxın və ya bibərli salatla yeyin, çayı 1–2 saat sonra için.');
+  const subs=relevantSubs(r);
+  const sd=STEPDONE[code]=STEPDONE[code]||{};
+  const famN=S.members.length>1;
+  openSheet(r.name,`<div class="stack">
+    <div class="hero-img" id="himg">${PH[code]?`<img src="${PH[code]}" alt="${esc(r.name)}">`:art(r.kind)}</div>
+    <div class="row between"><span class="small muted">${MEALS_SHORT[r.meal]} · ${r.min} dəq${CUIS[r.cu]?' · '+cuTag(r.cu)+' '+CUIS[r.cu][0]+' mətbəxi':''}</span>
+      <label class="btn plain sm" for="ph">${PH[code]?'Şəkli dəyiş':'Şəkil əlavə et'}</label><input id="ph" type="file" accept="image/*" hidden></div>
+    <div class="macros"><span><b>${fmt(a.k*avgF)}</b> kkal</span><span><b>${fmt(a.p*avgF)} q</b> zülal</span><span><b>${fmt(a.f*avgF)} q</b> yağ</span><span><b>${fmt(a.c*avgF)} q</b> karb.</span><span class="muted">${esc(m.name)}, 1 porsiya</span></div>
+    ${r.batch?`<div class="tipbox">Bu yeməyi ${r.batch} porsiyalıq bişirib saxlamaq olar.</div>`:''}
+    ${health.length?`<div class="warnbox">${health.join('<br>')}</div>`:''}
+    <div class="row between"><h3>Ərzaq</h3>${famN?`<div class="chips"><button class="chip" data-sc="me" aria-pressed="${scope==='me'}">Mənim porsiyam</button><button class="chip" data-sc="fam" aria-pressed="${scope==='fam'}">Ailə qazanı</button></div>`:''}</div>
+    <table class="ing"><tbody>${rows.map(([c,g,h])=>`<tr><td>${esc(ING[c].n)}${h&&scope==='me'?` <span class="muted small">· ${esc(h)}</span>`:''}</td><td class="g">${c==='yumurta'&&!(h&&scope==='me')?fmt1(Math.round(g/55*2)/2)+' ədəd · ':''}${r5(g)} q</td></tr>`).join('')}</tbody></table>
+    ${scope==='fam'?`<p class="tiny muted">${S.members.length} nəfər üçün ümumi miqdar. Hər kəsin porsiyası öz profilindədir.</p>`:''}
+    <h3>Hazırlanması</h3>
+    <p class="tiny muted">Bitirdiyiniz addıma toxunun, üstündən xətt çəkiləcək.</p>
+    <ol class="steps">${r.steps.map((s,j)=>`<li data-st="${j}" class="${sd[j]?'done':''}">${esc(s)}</li>`).join('')}</ol>
+    ${r.tip?`<div class="tipbox">${esc(r.tip)}</div>`:''}
+    ${subs.length?`<details class="card"><summary>Tapılmasa nə ilə əvəz etmək olar</summary><ul class="list">${subs.map(s=>`<li><span><b>${esc(s[0])}</b> → ${esc(s[1])}<br><span class="tiny muted">${esc(s[2])}</span></span></li>`).join('')}</ul></details>`:''}
+  </div>`,(sb,w)=>{
+    sb.querySelectorAll('[data-sc]').forEach(b=>b.onclick=()=>{closeSheet(w); openRecipe(code,b.dataset.sc);});
+    sb.querySelectorAll('[data-st]').forEach(li=>li.onclick=()=>{const j=+li.dataset.st; sd[j]=!sd[j]; li.classList.toggle('done',sd[j]);});
+    sb.querySelector('#ph').onchange=e=>{const f=e.target.files[0]; if(f) setPhoto(code,f,()=>{closeSheet(w); openRecipe(code,scope);});};
+  });
+  if(!PH[code]&&DB&&UID){ DB.doc('data/users/'+UID+'/photo-'+code).get().then(s=>{ if(s.exists){const d=s.data(); if(d&&d.img){PH[code]=d.img; try{localStorage.setItem(LSP,JSON.stringify(PH));}catch(e){} const h=document.getElementById('himg'); if(h) h.innerHTML=`<img src="${d.img}" alt="">`;}} }).catch(()=>{}); }
+}
+function setPhoto(code,file,done){
+  const img=new Image(), url=URL.createObjectURL(file);
+  img.onload=()=>{
+    const max=640, sc=Math.min(1,max/Math.max(img.width,img.height));
+    const c=document.createElement('canvas'); c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    const data=c.toDataURL('image/jpeg',0.72); URL.revokeObjectURL(url);
+    PH[code]=data; try{localStorage.setItem(LSP,JSON.stringify(PH));}catch(e){toast('Cihazda yer azdır, şəkil yalnız indilik göstərilir');}
+    if(DB&&UID) DB.doc('data/users/'+UID+'/photo-'+code).set({img:data}).catch(()=>{});
+    toast('Şəkil əlavə olundu'); done&&done();
+  };
+  img.onerror=()=>{toast('Şəkli açmaq alınmadı');};
+  img.src=url;
+}
+
+/* ================= MENU (calendar) ================= */
+let menuWeek=null;
+function renderMenu(){
+  const m=member(), t=todayISO(), start=addDays(S.prefs.start,Math.floor(Math.max(0,dayIdx(t))/PLAN_DAYS)*PLAN_DAYS);
+  const end=addDays(start,PLAN_DAYS-1);
+  // build calendar weeks Monday-first covering plan range
+  const sd=parseISO(start); const mondayOffset=(sd.getDay()+6)%7; let cur=addDays(start,-mondayOffset);
+  let html=`<div class="stack"><div class="row between"><div><h2>28 günlük menyu</h2><div class="small muted">${dShort(start)} – ${dShort(end)}</div></div><button class="btn plain sm" id="gotoday">Bu gün</button></div>
+    <div class="wkh">${GUNQ.map(g=>`<span>${g}</span>`).join('')}</div>`;
+  let lastMonth=-1;
+  while(diffDays(cur,end)>=0){
+    const mo=parseISO(addDays(cur,6)).getMonth();
+    html+=`<div class="wk">`;
+    for(let k=0;k<7;k++){
+      const d=addDays(cur,k), i=diffDays(start,d);
+      if(i<0||i>=PLAN_DAYS){ html+=`<div class="dc out"></div>`; continue; }
+      const L=getLog(m.id,d), dd=parseISO(d);
+      html+=`<button class="dc ${d===t?'today':''} ${diffDays(d,t)>0?'past':''}" data-d="${d}" aria-label="${dLong(d)}">
+        <span class="tiny muted">${dd.getDate()===1||i===0?AYLAR[dd.getMonth()].slice(0,3):'&nbsp;'}</span><span class="dn">${dd.getDate()}</span>${cuTag(S.plan[i].cu)}
+        <span class="dots">${MEALS.map(x=>`<i class="${L.e[x]?'on':''}"></i>`).join('')}</span></button>`;
+    }
+    html+=`</div>`; cur=addDays(cur,7);
+  }
+  html+=`<p class="tiny muted">Nöqtələr: yeyilmiş yeməklər. Rəngli nişan günün mətbəxidir. Günə toxunun: yeməklər, kalorilər, mətbəx seçimi və "Dəyiş" düyməsi açılır.</p>
+    <h3 class="mlabel">Günlərin siyahısı</h3><div class="stack">`;
+  for(let i=0;i<PLAN_DAYS;i++){
+    const d=addDays(start,i), day=S.plan[i], di=dayInfo(i,m);
+    html+=`<button class="card" style="text-align:left;cursor:pointer;${d===t?'border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)':''}" data-d="${d}">
+      <div class="row between"><b>${dLong(d)}</b><span class="small muted num">${cuTag(day.cu)} ${ordinal(i+1)} gün · ${fmt(di.k)} kkal</span></div>
+      <div class="small" style="margin-top:4px">${MEALS.map(x=>`<span class="muted">${S.prefs.times[x]}</span> ${esc(R[day[x]].name.split(' (')[0])}`).join(' · ')}</div></button>`;
+  }
+  html+=`</div></div>`;
+  view.innerHTML=html;
+  view.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>openDay(b.dataset.d));
+  document.getElementById('gotoday').onclick=()=>{const el=view.querySelector('.dc.today'); if(el){el.scrollIntoView({block:'center'}); el.focus();} else toast('Bu gün menyunun tarix aralığında deyil');};
+}
+
+/* ================= RECIPES ================= */
+let rFilter='all', rQuery='', rCu='all';
+let SAMPLE=null, SAMPLE_IMG=false;
+function renderRecipes(){
+  const m=member();
+  const list=D.rec.filter(r=>(rFilter==='all'||r.meal===rFilter)&&(rCu==='all'||r.cu===rCu)&&(!rQuery||r.name.toLowerCase().includes(rQuery.toLowerCase())||r.ing.some(([c])=>ING[c].n.toLowerCase().includes(rQuery.toLowerCase()))));
+  view.innerHTML=`<div class="stack">
+    <h2>Reseptlər</h2>
+    ${SAMPLE?`<div class="card stack"><b>AI köməkçi</b><div class="row" style="flex-wrap:wrap">${SAMPLE_IMG?`<label class="btn sm" for="aiimg">Yeməyin şəklindən kalori</label><input id="aiimg" type="file" accept="image/*" capture="environment" hidden>`:''}<button class="btn ghost sm" id="aifridge">Evdə olan ərzaqdan resept</button></div><p class="tiny muted">Cavablar təxminidir. AI ilk istifadədə icazə soruşur.</p></div>`:''}
+    <input type="search" id="rq" placeholder="Yemək və ya ərzaq axtar (məsələn: toyuq)" value="${esc(rQuery)}" aria-label="Axtar">
+    <div class="chips scroll">${[['all','Hamısı'],['S','Səhər'],['N','Nahar'],['Q','Qəlyanaltı'],['D','Şam']].map(([k,l])=>`<button class="chip" data-f="${k}" aria-pressed="${rFilter===k}">${l}</button>`).join('')}</div>
+    <div class="chips scroll">${[['all','Bütün mətbəxlər'],...CU_KEYS.map(k=>[k,CUIS[k][0]])].map(([k,l])=>`<button class="chip" data-rcu="${k}" aria-pressed="${rCu===k}">${l}</button>`).join('')}</div>
+    <p class="tiny muted">${list.length} resept</p>
+    <div class="rgrid">${list.map(r=>{const a=adj(r.code,m); return `<button class="rc" data-r="${r.code}"><div class="im">${PH[r.code]?`<img src="${PH[r.code]}" alt="">`:art(r.kind)}</div><div class="tx">${cuTag(r.cu)}<b class="${r.nat?'nat':''}">${esc(r.name)}</b><span class="tiny muted">${MEALS_SHORT[r.meal]} · ${r.min} dəq · ~${fmt(a.k)} kkal</span></div></button>`;}).join('')||'<p class="empty">Heç nə tapılmadı</p>'}</div>
+  </div>`;
+  const rq=document.getElementById('rq'); rq.oninput=()=>{rQuery=rq.value; const pos=rq.selectionStart; renderRecipes(); const n=document.getElementById('rq'); n.focus(); try{n.setSelectionRange(pos,pos);}catch(e){}};
+  view.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{rFilter=b.dataset.f; renderRecipes();});
+  view.querySelectorAll('[data-rcu]').forEach(b=>b.onclick=()=>{rCu=b.dataset.rcu; renderRecipes();});
+  view.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>openRecipe(b.dataset.r));
+  const ai=document.getElementById('aiimg'); if(ai) ai.onchange=e=>{const f=e.target.files[0]; if(f) aiPhoto(f);};
+  const af=document.getElementById('aifridge'); if(af) af.onclick=aiFridge;
+}
+function parseJSON(t){ if(!t) return null; const a=t.indexOf('{'), b=t.lastIndexOf('}'); if(a<0||b<a) return null; try{return JSON.parse(t.slice(a,b+1));}catch(e){return null;} }
+async function aiPhoto(file){
+  const m=member();
+  const w=openSheet('Şəkildən kalori',`<div class="stack"><p><span class="spinner"></span> Şəkil təhlil olunur…</p></div>`);
+  const sb=w.querySelector('.sb');
+  try{
+    const res=await SAMPLE(`Bu yemək şəklinə bax. Yeməyi müəyyən et, porsiyanın təxmini çəkisini və kalorisini qiymətləndir. Cavabı yalnız JSON kimi ver, Azərbaycan dilində: {"ad":"...","porsiya_qram":0,"kkal":0,"zulal":0,"yag":0,"karb":0,"qeyd":"bir cümlə: arıqlayan insan üçün məsləhət"}`,{images:[file],modelTier:'default'});
+    const j=parseJSON(res&&res.text);
+    if(!j){ sb.innerHTML=`<p>Cavabı oxumaq alınmadı. Başqa şəkillə yenidən cəhd edin.</p>`; return; }
+    sb.innerHTML=`<div class="stack"><h3>${esc(j.ad)}</h3><div class="macros"><span><b>${fmt(j.kkal)}</b> kkal</span><span><b>${fmt(j.zulal)} q</b> zülal</span><span><b>${fmt(j.yag)} q</b> yağ</span><span><b>${fmt(j.karb)} q</b> karb.</span><span class="muted">~${fmt(j.porsiya_qram)} q</span></div>${j.qeyd?`<div class="tipbox">${esc(j.qeyd)}</div>`:''}<p class="tiny muted">Bu, AI-nin təxminidir və ±20–30% fərqlənə bilər.</p><button class="btn" id="aiadd">Bu günə əlavə et (${esc(m.name)})</button></div>`;
+    sb.querySelector('#aiadd').onclick=()=>{const l=log(m.id,todayISO()); l.x=l.x||[]; l.x.push({n:String(j.ad).slice(0,60),k:Math.round(+j.kkal||0)}); save(); closeSheet(w); toast('Bu günə əlavə olundu');};
+  }catch(e){ sb.innerHTML=`<p>${e&&e.code==='rate_limited'?'Çox sorğu göndərildi, bir az sonra yenidən cəhd edin.':'AI cavab vermədi. Bir az sonra yenidən cəhd edin.'}</p>`; }
+}
+function aiFridge(){
+  const m=member(), mealK=Math.round(target(m)*0.32);
+  openSheet('Evdə olan ərzaqdan resept',`<div class="stack"><label class="f" for="fr">Evdə nə var?</label><textarea id="fr" rows="3" placeholder="Məsələn: toyuq budu, kartof, soğan, pomidor, qatıq"></textarea>
+    <div class="chips">${['Nahar','Şam yeməyi','Səhər yeməyi'].map((l,j)=>`<button class="chip" data-ml="${l}" aria-pressed="${j===0}">${l}</button>`).join('')}</div>
+    <button class="btn" id="frgo">Resept hazırla</button><div id="frout"></div></div>`,(sb)=>{
+    let ml='Nahar';
+    sb.querySelectorAll('[data-ml]').forEach(b=>b.onclick=()=>{ml=b.dataset.ml; sb.querySelectorAll('[data-ml]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+    sb.querySelector('#frgo').onclick=async()=>{
+      const items=sb.querySelector('#fr').value.trim(); if(!items){toast('Ərzaqları yazın');return;}
+      const out=sb.querySelector('#frout'); out.innerHTML='<p><span class="spinner"></span> Resept hazırlanır…</p>';
+      const health=[m.insulin?'insulin direnci var: şəkər, bal, ağ un az olsun':'',m.anemia?'anemiya var: dəmirli ərzaq və C vitamini olsun':''].filter(Boolean).join('; ');
+      try{
+        const res=await SAMPLE(`Azərbaycan mətbəxinə yaxın, az yağlı, arıqlamaya uyğun bir ${ml.toLowerCase()} resepti hazırla. Yalnız bu ərzaqlardan və adi ədviyyatdan istifadə et: ${items}. Bir nəfərlik porsiya təxminən ${mealK} kkal olsun.${health?' Qeyd: '+health+'.':''} Cavabı yalnız JSON kimi ver, Azərbaycan dilində: {"ad":"...","erzaq":[{"ad":"...","qram":0}],"addimlar":["..."],"kkal":0,"zulal":0,"deqiqe":0}`,{modelTier:'default'});
+        const j=parseJSON(res&&res.text);
+        if(!j){out.innerHTML='<p>Cavabı oxumaq alınmadı, yenidən cəhd edin.</p>';return;}
+        out.innerHTML=`<div class="card stack"><h3>${esc(j.ad)}</h3><div class="macros"><span><b>${fmt(j.kkal)}</b> kkal</span><span><b>${fmt(j.zulal)} q</b> zülal</span><span>${fmt(j.deqiqe)} dəq</span></div>
+          <table class="ing"><tbody>${(j.erzaq||[]).map(x=>`<tr><td>${esc(x.ad)}</td><td class="g">${fmt(x.qram)} q</td></tr>`).join('')}</tbody></table>
+          <ol class="steps">${(j.addimlar||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="tiny muted">AI resepti: kalorilər təxminidir.</p></div>`;
+        out.querySelectorAll('ol.steps li').forEach(li=>li.onclick=()=>li.classList.toggle('done'));
+      }catch(e){ out.innerHTML=`<p>${e&&e.code==='rate_limited'?'Çox sorğu göndərildi, bir az sonra yenidən cəhd edin.':'AI cavab vermədi. Bir az sonra yenidən cəhd edin.'}</p>`; }
+    };
+  });
+}
+
+/* ================= SHOP ================= */
+let shopWeek=null, shopScope='fam';
+const ORDER=['Ət və balıq','Zülal','Süd məhsulları','Yarma və paxlalılar','Çörək','Tərəvəz','Göyərti','Meyvə və qoz-fındıq','Yağ və digər'];
+function amount(code,g){
+  if(code==='yumurta') return Math.ceil(g/55)+' ədəd';
+  if(['sud','kefir'].includes(code)) return fmt1(Math.ceil(g/100)/10)+' l';
+  if(g>=1000) return fmt1(Math.ceil(g/100)/10)+' kq';
+  return (Math.ceil(g/10)*10)+' q';
+}
+function shopGroups(w,scope){
+  const tot={}, mem=scope==='me'?[member()]:S.members;
+  for(let k=0;k<7;k++){ const i=(w*7+k)%PLAN_DAYS; mem.forEach(m=>{const di=dayInfo(i,m); MEALS.forEach(x=>adj(S.plan[i][x],m).ing.forEach(([c,g])=>{tot[c]=(tot[c]||0)+g*di.f;}));}); }
+  const groups={}; Object.entries(tot).forEach(([c,g])=>{if(g<1) return; const gr=ING[c].g; (groups[gr]=groups[gr]||[]).push([c,g]);});
+  Object.values(groups).forEach(a=>a.sort((x,y)=>y[1]-x[1]));
+  return groups;
+}
+function renderShop(){
+  const t=todayISO(); const i=Math.max(0,dayIdx(t));
+  if(shopWeek===null) shopWeek=Math.floor((i%PLAN_DAYS)/7);
+  const wStart=addDays(S.prefs.start,Math.floor(i/PLAN_DAYS)*PLAN_DAYS+shopWeek*7);
+  const key=wStart+'|'+shopScope; const bought=S.bought[key]||{};
+  const groups=shopGroups(shopWeek,shopScope);
+  const all=Object.values(groups).flat(), got=all.filter(([c])=>bought[c]).length;
+  view.innerHTML=`<div class="stack">
+    <h2>Alış-veriş siyahısı</h2>
+    <div class="chips">${[0,1,2,3].map(w=>`<button class="chip" data-w="${w}" aria-pressed="${w===shopWeek}">${dShort(addDays(S.prefs.start,Math.floor(i/PLAN_DAYS)*PLAN_DAYS+w*7))} – ${dShort(addDays(S.prefs.start,Math.floor(i/PLAN_DAYS)*PLAN_DAYS+w*7+6))}</button>`).join('')}</div>
+    ${S.members.length>1?`<div class="chips"><button class="chip" data-s="fam" aria-pressed="${shopScope==='fam'}">Bütün ailə (${S.members.length} nəfər)</button><button class="chip" data-s="me" aria-pressed="${shopScope==='me'}">Yalnız ${esc(member().name)}</button></div>`:''}
+    <div class="row between"><span class="small muted">${got} / ${all.length} alınıb</span><button class="btn plain sm" id="copy">Kopyala</button></div>
+    ${ORDER.filter(g=>groups[g]).map(g=>`<div class="card"><b>${g}</b><ul class="list">${groups[g].map(([c,gr])=>`<li class="${bought[c]?'got':''}"><label class="row" style="flex:1;cursor:pointer"><input type="checkbox" data-c="${c}" ${bought[c]?'checked':''}><span>${esc(ING[c].n)}</span></label><span class="small muted num">${amount(c,gr)}</span></li>`).join('')}</ul></div>`).join('')}
+    <p class="tiny muted">Profillərdəki xüsusi dəyişikliklər (məsələn, insulin direnci üçün azaldılmış kartof və ya istisna olunan ərzaq) nəzərə alınıb. Duz, ədviyyat və sarımsaq siyahıda yoxdur.</p>
+  </div>`;
+  view.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{shopWeek=+b.dataset.w; renderShop();});
+  view.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{shopScope=b.dataset.s; renderShop();});
+  view.querySelectorAll('[data-c]').forEach(cb=>cb.onchange=()=>{S.bought[key]=S.bought[key]||{}; S.bought[key][cb.dataset.c]=cb.checked; save(); renderShop();});
+  document.getElementById('copy').onclick=async()=>{
+    const txt=`Alış-veriş (${dShort(wStart)} – ${dShort(addDays(wStart,6))})\n`+ORDER.filter(g=>groups[g]).map(g=>`\n${g}:\n`+groups[g].map(([c,gr])=>`${bought[c]?'✓':'-'} ${ING[c].n}: ${amount(c,gr)}`).join('\n')).join('\n');
+    try{await navigator.clipboard.writeText(txt); toast('Siyahı kopyalandı');}catch(e){toast('Kopyalamaq alınmadı');}
+  };
+}
+
+/* ================= PROGRESS ================= */
+function weights(m){ const L=S.log[m.id]||{}; const arr=Object.entries(L).filter(([d,v])=>v.kg).map(([d,v])=>[d,v.kg]).sort((a,b)=>a[0]<b[0]?-1:1); return arr; }
+function renderProgress(){
+  const m=member(), t=todayISO(), ws=weights(m);
+  const startW=m.startW||m.w, curW=ws.length?ws[ws.length-1][1]:m.w, tg=target(m), td=tdee(m);
+  const lossWk=Math.max(0,(td-tg)*7/7700);
+  const toGoal=m.goalW&&curW>m.goalW&&lossWk>0?Math.ceil((curW-m.goalW)/lossWk):null;
+  // adherence
+  let days=0, full=0; const i0=Math.min(dayIdx(t),PLAN_DAYS*12);
+  for(let k=0;k<=i0;k++){ const d=addDays(S.prefs.start,k); const L=getLog(m.id,d); days++; if(MEALS.every(x=>L.e[x])) full++; }
+  view.innerHTML=`<div class="stack">
+    <h2>${esc(m.name)}: proqres</h2>
+    <div class="stats">
+      <div class="stat"><b>${fmt1(curW)}</b><span>indiki çəki, kq</span></div>
+      <div class="stat"><b style="color:var(--good)">${fmt1(Math.max(0,startW-curW))}</b><span>itirilib, kq</span></div>
+      <div class="stat"><b>${fmt1(curW/((m.h/100)**2))}</b><span>BMI</span></div>
+      <div class="stat"><b>${fmt(tg)}</b><span>kkal/gün hədəf</span></div>
+      <div class="stat"><b>${fmt1(lossWk)}</b><span>kq/həftə gözlənilən</span></div>
+      <div class="stat"><b>${streak(m)}</b><span>gün ardıcıllıq</span></div>
+    </div>
+    ${toGoal?`<div class="tipbox">Bu sürətlə <b>${fmt1(m.goalW)} kq</b> hədəfinə təxminən <b>${toGoal} həftəyə</b> (${dShort(addDays(t,toGoal*7))}) çatacaqsınız.</div>`:''}
+    <div class="card stack"><b>Çəkini qeyd et</b>
+      <div class="grid2"><div><label class="f" for="wd">Tarix</label><input id="wd" type="date" value="${t}"></div><div><label class="f" for="wk">Çəki, kq</label><input id="wk" type="number" step="0.1" min="30" max="300" placeholder="${fmt1(curW)}"></div></div>
+      <button class="btn" id="wsave">Yadda saxla</button>
+      <p class="tiny muted">Həftədə bir dəfə, eyni gün, səhər ac qarına çəkilin.</p></div>
+    <div class="card chart"><b>Çəki: faktiki və proqnoz</b><div id="wc"></div></div>
+    <div class="card"><b>Menyuya əməl</b><p class="small" style="margin:6px 0 0">${days?`${days} gündən <b>${full}</b> gündə bütün 4 yemək yerinə yetirilib (${Math.round(full/days*100)}%).`:'Hələ məlumat yoxdur.'}</p></div>
+    ${ws.length?`<div class="card"><b>Qeydlər</b><ul class="list">${ws.slice().reverse().map(([d,kg])=>`<li><span>${dLong(d)}</span><span class="row"><b class="num">${fmt1(kg)} kq</b><button class="ic" data-delw="${d}" aria-label="Sil">${ICONS.x}</button></span></li>`).join('')}</ul></div>`:''}
+  </div>`;
+  document.getElementById('wsave').onclick=()=>{const d=document.getElementById('wd').value, kg=+document.getElementById('wk').value; if(!d||!(kg>30)){toast('Çəkini düzgün yazın');return;} log(m.id,d).kg=kg; if(d>=t){m.w=kg;} save(); renderProgress(); toast('Çəki qeyd olundu');};
+  view.querySelectorAll('[data-delw]').forEach(b=>b.onclick=()=>{const L=log(m.id,b.dataset.delw); delete L.kg; save(); renderProgress();});
+  drawWeight(m,ws,startW);
+}
+function drawWeight(m,ws,startW){
+  const W=640,H=260,L=40,Rr=16,T=14,B=30, weeks=12, s0=S.prefs.start;
+  const proj=[startW]; let cur=startW; const mm={...m};
+  for(let k=1;k<=weeks;k++){ mm.w=cur; const tg=target(m); cur=cur-Math.max(0,(tdee(mm)-tg)*7/7700); proj.push(cur); }
+  const pts=ws.map(([d,kg])=>[diffDays(s0,d)/7,kg]).filter(p=>p[0]>=-1&&p[0]<=weeks+1);
+  const ys=[...proj,...pts.map(p=>p[1]),m.goalW||proj[weeks]];
+  const minY=Math.floor(Math.min(...ys)-1), maxY=Math.ceil(Math.max(...ys)+0.5);
+  const x=v=>L+(W-L-Rr)*Math.max(0,Math.min(weeks,v))/weeks, y=v=>T+(H-T-B)*(maxY-v)/(maxY-minY||1);
+  let g=''; const step=Math.max(1,Math.round((maxY-minY)/5));
+  for(let v=minY;v<=maxY;v+=step) g+=`<line x1="${L}" x2="${W-Rr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+  for(let k=0;k<=weeks;k+=2) g+=`<text x="${x(k)}" y="${H-10}" text-anchor="middle">${k===0?dShort(s0):k+'. həftə'}</text>`;
+  if(m.goalW) g+=`<line x1="${L}" x2="${W-Rr}" y1="${y(m.goalW)}" y2="${y(m.goalW)}" stroke="var(--herb)" stroke-dasharray="3 4"/><text x="${W-Rr}" y="${y(m.goalW)-5}" text-anchor="end" style="fill:var(--herb)">hədəf ${fmt1(m.goalW)}</text>`;
+  g+=`<path d="${proj.map((v,k)=>(k?'L':'M')+x(k)+' '+y(v)).join(' ')}" fill="none" stroke="var(--saffron)" stroke-width="2.5" stroke-dasharray="6 5"/>`;
+  if(pts.length){ g+=`<path d="${pts.map((p,k)=>(k?'L':'M')+x(p[0])+' '+y(p[1])).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="3"/>`; pts.forEach(p=>g+=`<circle cx="${x(p[0])}" cy="${y(p[1])}" r="4" fill="var(--accent)"/>`); }
+  document.getElementById('wc').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Çəki qrafiki">${g}</svg><div class="small muted"><span style="color:var(--accent)">●</span> faktiki çəki &nbsp; <span style="color:var(--saffron)">- -</span> proqnoz &nbsp; <span style="color:var(--herb)">- -</span> hədəf</div>`;
+}
+
+/* ================= FAMILY / SETTINGS ================= */
+let DL=null;
+function renderFamily(){
+  const p=S.prefs;
+  view.innerHTML=`<div class="stack">
+    <h2>Ailə profilləri</h2>
+    ${S.members.map(m=>`<div class="member"><span class="avatar">${esc(m.name.slice(0,1))}</span><div style="flex:1"><b>${esc(m.name)}</b><div class="small muted">${m.sex==='m'?'Kişi':'Qadın'}, ${m.age} yaş, ${m.h} sm, ${fmt1(m.w)} kq · ${GOALS[m.goal]} · <b class="num">${fmt(target(m))} kkal</b>${m.anemia?' · anemiya':''}${m.insulin?' · insulin direnci':''}</div></div><button class="btn plain sm" data-ed="${m.id}">Dəyiş</button></div>`).join('')}
+    <button class="btn plain" id="addm">+ Ailə üzvü əlavə et</button>
+    <h2 class="sec">Menyu parametrləri</h2>
+    <div class="card stack">
+      <div><label class="f" for="pst">Menyunun başlanğıc tarixi</label><input id="pst" type="date" value="${p.start}"></div>
+      <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:4px 0">Mətbəxlər (bir neçəsini seçə bilərsiniz)</span><div class="chips">${CU_KEYS.map(k=>`<button class="chip" data-cu="${k}" aria-pressed="${p.cuisines.includes(k)}">${CUIS[k][0]}</button>`).join('')}</div><p class="tiny muted" style="margin:6px 0 0">Seçilən mətbəxlər günlərə növbə ilə paylanır. Azərbaycan seçilibsə, günaşırı Azərbaycan mətbəxi olur. Hər günün mətbəxini "Menyu" bölməsində ayrıca dəyişə bilərsiniz.</p></div>
+      <label class="row small" style="cursor:pointer"><input type="checkbox" id="pq" ${p.quick?'checked':''} style="width:20px;height:20px;accent-color:var(--accent)"> Həftə içi naharda və şamda 45 dəqiqəyə qədər hazırlanan yeməklər</label>
+      <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:4px 0">Yemədiyimiz ərzaq (bütün ailə üçün)</span><div class="chips">${Object.keys(TAGS).map(k=>`<button class="chip" data-ex="${k}" aria-pressed="${(p.excl||[]).includes(k)}">${TAGN[k]}</button>`).join('')}</div></div>
+      <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:4px 0">Yemək saatları</span><div class="grid2">${MEALS.map(x=>`<div><label class="f" for="tm${x}">${MEALS_SHORT[x]}</label><input id="tm${x}" type="time" value="${p.times[x]}"></div>`).join('')}</div></div>
+      <div class="row" style="flex-wrap:wrap"><button class="btn" id="regen">Menyunu yenidən yarat</button><button class="btn ghost" id="restore">Əsas menyunu bərpa et</button></div>
+      <p class="tiny muted">Parametrləri dəyişdikdən sonra "Menyunu yenidən yarat" düyməsinə basın. "Əsas menyunu bərpa et" əvvəlcədən hazırlanmış 28 günlük Azərbaycan menyusunu qaytarır.</p>
+    </div>
+    ${(DL||STANDALONE)?`<div class="card stack"><b>Telefonda xatırlatmalar</b><p class="small muted" style="margin:0">Yemək saatlarını və yeməklərin adlarını telefonunuzun təqviminə yükləyin. Təqvim hər yeməkdən əvvəl xatırladacaq.</p><button class="btn plain" id="ics">Təqvim faylını yüklə (.ics)</button></div>`:''}
+    <div class="card stack"><b>Ehtiyat nüsxə</b><p class="small muted" style="margin:0">${esc(STANDALONE?'Məlumatlar yalnız bu cihazda saxlanılır. Telefonu dəyişəndə və ya başqa cihaza keçəndə ehtiyat faylı yükləyib orada bərpa edin.':syncNote)}</p>
+      <div class="row" style="flex-wrap:wrap"><button class="btn plain sm" id="bexp">Ehtiyat faylı yüklə</button><label class="btn plain sm" for="bimp">Fayldan bərpa et</label><input id="bimp" type="file" accept="application/json,.json" hidden></div></div>
+    <details class="card"><summary>Məlumatları sıfırla</summary><p class="small">Bütün profillər, qeydlər və menyu silinəcək.</p><button class="btn ghost sm" id="reset">Hamısını sil</button></details>
+    <p class="tiny muted">Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir. Xroniki xəstəlik, hamiləlik və ya 18 yaşdan kiçik yaş olduqda həkimlə məsləhətləşin.</p>
+  </div>`;
+  view.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>memberForm(S.members.find(m=>m.id===b.dataset.ed)));
+  document.getElementById('addm').onclick=()=>memberForm(null);
+  document.getElementById('pst').onchange=e=>{ if(e.target.value){ p.start=e.target.value; save(); toast('Başlanğıc tarixi dəyişdi'); } };
+  view.querySelectorAll('[data-cu]').forEach(b=>b.onclick=()=>{const k=b.dataset.cu; if(p.cuisines.includes(k)){ if(p.cuisines.length===1){toast('Ən azı bir mətbəx seçilməlidir');return;} p.cuisines=p.cuisines.filter(x=>x!==k);} else p.cuisines=[...p.cuisines,k]; save(); renderFamily(); toast('Yeni menyu üçün "Menyunu yenidən yarat" düyməsinə basın');});
+  document.getElementById('pq').onchange=e=>{p.quick=e.target.checked; save();};
+  view.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{const k=b.dataset.ex; p.excl=p.excl||[]; p.excl=p.excl.includes(k)?p.excl.filter(x=>x!==k):[...p.excl,k]; save(); renderFamily();});
+  MEALS.forEach(x=>document.getElementById('tm'+x).onchange=e=>{ if(e.target.value){p.times[x]=e.target.value; save();} });
+  document.getElementById('regen').onclick=()=>{ S.seed=(S.seed||1)+1; generate(); save(); toast('Yeni menyu hazırlandı'); setTab('menu'); };
+  document.getElementById('restore').onclick=()=>{ S.seed=1; p.cuisines=['az']; p.quick=false; p.excl=[]; generate(); save(); toast('Əsas Azərbaycan menyusu bərpa olundu'); renderFamily(); };
+  const ib=document.getElementById('ics'); if(ib) ib.onclick=downloadICS;
+  document.getElementById('bexp').onclick=exportBackup;
+  document.getElementById('bimp').onchange=e=>{const f=e.target.files[0]; if(f) importBackup(f);};
+  document.getElementById('reset').onclick=()=>{ S=blank(); PH={}; try{localStorage.removeItem(LSP);}catch(e){} save(); tab='today'; render(); };
+}
+function memberForm(m){
+  const isNew=!m; m=m||{id:uid(),name:'',sex:'f',age:30,h:165,w:70,goalW:'',act:1.2,goal:'lose',anemia:false,insulin:false};
+  openSheet(isNew?'Yeni profil':'Profili dəyiş',`<form class="stack" id="mf">
+    <div><label class="f" for="mn">Ad</label><input id="mn" type="text" required value="${esc(m.name)}"></div>
+    <div class="grid2"><div><label class="f" for="msx">Cins</label><select id="msx"><option value="m" ${m.sex==='m'?'selected':''}>Kişi</option><option value="f" ${m.sex==='f'?'selected':''}>Qadın</option></select></div>
+      <div><label class="f" for="mag">Yaş</label><input id="mag" type="number" min="14" max="95" value="${m.age}"></div></div>
+    <div class="grid2"><div><label class="f" for="mh">Boy, sm</label><input id="mh" type="number" min="130" max="220" value="${m.h}"></div>
+      <div><label class="f" for="mw">Çəki, kq</label><input id="mw" type="number" step="0.1" min="35" max="300" value="${m.w}"></div></div>
+    <div class="grid2"><div><label class="f" for="mgw">Hədəf çəki, kq</label><input id="mgw" type="number" step="0.1" min="35" max="300" value="${m.goalW||''}"></div>
+      <div><label class="f" for="mgo">Məqsəd</label><select id="mgo">${Object.entries(GOALS).map(([k,l])=>`<option value="${k}" ${m.goal===k?'selected':''}>${l}</option>`).join('')}</select></div></div>
+    <div><label class="f" for="mac">Həyat tərzi</label><select id="mac">${ACTS.map(([v,l])=>`<option value="${v}" ${+m.act===v?'selected':''}>${l}</option>`).join('')}</select></div>
+    <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:4px 0">Sağlamlıq</span>
+      <label class="row small" style="cursor:pointer"><input type="checkbox" id="man" ${m.anemia?'checked':''} style="width:20px;height:20px;accent-color:var(--accent)"> Anemiya (dəmir çatışmazlığı)</label>
+      <label class="row small" style="cursor:pointer;margin-top:6px"><input type="checkbox" id="mins" ${m.insulin?'checked':''} style="width:20px;height:20px;accent-color:var(--accent)"> İnsulin direnci və ya prediabet</label></div>
+    <div class="tipbox small" id="mprev"></div>
+    <div class="row" style="flex-wrap:wrap"><button class="btn" type="submit">Yadda saxla</button>${!isNew&&S.members.length>1?'<button class="btn ghost" type="button" id="mdel">Profili sil</button>':''}</div>
+  </form>`,(sb,w)=>{
+    const read=()=>({...m,name:sb.querySelector('#mn').value.trim(),sex:sb.querySelector('#msx').value,age:+sb.querySelector('#mag').value,h:+sb.querySelector('#mh').value,w:+sb.querySelector('#mw').value,goalW:+sb.querySelector('#mgw').value||null,goal:sb.querySelector('#mgo').value,act:+sb.querySelector('#mac').value,anemia:sb.querySelector('#man').checked,insulin:sb.querySelector('#mins').checked});
+    const prev=()=>{const x=read(); if(!(x.age>0&&x.h>0&&x.w>0)) return; const b=bmi(x), tg=target(x), td=tdee(x);
+      sb.querySelector('#mprev').innerHTML=`Gündəlik xərc: <b>${fmt(td)} kkal</b> · Hədəf: <b>${fmt(tg)} kkal</b> · BMI: <b>${fmt1(b)}</b>${td-tg>100?` · ~${fmt1((td-tg)*7/7700)} kq/həftə`:''}${x.age<18?'<br>18 yaşdan kiçiklər üçün yalnız yüngül rejim tətbiq olunur, həkimlə məsləhətləşin.':''}${b<20&&(x.goal==='lose'||x.goal==='light')?'<br>BMI artıq aşağıdır: arıqlamaq tövsiyə olunmur.':''}`;};
+    sb.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',prev)); prev();
+    sb.querySelector('#mf').onsubmit=e=>{e.preventDefault(); const x=read(); if(!x.name){toast('Adı yazın');return;}
+      if(isNew){ x.startW=x.w; S.members.push(x); S.active=x.id; } else { Object.assign(m,x); }
+      if(!S.plan) generate(); ADJ_CACHE.clear(); save(); closeSheet(w); toast('Profil yadda saxlandı'); };
+    const del=sb.querySelector('#mdel'); if(del) del.onclick=()=>{ S.members=S.members.filter(z=>z.id!==m.id); delete S.log[m.id]; S.active=S.members[0].id; save(); closeSheet(w); };
+  });
+}
+async function downloadICS(){
+  const p=S.prefs, lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sufre//AZ','CALSCALE:GREGORIAN'];
+  const t=todayISO(); const i0=Math.max(0,dayIdx(t));
+  for(let k=0;k<PLAN_DAYS;k++){
+    const d=addDays(p.start,i0+k), i=(i0+k)%PLAN_DAYS;
+    MEALS.forEach(x=>{ const [h,mm]=p.times[x].split(':'); const dt=d.replace(/-/g,'')+'T'+h+mm+'00';
+      const end=d.replace(/-/g,'')+'T'+pad((+h+(+mm>=30?1:0))%24)+pad((+mm+30)%60)+'00';
+      lines.push('BEGIN:VEVENT','UID:'+d+x+'@sufre','DTSTAMP:'+t.replace(/-/g,'')+'T000000','DTSTART:'+dt,'DTEND:'+end,'SUMMARY:'+MEALS_SHORT[x]+': '+R[S.plan[i][x]].name.replace(/[,;]/g,' '),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+MEALS_SHORT[x]+' vaxtıdır','TRIGGER:-PT10M','END:VALARM','END:VEVENT'); });
+  }
+  lines.push('END:VCALENDAR');
+  const ok=await saveFile('sufre-menyu.ics',lines.join('\r\n'),'text/calendar'); toast(ok?'Faylı açın və təqviminizə əlavə edin':'Yükləmə ləğv olundu');
+}
+
+/* ================= files (standalone + Claude) ================= */
+const STANDALONE=!(window.claude&&window.claude.use);
+async function saveFile(filename,data,mime){
+  if(DL){ try{ await DL.save({filename,data}); return true; }catch(e){ return false; } }
+  if(STANDALONE){ try{ const url=URL.createObjectURL(new Blob([data],{type:mime||'application/octet-stream'})); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),4000); return true; }catch(e){ return false; } }
+  return false;
+}
+function exportBackup(){
+  const data=JSON.stringify({app:'sufre',v:1,state:S,photos:PH});
+  saveFile('sufre-ehtiyat-'+todayISO()+'.json',data,'application/json').then(ok=>{
+    if(ok) toast('Ehtiyat faylı yükləndi');
+    else navigator.clipboard.writeText(data).then(()=>toast('Ehtiyat məlumatı kopyalandı'),()=>toast('Ehtiyat nüsxə alınmadı'));
+  });
+}
+function importBackup(file){
+  const fr=new FileReader();
+  fr.onload=()=>{ try{ const j=JSON.parse(fr.result); if(j.app!=='sufre'||!j.state||j.state.v!==1) throw 0; S=j.state; PH=j.photos||{}; migrate(); try{localStorage.setItem(LSP,JSON.stringify(PH));}catch(e){} ADJ_CACHE.clear(); save(); tab='today'; render(); toast('Məlumatlar bərpa olundu'); }catch(e){ toast('Bu fayl Süfrə ehtiyat faylı deyil'); } };
+  fr.readAsText(file);
+}
+
+/* ================= boot ================= */
+const h=(location.hash||'').slice(1); if(TABS.some(t=>t[0]===h)) tab=h;
+if(S.members.length&&!S.active) S.active=S.members[0].id;
+render();
+// re-render at midnight / when app becomes visible (date may change)
+let lastDay=todayISO();
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } });
+setInterval(()=>{ if(todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } else if(tab==='today'&&!sheetStack.length&&!document.hidden){ /* refresh "next meal" */ const v=view.scrollTop; render(); view.scrollTop=v; } },300000);
+(async()=>{
+  try{
+    if(!window.claude||!window.claude.use) return;
+    const [db,user,dl,sample]=await Promise.all([claude.use('db'),claude.use('user'),claude.use('downloads'),claude.use('sample')]);
+    DL=dl||null;
+    if(sample){ SAMPLE=sample; try{const l=await sample.limits(); SAMPLE_IMG=!!(l&&l.images);}catch(e){SAMPLE_IMG=false;} }
+    if(db&&user){
+      const id=await user.id();
+      if(id){
+        DB=db; UID=id;
+        const timer=setTimeout(()=>{syncNote='Hesabla sinxronizasiya hələ cavab vermir. Məlumatlar bu cihazda saxlanılır.';},10000);
+        try{
+          const snap=await db.doc('data/users/'+id+'/state').get();
+          clearTimeout(timer);
+          if(snap.exists){ const d=snap.data(); const remote=d&&d.json?JSON.parse(d.json):null;
+            if(remote&&remote.v===1&&(remote.updated||0)>(S.updated||0)){ S=remote; try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){} ADJ_CACHE.clear(); }
+            else if((S.updated||0)>(d.t||0)) save();
+          } else if(S.members.length) save();
+          syncNote='Məlumatlar Claude hesabınızda saxlanılır: telefonda və kompüterdə eyni profillər və qeydlər görünür.';
+        }catch(e){ clearTimeout(timer); syncNote='Hesabla sinxronizasiya alınmadı. Məlumatlar bu cihazda saxlanılır.'; }
+      }
+    }
+    if(!sheetStack.length) render();
+  }catch(e){}
+})();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+})();
+</script>
+</body>
+</html>
