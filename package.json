@@ -1,6 +1,6 @@
 {
   "name": "sufre-app",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "private": true,
   "description": "Süfrə — ailə arıqlama menyusu (Android/iOS, Capacitor)",
   "scripts": {
@@ -12,7 +12,10 @@
   "dependencies": {
     "@capacitor/android": "8.5.3",
     "@capacitor/core": "8.5.3",
-    "@capacitor/ios": "8.5.3"
+    "@capacitor/ios": "8.5.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/share": "8.0.3",
+    "@capacitor/filesystem": "8.1.5"
   },
   "devDependencies": {
     "@capacitor/assets": "4.0.0",
