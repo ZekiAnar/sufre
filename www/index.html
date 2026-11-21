@@ -171,7 +171,7 @@ details summary{cursor:pointer;font-weight:600}
 .hb[aria-pressed="true"]{color:var(--accent)}
 .sheet .sh{position:relative;touch-action:none}
 .sheet .grab{position:absolute;top:5px;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:4px;background:var(--line)}
-#toset svg{width:18px;height:18px;vertical-align:-4px}
+.water-toast{bottom:auto;top:calc(70px + env(safe-area-inset-top));text-align:center;padding:12px 16px;min-width:260px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 </style>
 </head>
 <body>
@@ -247,11 +247,13 @@ az:{
  s_times:'Yemək saatları',s_water:'Su',s_glass:'Stəkan həcmi',s_waterGoal:'Gündəlik su hədəfi',auto:'Avtomatik',s_weighDay:'Çəki günü',s_reminders:'Xatırlatmalar',s_icsText:'Yemək saatlarını və yeməklərin adlarını telefonunuzun təqviminə yükləyin. Təqvim hər yeməkdən 10 dəqiqə əvvəl xatırladacaq.',s_ics:'Təqvim faylını yüklə (.ics)',
  s_data:'Məlumatlar və ehtiyat nüsxə',s_local:'Məlumatlar yalnız bu cihazda saxlanılır.',s_lastBackup:'Son ehtiyat nüsxə: {d}',never:'hələ yoxdur',s_export:'Ehtiyat faylı yüklə',s_import:'Fayldan bərpa et',s_share:'Paylaş / Google Drive-a saxla',s_shareNote:'Paylaşma pəncərəsində "Google Drive" seçin. Bərpa üçün "Fayldan bərpa et" düyməsinə basıb Drive-dakı faylı seçin.',
  s_gdrive:'Google Drive',s_gdUp:'Google Drive-a yüklə',s_gdDown:'Google Drive-dan bərpa et',s_gdNote:'Ehtiyat nüsxə Google Drive hesabınıza "Sufre-backup" adı ilə yüklənir.',gdUploading:'Google Drive-a yüklənir…',gdDone:'Google Drive-a yükləndi',gdFail:'Google Drive ilə əlaqə alınmadı',gdNone:'Google Drive-da ehtiyat nüsxə tapılmadı',gdPick:'Bərpa üçün nüsxəni seçin',
- s_snapshots:'Avtomatik nüsxələr (son 7 gün)',s_snapNote:'App hər gün bu cihazda bir nüsxə saxlayır.',restore:'Bərpa et',restored:'Məlumatlar bərpa olundu',badFile:'Bu fayl Süfrə ehtiyat faylı deyil',backupDone:'Ehtiyat faylı yükləndi',backupCopied:'Ehtiyat məlumatı kopyalandı',backupFail:'Ehtiyat nüsxə alınmadı',confirmRestore:'Hazırkı məlumatlar bu nüsxə ilə əvəz olunacaq. Davam edilsin?',yes:'Bəli',no:'Xeyr',
+ s_snapshots:'Bərpa nöqtələri',s_snapNote:'Avtomatik yaradılmış nüsxələr. Birini seçib məlumatları o günə qaytara bilərsiniz.',restore:'Bərpa et',restored:'Məlumatlar bərpa olundu',badFile:'Bu fayl Süfrə ehtiyat faylı deyil',backupDone:'Ehtiyat faylı yükləndi',backupCopied:'Ehtiyat məlumatı kopyalandı',backupFail:'Ehtiyat nüsxə alınmadı',confirmRestore:'Hazırkı məlumatlar bu nüsxə ilə əvəz olunacaq. Davam edilsin?',yes:'Bəli',no:'Xeyr',
  s_reset:'Məlumatları sıfırla',s_resetText:'Bütün profillər, qeydlər və menyu silinəcək.',s_resetBtn:'Hamısını sil',s_about:'Haqqında',s_aboutText:'Süfrə ümumi məlumat verir və həkim məsləhətini əvəz etmir. Xroniki xəstəlik, hamiləlik və ya 18 yaşdan kiçik yaş olduqda həkimlə məsləhətləşin. Məlumatlarınız heç bir serverə göndərilmir.',version:'Versiya',
  sync_claude:'Məlumatlar Claude hesabınızda saxlanılır: telefonda və kompüterdə eyni profillər və qeydlər görünür.',sync_wait:'Hesabla sinxronizasiya hələ cavab vermir. Məlumatlar bu cihazda saxlanılır.',sync_fail:'Hesabla sinxronizasiya alınmadı. Məlumatlar bu cihazda saxlanılır.',
  minCuisine:'Ən azı bir mətbəx seçilməlidir',regenHint:'Yeni menyu üçün "Menyunu yenidən yarat" düyməsinə basın',newMenu:'Yeni menyu hazırlandı',baseRestored:'Əsas Azərbaycan menyusu bərpa olundu',startChanged:'Başlanğıc tarixi dəyişdi',icsDone:'Faylı açın və təqviminizə əlavə edin',dlCancel:'Yükləmə ləğv olundu',
  TAG_baliq:'Balıq',TAG_ciyer:'Ciyər',TAG_quzu:'Quzu əti',TAG_mal:'Mal əti',TAG_toyuq:'Toyuq',TAG_sud:'Süd məhsulları',TAG_yumurta:'Yumurta',TAG_qoz:'Qoz-fındıq',TAG_gluten:'Un və çörək (qlüten)',
+ s_waterRem:'Su xatırlatması',wr_on:'Mütəmadi su içməyi xatırlat',wr_every:'Nə qədər tez-tez',wr_from:'Başlanğıc saatı',wr_to:'Son saat',wr_native:'Telefon bildirişi gələcək, app bağlı olsa da.',wr_web:'App açıq olanda xatırladacaq. App bağlı olanda da xatırlatma gəlsin deyə su xatırlatmalarını telefonun təqviminə yükləyin.',wr_ics:'Su xatırlatmalarını təqvimə yüklə (.ics)',wr_perm:'Bildirişlərə icazə ver',wr_denied:'Bildirişə icazə verilmədi. Telefonun parametrlərində Süfrə üçün bildirişləri açın.',wr_title:'Su vaxtıdır 💧',wr_body:'1 stəkan su için. Bu gün: {a} / {b} stəkan',wr_plus:'+1 stəkan',wr_saved:'Su xatırlatmaları quruldu',wr_off:'Su xatırlatmaları söndürüldü',wr_list:'Gündə {n} xatırlatma: {t}',everyMin:'{n} dəq',everyH:'{n} saat',
+ s_auto:'Avtomatik ehtiyat nüsxə',s_autoFreq:'Nə qədər tez-tez',af_0:'Söndürülüb',af_1:'Hər gün',af_3:'3 gündən bir',af_7:'Həftədə bir',af_14:'2 həftədən bir',s_autoKeep:'Neçə nüsxə saxlanılsın',s_autoDrive:'Avtomatik nüsxəni Google Drive-a da yüklə',s_autoNote:'Seçilən tezliklə yeni bərpa nöqtəsi yaradılır, ən köhnəsi silinir. Bu nüsxələr yalnız bu cihazdadır: app silinəndə onlar da silinir. Ona görə vaxtaşırı faylı və ya Google Drive nüsxəsini də çıxarın.',s_lastAuto:'Son avtomatik nüsxə: {d}',autoDriveDone:'Avtomatik nüsxə Google Drive-a yükləndi',
  disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
 },
 ru:{
@@ -310,11 +312,13 @@ ru:{
  s_times:'Время приёмов пищи',s_water:'Вода',s_glass:'Объём стакана',s_waterGoal:'Цель по воде в день',auto:'Авто',s_weighDay:'День взвешивания',s_reminders:'Напоминания',s_icsText:'Загрузите время приёмов пищи и названия блюд в календарь телефона. Календарь напомнит за 10 минут.',s_ics:'Скачать файл календаря (.ics)',
  s_data:'Данные и резервная копия',s_local:'Данные хранятся только на этом устройстве.',s_lastBackup:'Последняя копия: {d}',never:'ещё нет',s_export:'Скачать резервную копию',s_import:'Восстановить из файла',s_share:'Поделиться / сохранить в Google Drive',s_shareNote:'В окне «Поделиться» выберите «Google Диск». Для восстановления нажмите «Восстановить из файла» и выберите файл на Диске.',
  s_gdrive:'Google Drive',s_gdUp:'Загрузить в Google Drive',s_gdDown:'Восстановить из Google Drive',s_gdNote:'Копия загружается в ваш Google Drive под именем «Sufre-backup».',gdUploading:'Загрузка в Google Drive…',gdDone:'Загружено в Google Drive',gdFail:'Не удалось связаться с Google Drive',gdNone:'В Google Drive нет резервных копий',gdPick:'Выберите копию для восстановления',
- s_snapshots:'Автокопии (последние 7 дней)',s_snapNote:'Приложение каждый день сохраняет копию на этом устройстве.',restore:'Восстановить',restored:'Данные восстановлены',badFile:'Это не файл резервной копии Süfrə',backupDone:'Резервная копия скачана',backupCopied:'Данные копии скопированы',backupFail:'Не удалось сделать копию',confirmRestore:'Текущие данные будут заменены этой копией. Продолжить?',yes:'Да',no:'Нет',
+ s_snapshots:'Точки восстановления',s_snapNote:'Автоматически созданные копии. Выберите одну, чтобы вернуть данные к тому дню.',restore:'Восстановить',restored:'Данные восстановлены',badFile:'Это не файл резервной копии Süfrə',backupDone:'Резервная копия скачана',backupCopied:'Данные копии скопированы',backupFail:'Не удалось сделать копию',confirmRestore:'Текущие данные будут заменены этой копией. Продолжить?',yes:'Да',no:'Нет',
  s_reset:'Сбросить данные',s_resetText:'Все профили, записи и меню будут удалены.',s_resetBtn:'Удалить всё',s_about:'О приложении',s_aboutText:'Süfrə носит информационный характер и не заменяет консультацию врача. При хронических заболеваниях, беременности или возрасте до 18 лет посоветуйтесь с врачом. Ваши данные не отправляются на серверы.',version:'Версия',
  sync_claude:'Данные хранятся в вашем аккаунте Claude: на телефоне и компьютере одни и те же профили и записи.',sync_wait:'Синхронизация пока не отвечает. Данные хранятся на этом устройстве.',sync_fail:'Синхронизация не удалась. Данные хранятся на этом устройстве.',
  minCuisine:'Нужно выбрать хотя бы одну кухню',regenHint:'Для нового меню нажмите «Создать меню заново»',newMenu:'Новое меню готово',baseRestored:'Базовое азербайджанское меню восстановлено',startChanged:'Дата начала изменена',icsDone:'Откройте файл и добавьте в календарь',dlCancel:'Загрузка отменена',
  TAG_baliq:'Рыба',TAG_ciyer:'Печень',TAG_quzu:'Баранина',TAG_mal:'Говядина',TAG_toyuq:'Курица',TAG_sud:'Молочные продукты',TAG_yumurta:'Яйца',TAG_qoz:'Орехи',TAG_gluten:'Мука и хлеб (глютен)',
+ s_waterRem:'Напоминание о воде',wr_on:'Регулярно напоминать пить воду',wr_every:'Как часто',wr_from:'С',wr_to:'До',wr_native:'Придёт уведомление на телефон, даже если приложение закрыто.',wr_web:'Напоминает, пока приложение открыто. Чтобы напоминания приходили и при закрытом приложении, загрузите их в календарь телефона.',wr_ics:'Загрузить напоминания о воде в календарь (.ics)',wr_perm:'Разрешить уведомления',wr_denied:'Уведомления не разрешены. Включите их для Süfrə в настройках телефона.',wr_title:'Время пить воду 💧',wr_body:'Выпейте стакан воды. Сегодня: {a} / {b} стаканов',wr_plus:'+1 стакан',wr_saved:'Напоминания о воде настроены',wr_off:'Напоминания о воде выключены',wr_list:'{n} напоминаний в день: {t}',everyMin:'{n} мин',everyH:'{n} ч',
+ s_auto:'Автоматическая резервная копия',s_autoFreq:'Как часто',af_0:'Выключено',af_1:'Каждый день',af_3:'Раз в 3 дня',af_7:'Раз в неделю',af_14:'Раз в 2 недели',s_autoKeep:'Сколько копий хранить',s_autoDrive:'Также загружать автокопию в Google Drive',s_autoNote:'С выбранной частотой создаётся новая точка восстановления, самая старая удаляется. Эти копии хранятся только на этом устройстве и удаляются вместе с приложением, поэтому иногда сохраняйте и файл или копию в Google Drive.',s_lastAuto:'Последняя автокопия: {d}',autoDriveDone:'Автокопия загружена в Google Drive',
  disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
 },
 en:{
@@ -373,15 +377,17 @@ en:{
  s_times:'Meal times',s_water:'Water',s_glass:'Glass size',s_waterGoal:'Daily water goal',auto:'Auto',s_weighDay:'Weigh-in day',s_reminders:'Reminders',s_icsText:"Load meal times and dish names into your phone's calendar. It will remind you 10 minutes before each meal.",s_ics:'Download calendar file (.ics)',
  s_data:'Data and backup',s_local:'Data is stored only on this device.',s_lastBackup:'Last backup: {d}',never:'none yet',s_export:'Download backup file',s_import:'Restore from file',s_share:'Share / save to Google Drive',s_shareNote:'In the share window choose "Google Drive". To restore, press "Restore from file" and pick the file in Drive.',
  s_gdrive:'Google Drive',s_gdUp:'Upload to Google Drive',s_gdDown:'Restore from Google Drive',s_gdNote:'The backup is uploaded to your Google Drive as "Sufre-backup".',gdUploading:'Uploading to Google Drive…',gdDone:'Uploaded to Google Drive',gdFail:"Couldn't reach Google Drive",gdNone:'No backups found in Google Drive',gdPick:'Choose a backup to restore',
- s_snapshots:'Automatic copies (last 7 days)',s_snapNote:'The app keeps one copy per day on this device.',restore:'Restore',restored:'Data restored',badFile:'This is not a Süfrə backup file',backupDone:'Backup downloaded',backupCopied:'Backup data copied',backupFail:"Couldn't create a backup",confirmRestore:'Your current data will be replaced by this backup. Continue?',yes:'Yes',no:'No',
+ s_snapshots:'Restore points',s_snapNote:'Copies made automatically. Pick one to return your data to that day.',restore:'Restore',restored:'Data restored',badFile:'This is not a Süfrə backup file',backupDone:'Backup downloaded',backupCopied:'Backup data copied',backupFail:"Couldn't create a backup",confirmRestore:'Your current data will be replaced by this backup. Continue?',yes:'Yes',no:'No',
  s_reset:'Reset data',s_resetText:'All profiles, logs and the menu will be deleted.',s_resetBtn:'Delete everything',s_about:'About',s_aboutText:'Süfrə provides general information and does not replace medical advice. With a chronic illness, pregnancy or under 18, consult a doctor. Your data is not sent to any server.',version:'Version',
  sync_claude:'Data is stored in your Claude account: the same profiles and logs on phone and computer.',sync_wait:'Sync is not responding yet. Data is stored on this device.',sync_fail:"Sync didn't work. Data is stored on this device.",
  minCuisine:'Select at least one cuisine',regenHint:'Press "Create a new menu" to apply',newMenu:'New menu ready',baseRestored:'Base Azerbaijani menu restored',startChanged:'Start date changed',icsDone:'Open the file and add it to your calendar',dlCancel:'Download cancelled',
  TAG_baliq:'Fish',TAG_ciyer:'Liver',TAG_quzu:'Lamb',TAG_mal:'Beef',TAG_toyuq:'Chicken',TAG_sud:'Dairy',TAG_yumurta:'Eggs',TAG_qoz:'Nuts',TAG_gluten:'Flour & bread (gluten)',
+ s_waterRem:'Water reminder',wr_on:'Remind me to drink water regularly',wr_every:'How often',wr_from:'From',wr_to:'Until',wr_native:'You get a phone notification even when the app is closed.',wr_web:'Reminds you while the app is open. To get reminders when it is closed too, add them to your phone calendar.',wr_ics:'Add water reminders to calendar (.ics)',wr_perm:'Allow notifications',wr_denied:'Notifications are not allowed. Turn them on for Süfrə in your phone settings.',wr_title:'Time for water 💧',wr_body:'Drink a glass of water. Today: {a} / {b} glasses',wr_plus:'+1 glass',wr_saved:'Water reminders set',wr_off:'Water reminders turned off',wr_list:'{n} reminders a day: {t}',everyMin:'{n} min',everyH:'{n} h',
+ s_auto:'Automatic backup',s_autoFreq:'How often',af_0:'Off',af_1:'Every day',af_3:'Every 3 days',af_7:'Every week',af_14:'Every 2 weeks',s_autoKeep:'How many copies to keep',s_autoDrive:'Also upload the automatic copy to Google Drive',s_autoNote:'A new restore point is created at the chosen frequency and the oldest is removed. These copies live only on this device and are deleted with the app, so also save a file or a Google Drive copy from time to time.',s_lastAuto:'Last automatic copy: {d}',autoDriveDone:'Automatic copy uploaded to Google Drive',
  disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='3.0';
+const VERSION='3.1';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
@@ -473,7 +479,7 @@ const LS='sufre-state-v1', LSP='sufre-photos-v1', LSN='sufre-snap-v1', LST='sufr
 const DEF_TIMES={S:'08:00',N:'13:00',Q:'16:30',D:'19:30'};
 let S=null, PH={}, STR={};
 function detectLang(){ const n=((navigator.language||'az')+'').slice(0,2).toLowerCase(); return n==='ru'?'ru':n==='en'?'en':'az'; }
-function blank(){return {v:1,members:[],active:null,prefs:{start:todayISO(),cuisines:['az'],quick:false,excl:[],times:{...DEF_TIMES},lang:detectLang(),theme:'system',unit:'kg',weekStart:1,snack:true,glass:250,waterGoal:0,weighDay:1,lastBackup:null},plan:null,seed:1,log:{},bought:{},updated:0};}
+function blank(){return {v:1,members:[],active:null,prefs:{start:todayISO(),cuisines:['az'],quick:false,excl:[],times:{...DEF_TIMES},lang:detectLang(),theme:'system',unit:'kg',weekStart:1,snack:true,glass:250,waterGoal:0,weighDay:1,lastBackup:null,waterRem:{on:false,every:90,from:'09:00',to:'21:00'},autoFreq:1,autoKeep:7,autoDrive:false,lastDrive:null},plan:null,seed:1,log:{},bought:{},updated:0};}
 try{S=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){S=null;}
 if(!S||S.v!==1) S=blank();
 try{PH=JSON.parse(localStorage.getItem(LSP)||'{}')||{};}catch(e){PH={};}
@@ -483,6 +489,7 @@ function migrate(){
   if(!p.cuisines){ p.cuisines=['az']; delete p.cuisine; }
   Object.keys(b).forEach(k=>{ if(p[k]===undefined) p[k]=b[k]; });
   if(!LANGS.includes(p.lang)) p.lang='az';
+  p.waterRem={...b.waterRem,...(p.waterRem||{})};
   if(S.plan) S.plan.forEach(d=>{ if(!d.cu) d.cu=(R[d.N]&&R[d.N].cu)||'az'; });
   S.members.forEach(m=>{ m.hc=m.hc||[]; m.al=m.al||[]; if(m.anemia&&!m.hc.includes('anemia')) m.hc.push('anemia'); if(m.insulin&&!m.hc.includes('insulin')) m.hc.push('insulin'); delete m.anemia; delete m.insulin; });
 }
@@ -496,13 +503,14 @@ function save(){
   if(DB&&UID){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ const body={json:JSON.stringify(S),t:S.updated}; saving=saving.then(()=>DB.doc('data/users/'+UID+'/state').set(body)).catch(()=>{}); },1200); }
 }
 function snapshots(){ try{return JSON.parse(localStorage.getItem(LSN)||'[]')||[];}catch(e){return [];} }
+// automatic restore points: a new one every `autoFreq` days, the newest one kept fresh in between
 function snapshot(){
-  if(!S.members.length) return;
-  const list=snapshots(), d=todayISO();
+  const f=+S.prefs.autoFreq||0; if(!S.members.length||!f) return;
+  const list=snapshots(), d=todayISO(), last=list[list.length-1];
   const entry={d,t:Date.now(),s:JSON.stringify(S)};
-  const i=list.findIndex(x=>x.d===d); if(i>=0) list[i]=entry; else list.push(entry);
-  list.sort((a,b)=>a.d<b.d?-1:1); while(list.length>7) list.shift();
-  try{localStorage.setItem(LSN,JSON.stringify(list));}catch(e){}
+  if(last&&diffDays(last.d,d)<f) list[list.length-1]={...entry,d:last.d,u:d}; else list.push(entry);
+  const keep=+S.prefs.autoKeep||7; while(list.length>keep) list.shift();
+  try{localStorage.setItem(LSN,JSON.stringify(list));}catch(e){ while(list.length>2){ list.shift(); try{localStorage.setItem(LSN,JSON.stringify(list)); break;}catch(e2){} } }
 }
 const uid=()=>Math.random().toString(36).slice(2,9);
 const member=()=>S.members.find(m=>m.id===S.active)||S.members[0];
@@ -1131,12 +1139,10 @@ function renderFamily(){
     <h2>${esc(T('famTitle'))}</h2>
     ${S.members.map(m=>`<div class="member"><span class="avatar">${esc(m.name.slice(0,1))}</span><div style="flex:1"><b>${esc(m.name)}</b><div class="small muted">${memberLine(m)}</div></div><button class="btn plain sm" data-ed="${m.id}">${esc(T('change'))}</button></div>`).join('')}
     <button class="btn plain" id="addm">${esc(T('addMember'))}</button>
-    <button class="btn ghost" id="toset">${ICONS.gear} ${esc(T('settings'))}</button>
     <p class="tiny muted">${esc(T('disclaimer'))}</p>
   </div>`;
   view.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>memberForm(S.members.find(m=>m.id===b.dataset.ed)));
   document.getElementById('addm').onclick=()=>memberForm(null);
-  document.getElementById('toset').onclick=()=>setTab('settings');
 }
 function memberForm(m){
   const isNew=!m; m=m||{id:uid(),name:'',sex:'f',age:30,h:165,w:70,goalW:null,act:1.2,goal:'lose',hc:[],al:[]};
@@ -1210,6 +1216,16 @@ function renderSettings(){
       <div>${lbl(T('s_glass'))}${seg('gl',[[200,'200 ml'],[250,'250 ml'],[300,'300 ml']],p.glass)}</div>
       <div>${lbl(T('s_waterGoal'))}${seg('wg',[[0,T('auto')],[1500,'1,5 l'],[2000,'2 l'],[2500,'2,5 l'],[3000,'3 l']],p.waterGoal)}</div>
     </div>
+    ${secT(T('s_waterRem'))}
+    <div class="card stack">
+      ${toggle('wron',p.waterRem.on,T('wr_on'))}
+      ${p.waterRem.on?`<div>${lbl(T('wr_every'))}${seg('wre',[[60,T('everyH',{n:1})],[90,T('everyMin',{n:90})],[120,T('everyH',{n:2})],[180,T('everyH',{n:3})]],p.waterRem.every)}</div>
+      <div class="grid2"><div><label class="f" for="wrf">${esc(T('wr_from'))}</label><input id="wrf" type="time" value="${p.waterRem.from}"></div><div><label class="f" for="wrt">${esc(T('wr_to'))}</label><input id="wrt" type="time" value="${p.waterRem.to}"></div></div>
+      <p class="small muted" style="margin:0">${esc(T('wr_list',{n:waterTimes().length,t:waterTimes().join(', ')}))}</p>
+      <p class="tiny muted" style="margin:0">${esc(T(NATIVE?'wr_native':'wr_web'))}</p>
+      ${(!NATIVE&&STANDALONE&&'Notification' in window&&Notification.permission==='default')?`<button class="btn plain sm" id="wrperm">${esc(T('wr_perm'))}</button>`:''}
+      ${(!NATIVE&&(DL||STANDALONE))?`<button class="btn plain sm" id="wrics">${esc(T('wr_ics'))}</button>`:''}`:''}
+    </div>
     ${secT(T('s_reminders'))}
     <div class="card stack">
       <div>${lbl(T('s_weighDay'))}${seg('wday',[...[1,2,3,4,5,6,0].map(d=>[d,T('daysShort')[d]]),[-1,'—']],p.weighDay)}</div>
@@ -1221,8 +1237,15 @@ function renderSettings(){
       <div class="row" style="flex-wrap:wrap"><button class="btn plain sm" id="bexp">${esc(T('s_export'))}</button><label class="btn plain sm" for="bimp">${esc(T('s_import'))}</label><input id="bimp" type="file" accept="application/json,.json,text/plain" hidden>${canShare?`<button class="btn plain sm" id="bshare">${esc(T('s_share'))}</button>`:''}</div>
       ${canShare?`<p class="tiny muted" style="margin:0">${esc(T('s_shareNote'))}</p>`:''}
     </div>
+    <div class="card stack"><b>${esc(T('s_auto'))}</b>
+      <div>${lbl(T('s_autoFreq'))}${seg('af',[0,1,3,7,14].map(v=>[v,T('af_'+v)]),p.autoFreq)}</div>
+      ${+p.autoFreq?`<div>${lbl(T('s_autoKeep'))}${seg('ak',[[5,'5'],[7,'7'],[14,'14'],[30,'30']],p.autoKeep)}</div>
+      ${MCP?toggle('adr',p.autoDrive,T('s_autoDrive')):''}
+      <p class="small muted" style="margin:0">${esc(T('s_lastAuto',{d:snaps.length?dLong(snaps[0].u||snaps[0].d):T('never')}))}</p>`:''}
+      <p class="tiny muted" style="margin:0">${esc(T('s_autoNote'))}</p>
+    </div>
     ${MCP?`<div class="card stack"><b>${esc(T('s_gdrive'))}</b><p class="tiny muted" style="margin:0">${esc(T('s_gdNote'))}</p><div class="row" style="flex-wrap:wrap"><button class="btn sm" id="gdup">${esc(T('s_gdUp'))}</button><button class="btn ghost sm" id="gddown">${esc(T('s_gdDown'))}</button></div></div>`:''}
-    <details class="card"><summary>${esc(T('s_snapshots'))} (${snaps.length})</summary><p class="tiny muted">${esc(T('s_snapNote'))}</p><ul class="list">${snaps.map((s,j)=>`<li><span>${esc(dLong(s.d))}</span><button class="btn plain sm" data-snap="${s.d}">${esc(T('restore'))}</button></li>`).join('')||`<li class="muted">${esc(T('noData'))}</li>`}</ul></details>
+    <details class="card"><summary>${esc(T('s_snapshots'))} (${snaps.length})</summary><p class="tiny muted">${esc(T('s_snapNote'))}</p><ul class="list">${snaps.map((s,j)=>`<li><span>${esc(dLong(s.u||s.d))}</span><button class="btn plain sm" data-snap="${s.d}">${esc(T('restore'))}</button></li>`).join('')||`<li class="muted">${esc(T('noData'))}</li>`}</ul></details>
     <details class="card"><summary>${esc(T('s_reset'))}</summary><p class="small">${esc(T('s_resetText'))}</p><button class="btn ghost sm" id="reset">${esc(T('s_resetBtn'))}</button></details>
     ${secT(T('s_about'))}
     <div class="card"><p class="small" style="margin:0">${esc(T('s_aboutText'))}</p><p class="tiny muted" style="margin:8px 0 0">Süfrə · ${esc(T('version'))} ${VERSION}${NATIVE?' · Android':''}</p></div>
@@ -1235,6 +1258,14 @@ function renderSettings(){
   on('[data-gl]',b=>{p.glass=+b.dataset.gl; save(); render();});
   on('[data-wg]',b=>{p.waterGoal=+b.dataset.wg; save(); render();});
   on('[data-wday]',b=>{p.weighDay=+b.dataset.wday; save(); render();});
+  on('[data-af]',b=>{p.autoFreq=+b.dataset.af; save(); render();});
+  on('[data-ak]',b=>{p.autoKeep=+b.dataset.ak; save(); render();});
+  const adr=document.getElementById('adr'); if(adr) adr.onchange=e=>{p.autoDrive=e.target.checked; save(); if(p.autoDrive) autoDriveBackup(true);};
+  document.getElementById('wron').onchange=async e=>{p.waterRem.on=e.target.checked; save(); render(); await applyWaterReminders(true);};
+  on('[data-wre]',b=>{p.waterRem.every=+b.dataset.wre; save(); render(); applyWaterReminders(true);});
+  ['wrf','wrt'].forEach(id=>{const el=document.getElementById(id); if(el) el.onchange=e=>{ if(!e.target.value) return; p.waterRem[id==='wrf'?'from':'to']=e.target.value; save(); render(); applyWaterReminders(true); };});
+  const wp=document.getElementById('wrperm'); if(wp) wp.onclick=async()=>{ try{ const r=await Notification.requestPermission(); if(r!=='granted') toast(T('wr_denied')); }catch(e){} render(); };
+  const wi=document.getElementById('wrics'); if(wi) wi.onclick=downloadWaterICS;
   document.getElementById('pst').onchange=e=>{ if(e.target.value){ p.start=e.target.value; save(); toast(T('startChanged')); } };
   on('[data-cu]',b=>{const k=b.dataset.cu; if(p.cuisines.includes(k)){ if(p.cuisines.length===1){toast(T('minCuisine'));return;} p.cuisines=p.cuisines.filter(x=>x!==k);} else p.cuisines=[...p.cuisines,k]; save(); render(); toast(T('regenHint'));});
   document.getElementById('pq').onchange=e=>{p.quick=e.target.checked; save();};
@@ -1351,11 +1382,65 @@ async function driveRestore(){
   }catch(e){ sb.innerHTML=`<p>${esc(T('gdFail'))}</p>`; }
 }
 
+/* ================= water reminders ================= */
+const toMin=s=>{const [h,m]=s.split(':').map(Number); return h*60+m;};
+function waterTimes(){
+  const w=S.prefs.waterRem, a=toMin(w.from), b=toMin(w.to), out=[];
+  if(!(b>a)) return out;
+  for(let t=a;t<=b&&out.length<24;t+=Math.max(30,+w.every||90)) out.push(pad(Math.floor(t/60))+':'+pad(t%60));
+  return out;
+}
+const WATER_ID0=7000;
+async function applyWaterReminders(feedback){
+  const w=S.prefs.waterRem;
+  if(!NATIVE){ if(feedback) toast(T(w.on?'wr_saved':'wr_off')); return; }
+  const LN=CP().LocalNotifications; if(!LN) return;
+  try{
+    const pend=await LN.getPending(); const old=(pend.notifications||[]).filter(n=>n.id>=WATER_ID0&&n.id<WATER_ID0+100).map(n=>({id:n.id}));
+    if(old.length) await LN.cancel({notifications:old});
+    if(!w.on){ if(feedback) toast(T('wr_off')); return; }
+    let perm=await LN.checkPermissions(); if(perm.display!=='granted') perm=await LN.requestPermissions();
+    if(perm.display!=='granted'){ toast(T('wr_denied')); return; }
+    await LN.schedule({notifications:waterTimes().map((t,i)=>{const [h,mm]=t.split(':').map(Number); return {id:WATER_ID0+i,title:T('wr_title'),body:T('wr_body',{a:0,b:0}).split('.')[0]+'.',schedule:{on:{hour:h,minute:mm},allowWhileIdle:true}};})});
+    if(feedback) toast(T('wr_saved'));
+  }catch(e){ if(feedback) toast(T('wr_denied')); }
+}
+// while the app is open (web, PWA, Claude): nudge at each reminder time unless today's goal is reached
+const WFIRED={};
+function waterTick(){
+  const w=S.prefs.waterRem; if(NATIVE||!w.on||!S.members.length) return;
+  const now=new Date(), hm=pad(now.getHours())+':'+pad(now.getMinutes()), d=todayISO();
+  if(!waterTimes().includes(hm)||WFIRED[d+hm]) return; WFIRED[d+hm]=1;
+  const m=member(), Lg=getLog(m.id,d), g=waterGoal(m); if((Lg.w||0)>=g) return;
+  const body=T('wr_body',{a:Lg.w||0,b:g});
+  if(STANDALONE&&'Notification' in window&&Notification.permission==='granted'&&document.hidden){ try{ new Notification(T('wr_title'),{body,icon:'icon-192.png',tag:'sufre-water'}); }catch(e){} }
+  const el=document.createElement('div'); el.className='toast water-toast'; el.setAttribute('role','status');
+  el.innerHTML=`<b>${esc(T('wr_title'))}</b><br><span class="small">${esc(body)}</span><div class="row" style="margin-top:8px;justify-content:center"><button class="btn sm" data-wp>${esc(T('wr_plus'))}</button><button class="btn plain sm" data-wx>${esc(T('close'))}</button></div>`;
+  document.body.appendChild(el);
+  el.querySelector('[data-wp]').onclick=()=>{ const l=log(m.id,d); l.w=(l.w||0)+1; save(); el.remove(); if(!sheetStack.length) render(); };
+  el.querySelector('[data-wx]').onclick=()=>el.remove();
+  setTimeout(()=>el.remove(),60000);
+}
+setInterval(waterTick,20000);
+async function downloadWaterICS(){
+  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sufre//water','CALSCALE:GREGORIAN'], d=todayISO().replace(/-/g,'');
+  waterTimes().forEach((t,i)=>{ const hm=t.replace(':',''); const e=toMin(t)+5;
+    lines.push('BEGIN:VEVENT','UID:water-'+i+'@sufre','DTSTAMP:'+d+'T000000','DTSTART:'+d+'T'+hm+'00','DTEND:'+d+'T'+pad(Math.floor(e/60)%24)+pad(e%60)+'00','RRULE:FREQ=DAILY','SUMMARY:'+T('wr_title'),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+T('wr_title'),'TRIGGER:PT0M','END:VALARM','END:VEVENT'); });
+  lines.push('END:VCALENDAR');
+  const ok=await saveFile('sufre-water.ics',lines.join('\r\n'),'text/calendar'); toast(ok?T('icsDone'):T('dlCancel'));
+}
+// automatic Google Drive copy (Claude version) at the chosen frequency
+async function autoDriveBackup(force){
+  const p=S.prefs; if(!MCP||!p.autoDrive||!+p.autoFreq||!S.members.length) return;
+  if(!force&&p.lastDrive&&diffDays(p.lastDrive,todayISO())<+p.autoFreq) return;
+  try{ await gdCall('create_file',{title:backupName(),textContent:backupData(),contentMimeType:'application/json',disableConversionToGoogleType:true}); p.lastDrive=todayISO(); p.lastBackup=todayISO(); save(); toast(T('autoDriveDone')); if(tab==='settings'&&!sheetStack.length) render(); }catch(e){}
+}
+
 /* ================= boot ================= */
 renderTabs();
 const h0=(location.hash||'').slice(1); if(VIEWS.includes(h0)&&h0!=='today'){ tab=h0; }
 if(S.members.length&&!S.active) S.active=S.members[0].id;
-render(); syncGuard(); snapshot();
+render(); syncGuard(); snapshot(); applyWaterReminders(false);
 let lastDay=todayISO();
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } });
 setInterval(()=>{ if(todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } else if(tab==='today'&&!sheetStack.length&&!document.hidden){ const v=view.scrollTop; render(); view.scrollTop=v; } },300000);
@@ -1382,6 +1467,7 @@ setInterval(()=>{ if(todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.l
       }
     }
     if(!sheetStack.length) render();
+    autoDriveBackup(false);
   }catch(e){}
 })();
 
