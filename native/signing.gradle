@@ -1,0 +1,22 @@
+
+// Süfrə: permanent signing key and version (added by the build workflow)
+android {
+    defaultConfig {
+        versionCode Integer.parseInt(System.getenv("SUFRE_VCODE") ?: "1")
+        versionName System.getenv("SUFRE_VNAME") ?: "3"
+    }
+    signingConfigs {
+        sufre {
+            storeFile file(System.getenv("SUFRE_KS_PATH"))
+            storeType "pkcs12"
+            storePassword System.getenv("SUFRE_KEY_PASSWORD")
+            keyAlias "sufre"
+            keyPassword System.getenv("SUFRE_KEY_PASSWORD")
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.sufre
+        }
+    }
+}

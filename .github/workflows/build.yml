@@ -48,13 +48,30 @@ jobs:
           npx cap add android
           npx capacitor-assets generate --android --iconBackgroundColor '#a3263b' --iconBackgroundColorDark '#a3263b' --splashBackgroundColor '#a3263b' --splashBackgroundColorDark '#a3263b'
           npx cap sync android
+          cp native/MainActivity.java android/app/src/main/java/az/sufre/app/MainActivity.java
+          printf '\nsocialLogin.facebook.include=false\n' >> android/gradle.properties
 
       - name: APK yığ
+        env:
+          SUFRE_KEYSTORE: ${{ secrets.SUFRE_KEYSTORE }}
+          SUFRE_KEY_PASSWORD: ${{ secrets.SUFRE_KEY_PASSWORD }}
+          SUFRE_VCODE: ${{ github.run_number }}
+          SUFRE_VNAME: 1.0.${{ github.run_number }}
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
-          cp app/build/outputs/apk/debug/app-debug.apk ../Sufre.apk
+          if [ -n "$SUFRE_KEYSTORE" ] && [ -n "$SUFRE_KEY_PASSWORD" ]; then
+            echo "Daimi açarla imzalanır"
+            export SUFRE_KS_PATH="$RUNNER_TEMP/sufre.p12"
+            echo "$SUFRE_KEYSTORE" | base64 -d > "$SUFRE_KS_PATH"
+            cat ../native/signing.gradle >> app/build.gradle
+            ./gradlew assembleRelease --no-daemon
+            cp app/build/outputs/apk/release/app-release.apk ../Sufre.apk
+          else
+            echo "::warning::SUFRE_KEYSTORE secret yoxdur — müvəqqəti açarla imzalanır"
+            ./gradlew assembleDebug --no-daemon
+            cp app/build/outputs/apk/debug/app-debug.apk ../Sufre.apk
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
