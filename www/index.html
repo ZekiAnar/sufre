@@ -152,6 +152,7 @@ ol.steps li.done::before{background:var(--good);color:#fff;content:"✓"}
 .list li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);align-items:center}
 ul.list{list-style:none;margin:0;padding:0}
 .list li.got span:first-child{text-decoration:line-through;color:var(--muted)}
+.gchk{width:20px;height:20px;accent-color:var(--good);margin-right:8px;flex:none}
 .list input[type=checkbox]{width:20px;height:20px;accent-color:var(--good);margin-right:8px;flex:none}
 .chart svg{width:100%;height:auto;display:block}
 .chart text{fill:var(--muted);font-size:11px;font-family:var(--body)}
@@ -226,7 +227,7 @@ az:{
  search:'Yemək və ya ərzaq axtar (məsələn: toyuq)',all:'Hamısı',allCuisines:'Bütün mətbəxlər',nRecipes:'{n} resept',nothing:'Heç nə tapılmadı',
  aiAnalyzing:'Şəkil təhlil olunur…',aiParseErr:'Cavabı oxumaq alınmadı. Yenidən cəhd edin.',aiBusy:'Çox sorğu göndərildi, bir az sonra yenidən cəhd edin.',aiFail:'AI cavab vermədi. Bir az sonra yenidən cəhd edin.',aiEstimate:'Bu, AI-nin təxminidir və ±20–30% fərqlənə bilər.',addToday:'Bu günə əlavə et ({n})',addedToday:'Bu günə əlavə olundu',
  fridgeQ:'Evdə nə var?',fridgePh:'Məsələn: toyuq budu, kartof, soğan, pomidor, qatıq',makeRecipe:'Resept hazırla',writeItems:'Ərzaqları yazın',cooking:'Resept hazırlanır…',aiRecipe:'AI resepti: kalorilər təxminidir.',
- shopTitle:'Alış-veriş siyahısı',wholeFamily:'Bütün ailə ({n} nəfər)',onlyX:'Yalnız {n}',bought:'{a} / {b} alınıb',copy:'Kopyala',copied:'Siyahı kopyalandı',copyFail:'Kopyalamaq alınmadı',
+ shopTitle:'Alış-veriş siyahısı',wholeFamily:'Bütün ailə ({n} nəfər)',onlyX:'Yalnız {n}',bought:'{a} / {b} alınıb',copy:'Kopyala',checkAll:'Hamısını işarələ',uncheckAll:'İşarələri götür',copied:'Siyahı kopyalandı',copyFail:'Kopyalamaq alınmadı',
  shopNote:'Profillərdəki xüsusi dəyişikliklər (məsələn, insulin direnci üçün azaldılmış kartof və ya allergiya) nəzərə alınıb. Duz, ədviyyat və sarımsaq siyahıda yoxdur.',shopFor:'Alış-veriş ({a} – {b})',
  progTitle:'{n}: proqres',curW:'indiki çəki',lost:'itirilib',bmi:'BMI',goalK:'kkal/gün hədəf',perWeek:'həftəlik gözlənilən',streakDays:'gün ardıcıllıq',
  toGoal:'Bu sürətlə {w} hədəfinə təxminən {n} həftəyə ({d}) çatacaqsınız.',logWeight:'Çəkini qeyd et',date:'Tarix',weight:'Çəki',weighTip:'Həftədə bir dəfə, eyni gün, səhər ac qarına çəkilin.',
@@ -291,7 +292,7 @@ ru:{
  search:'Поиск блюда или продукта (например: курица)',all:'Все',allCuisines:'Все кухни',nRecipes:'Рецептов: {n}',nothing:'Ничего не найдено',
  aiAnalyzing:'Анализ фото…',aiParseErr:'Не удалось прочитать ответ. Попробуйте ещё раз.',aiBusy:'Слишком много запросов, попробуйте позже.',aiFail:'ИИ не ответил. Попробуйте позже.',aiEstimate:'Это оценка ИИ, погрешность ±20–30%.',addToday:'Добавить в сегодня ({n})',addedToday:'Добавлено в сегодня',
  fridgeQ:'Что есть дома?',fridgePh:'Например: куриные бёдра, картофель, лук, помидоры, йогурт',makeRecipe:'Составить рецепт',writeItems:'Укажите продукты',cooking:'Составляем рецепт…',aiRecipe:'Рецепт ИИ: калории приблизительные.',
- shopTitle:'Список покупок',wholeFamily:'Вся семья ({n} чел.)',onlyX:'Только {n}',bought:'Куплено {a} из {b}',copy:'Копировать',copied:'Список скопирован',copyFail:'Не удалось скопировать',
+ shopTitle:'Список покупок',wholeFamily:'Вся семья ({n} чел.)',onlyX:'Только {n}',bought:'Куплено {a} из {b}',copy:'Копировать',checkAll:'Отметить всё',uncheckAll:'Снять отметки',copied:'Список скопирован',copyFail:'Не удалось скопировать',
  shopNote:'Учтены особенности профилей (например, меньше картофеля при инсулинорезистентности или аллергии). Соль, специи и чеснок не включены.',shopFor:'Покупки ({a} – {b})',
  progTitle:'{n}: прогресс',curW:'текущий вес',lost:'сброшено',bmi:'ИМТ',goalK:'ккал/день цель',perWeek:'ожидается в неделю',streakDays:'дней подряд',
  toGoal:'В таком темпе цель {w} будет достигнута примерно через {n} нед. ({d}).',logWeight:'Записать вес',date:'Дата',weight:'Вес',weighTip:'Взвешивайтесь раз в неделю в один и тот же день утром натощак.',
@@ -356,7 +357,7 @@ en:{
  search:'Search a dish or ingredient (e.g. chicken)',all:'All',allCuisines:'All cuisines',nRecipes:'{n} recipes',nothing:'Nothing found',
  aiAnalyzing:'Analysing the photo…',aiParseErr:"Couldn't read the answer. Try again.",aiBusy:'Too many requests, try again later.',aiFail:"AI didn't respond. Try again later.",aiEstimate:'This is an AI estimate and may differ by ±20–30%.',addToday:'Add to today ({n})',addedToday:'Added to today',
  fridgeQ:'What do you have at home?',fridgePh:'For example: chicken thighs, potatoes, onion, tomatoes, yogurt',makeRecipe:'Make a recipe',writeItems:'List the ingredients',cooking:'Creating a recipe…',aiRecipe:'AI recipe: calories are approximate.',
- shopTitle:'Shopping list',wholeFamily:'Whole family ({n})',onlyX:'Only {n}',bought:'{a} of {b} bought',copy:'Copy',copied:'List copied',copyFail:"Couldn't copy",
+ shopTitle:'Shopping list',wholeFamily:'Whole family ({n})',onlyX:'Only {n}',bought:'{a} of {b} bought',copy:'Copy',checkAll:'Check all',uncheckAll:'Uncheck all',copied:'List copied',copyFail:"Couldn't copy",
  shopNote:'Profile adjustments (for example less potato for insulin resistance, or allergies) are included. Salt, spices and garlic are not listed.',shopFor:'Shopping ({a} – {b})',
  progTitle:'{n}: progress',curW:'current weight',lost:'lost',bmi:'BMI',goalK:'kcal/day target',perWeek:'expected per week',streakDays:'day streak',
  toGoal:'At this pace you will reach {w} in about {n} weeks ({d}).',logWeight:'Log weight',date:'Date',weight:'Weight',weighTip:'Weigh yourself once a week, same day, in the morning before eating.',
@@ -1066,13 +1067,16 @@ function renderShop(){
     <h2>${esc(T('shopTitle'))}</h2>
     <div class="chips">${[0,1,2,3].map(w=>`<button class="chip" data-w="${w}" aria-pressed="${w===shopWeek}">${dShort(addDays(S.prefs.start,base+w*7))} – ${dShort(addDays(S.prefs.start,base+w*7+6))}</button>`).join('')}</div>
     ${S.members.length>1?`<div class="chips"><button class="chip" data-s="fam" aria-pressed="${shopScope==='fam'}">${esc(T('wholeFamily',{n:S.members.length}))}</button><button class="chip" data-s="me" aria-pressed="${shopScope==='me'}">${esc(T('onlyX',{n:member().name}))}</button></div>`:''}
-    <div class="row between"><span class="small muted">${esc(T('bought',{a:got,b:all.length}))}</span><button class="btn plain sm" id="copy">${esc(T('copy'))}</button></div>
-    ${ORDER.filter(g=>groups[g]).map(g=>`<div class="card"><b>${esc(grn(g))}</b><ul class="list">${groups[g].map(([c,gr])=>`<li class="${bought[c]?'got':''}"><label class="row" style="flex:1;cursor:pointer"><input type="checkbox" data-c="${c}" ${bought[c]?'checked':''}><span>${esc(inm(c))}</span></label><span class="small muted num">${amount(c,gr)}</span></li>`).join('')}</ul></div>`).join('')}
+    <div class="row between"><span class="small muted">${esc(T('bought',{a:got,b:all.length}))}</span><span class="row" style="gap:6px"><button class="btn plain sm" id="chkall">${esc(T(all.length&&got===all.length?'uncheckAll':'checkAll'))}</button><button class="btn plain sm" id="copy">${esc(T('copy'))}</button></span></div>
+    ${ORDER.filter(g=>groups[g]).map(g=>{const gd=groups[g].every(([c])=>bought[c]); return `<div class="card"><label class="row" style="cursor:pointer;gap:0"><input type="checkbox" class="gchk" data-g="${esc(g)}" ${gd?'checked':''} aria-label="${esc(T(gd?'uncheckAll':'checkAll'))}: ${esc(grn(g))}"><b>${esc(grn(g))}</b></label><ul class="list">${groups[g].map(([c,gr])=>`<li class="${bought[c]?'got':''}"><label class="row" style="flex:1;cursor:pointer"><input type="checkbox" data-c="${c}" ${bought[c]?'checked':''}><span>${esc(inm(c))}</span></label><span class="small muted num">${amount(c,gr)}</span></li>`).join('')}</ul></div>`;}).join('')}
     <p class="tiny muted">${esc(T('shopNote'))}</p>
   </div>`;
   view.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{shopWeek=+b.dataset.w; renderShop();});
   view.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{shopScope=b.dataset.s; renderShop();});
   view.querySelectorAll('[data-c]').forEach(cb=>cb.onchange=()=>{S.bought[key]=S.bought[key]||{}; S.bought[key][cb.dataset.c]=cb.checked; save(); renderShop();});
+  const setMany=(items,v)=>{ const sc=view.scrollTop; S.bought[key]=S.bought[key]||{}; items.forEach(([c])=>S.bought[key][c]=v); save(); renderShop(); view.scrollTop=sc; };
+  document.getElementById('chkall').onclick=()=>setMany(all,!(all.length&&got===all.length));
+  view.querySelectorAll('.gchk').forEach(cb=>cb.onchange=()=>setMany(groups[cb.dataset.g],cb.checked));
   document.getElementById('copy').onclick=async()=>{
     const txt=T('shopFor',{a:dShort(wStart),b:dShort(addDays(wStart,6))})+'\n'+ORDER.filter(g=>groups[g]).map(g=>`\n${grn(g)}:\n`+groups[g].map(([c,gr])=>`${bought[c]?'✓':'-'} ${inm(c)}: ${amount(c,gr)}`).join('\n')).join('\n');
     try{await navigator.clipboard.writeText(txt); toast(T('copied'));}catch(e){toast(T('copyFail'));}
