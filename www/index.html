@@ -195,6 +195,7 @@ details summary{cursor:pointer;font-weight:600}
 .cktext .zone.l{left:-10px}.cktext .zone.r{right:-10px}
 .btn.big{padding:16px 22px;font-size:1.05rem}
 .cookl li{font-size:1.05rem}
+.famcode{font-size:2rem;font-weight:800;letter-spacing:.18em;text-align:center;font-variant-numeric:tabular-nums;color:var(--accent);padding:6px 0}
 .water-toast{bottom:auto;top:calc(70px + env(safe-area-inset-top));text-align:center;padding:12px 16px;min-width:260px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 </style>
 </head>
@@ -293,6 +294,9 @@ cookStart:'Bişirməyə başla',cookPrep:'Hazırlıq: lazım olan ərzaq',cookFa
 edit:'Redaktə et',delOwn:'Bu resept silinsin? Menyuda olduğu günlərdə başqa yeməklə əvəz olunacaq.',deleted:'Silindi',ownAdd:'Öz reseptini əlavə et',ownMine:'Mənim reseptlərim',ownNamePh:'Məsələn: Nənəmin dolması',ownMeal:'Yemək vaxtı',ownKind:'Növü',ownMin:'Hazırlanma, dəq',ownServ:'Neçə porsiyadır',ownTotal:'bütün qazan üçün',ownIngAdd:'Ərzaq əlavə et',ownIngNew:'Siyahıda olmayan ərzaq',ownStepsHint:'hər addım ayrı sətirdə',ownInPlan:'Menyu yaradılanda bu resept də seçilə bilər',ownPrev:'1 porsiya: {k} kkal, {p} q zülal',ownNoIng:'Hələ ərzaq yoxdur',ownNeed:'Ad və ən azı bir ərzaq yazın',per100:'100 q üçün:',
 k_soup:'Şorba',k_stew:'Bişmiş, qovurma',k_dolma:'Dolma',k_plov:'Plov',k_kebab:'Kabab',k_fish:'Balıq',k_salad:'Salat',k_eggs:'Yumurta yeməyi',k_porridge:'Sıyıq',k_qutab:'Qutab',k_wrap:'Dürmək',k_pasta:'Makaron',k_bowl:'Boşqab',k_snack:'Qəlyanaltı',k_roast:'Sobada',
 xHand:'Əl ilə',xIng:'Ərzaqdan',xRec:'Reseptdən',grams:'Qram',portion:'Porsiya',
+ widgetStale:'Bu günün menyusu üçün Süfrə-ni açın',steps:'addım',stepsWeek:'həftəlik orta: {n}',
+hcToggle:'Addımları Health Connect-dən götür',hcWeight:'Ağıllı tərəzinin çəkisini də götür',hcBonus:'5000-dən çox addım üçün əlavə kalori ver',hcNote:'Süfrə yalnız addım və çəki məlumatını oxuyur, heç nə yazmır və məlumat telefondan kənara çıxmır.',hcSettings:'Health Connect icazələri',hcFail:'Health Connect ilə əlaqə alınmadı',hcMissing:'Health Connect quraşdırılmayıb. Play Market-dən "Health Connect" app-ini quraşdırın.',hcDenied:'Addımlara icazə verilmədi',hcOn:'Addımlar qoşuldu',
+famSync:'Ailə sinxronizasiyası',famIntro:'Bütün ailə telefonlarında eyni menyu, alış-veriş siyahısı və qeydlər. Bir telefonda ailə yaradın, digərlərində kodu yazıb qoşulun.',famCreate:'Ailəni yarat',famCodePh:'Ailə kodu',famJoin:'Qoşul',famOk:'Sinxronlaşdırılıb',famErr:'Əlaqə yoxdur; dəyişikliklər internet gələndə göndəriləcək',famBusy:'Qoşulur…',famGone:'Bu ailə artıq mövcud deyil',famCodeNote:'Bu kodu ailə üzvlərinə göndərin: Ailə → Qoşul',famShare:'Kodu paylaş',famLeave:'Ailədən çıx',famMe:'Bu telefon kimindir?',famCreated:'Ailə yaradıldı',famFail:'Serverə qoşulmaq alınmadı',famBadCode:'Kodu düzgün yazın',famNotFound:'Bu kodla ailə tapılmadı',famJoined:'Ailəyə qoşuldunuz',famJoinConfirm:'Bu telefondakı məlumatlar ailənin məlumatları ilə əvəz olunacaq. Davam edilsin?',famLeaveConfirm:'Ailədən çıxılsın? Məlumatlar bu telefonda qalacaq, amma artıq sinxronlaşdırılmayacaq.',famShareText:'Süfrə ailə kodu: {c}\nApp: https://github.com/ZekiAnar/sufre/releases/latest/download/Sufre.apk\niPhone: https://zekianar.github.io/sufre/',
  disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
 },
 ru:{
@@ -373,6 +377,9 @@ cookStart:'Начать готовить',cookPrep:'Подготовка: нуж
 edit:'Изменить',delOwn:'Удалить этот рецепт? В меню он будет заменён другим блюдом.',deleted:'Удалено',ownAdd:'Добавить свой рецепт',ownMine:'Мои рецепты',ownNamePh:'Например: долма от бабушки',ownMeal:'Приём пищи',ownKind:'Тип',ownMin:'Время, мин',ownServ:'Сколько порций',ownTotal:'на всю кастрюлю',ownIngAdd:'Добавить продукт',ownIngNew:'Продукта нет в списке',ownStepsHint:'каждый шаг с новой строки',ownInPlan:'Может выбираться при создании меню',ownPrev:'1 порция: {k} ккал, {p} г белка',ownNoIng:'Продуктов пока нет',ownNeed:'Укажите название и хотя бы один продукт',per100:'На 100 г:',
 k_soup:'Суп',k_stew:'Тушёное, жаркое',k_dolma:'Долма',k_plov:'Плов',k_kebab:'Кебаб',k_fish:'Рыба',k_salad:'Салат',k_eggs:'Блюдо из яиц',k_porridge:'Каша',k_qutab:'Кутаб',k_wrap:'Ролл',k_pasta:'Паста',k_bowl:'Боул',k_snack:'Перекус',k_roast:'В духовке',
 xHand:'Вручную',xIng:'Из продуктов',xRec:'Из рецепта',grams:'Граммы',portion:'Порция',
+ widgetStale:'Откройте Süfrə, чтобы увидеть меню на сегодня',steps:'шагов',stepsWeek:'в среднем за неделю: {n}',
+hcToggle:'Брать шаги из Health Connect',hcWeight:'Брать вес с умных весов',hcBonus:'Добавлять калории за шаги сверх 5000',hcNote:'Süfrə только читает шаги и вес, ничего не записывает, данные не покидают телефон.',hcSettings:'Разрешения Health Connect',hcFail:'Не удалось связаться с Health Connect',hcMissing:'Health Connect не установлен. Установите приложение «Health Connect» из Play Маркета.',hcDenied:'Доступ к шагам не разрешён',hcOn:'Шаги подключены',
+famSync:'Синхронизация семьи',famIntro:'Одно меню, список покупок и записи на всех телефонах семьи. Создайте семью на одном телефоне, на других введите код.',famCreate:'Создать семью',famCodePh:'Код семьи',famJoin:'Присоединиться',famOk:'Синхронизировано',famErr:'Нет связи; изменения отправятся, когда появится интернет',famBusy:'Подключение…',famGone:'Этой семьи больше нет',famCodeNote:'Отправьте этот код членам семьи: Семья → Присоединиться',famShare:'Поделиться кодом',famLeave:'Выйти из семьи',famMe:'Чей это телефон?',famCreated:'Семья создана',famFail:'Не удалось подключиться к серверу',famBadCode:'Введите правильный код',famNotFound:'Семья с таким кодом не найдена',famJoined:'Вы присоединились к семье',famJoinConfirm:'Данные на этом телефоне будут заменены данными семьи. Продолжить?',famLeaveConfirm:'Выйти из семьи? Данные останутся на телефоне, но синхронизироваться не будут.',famShareText:'Код семьи Süfrə: {c}\nПриложение: https://github.com/ZekiAnar/sufre/releases/latest/download/Sufre.apk\niPhone: https://zekianar.github.io/sufre/',
  disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
 },
 en:{
@@ -453,10 +460,13 @@ cookStart:'Start cooking',cookPrep:'Get ready: ingredients',cookFam:'Amounts are
 edit:'Edit',delOwn:'Delete this recipe? It will be replaced by another dish on the menu.',deleted:'Deleted',ownAdd:'Add your own recipe',ownMine:'My recipes',ownNamePh:'For example: Grandma\'s dolma',ownMeal:'Meal',ownKind:'Type',ownMin:'Time, min',ownServ:'Number of portions',ownTotal:'for the whole pot',ownIngAdd:'Add ingredient',ownIngNew:'Ingredient not in the list',ownStepsHint:'one step per line',ownInPlan:'Can be picked when a menu is created',ownPrev:'1 portion: {k} kcal, {p} g protein',ownNoIng:'No ingredients yet',ownNeed:'Enter a name and at least one ingredient',per100:'Per 100 g:',
 k_soup:'Soup',k_stew:'Stew',k_dolma:'Dolma',k_plov:'Plov',k_kebab:'Kebab',k_fish:'Fish',k_salad:'Salad',k_eggs:'Egg dish',k_porridge:'Porridge',k_qutab:'Qutab',k_wrap:'Wrap',k_pasta:'Pasta',k_bowl:'Bowl',k_snack:'Snack',k_roast:'Oven-baked',
 xHand:'Manually',xIng:'From ingredients',xRec:'From a recipe',grams:'Grams',portion:'Portion',
+ widgetStale:'Open Süfrə to see today\'s menu',steps:'steps',stepsWeek:'weekly average: {n}',
+hcToggle:'Get steps from Health Connect',hcWeight:'Also get weight from a smart scale',hcBonus:'Add calories for steps above 5000',hcNote:'Süfrə only reads steps and weight, writes nothing, and the data never leaves your phone.',hcSettings:'Health Connect permissions',hcFail:'Couldn\'t reach Health Connect',hcMissing:'Health Connect is not installed. Install the "Health Connect" app from Google Play.',hcDenied:'Step access was not allowed',hcOn:'Steps connected',
+famSync:'Family sync',famIntro:'The same menu, shopping list and logs on every family phone. Create a family on one phone and enter the code on the others.',famCreate:'Create family',famCodePh:'Family code',famJoin:'Join',famOk:'Synced',famErr:'Offline; changes will be sent when you are back online',famBusy:'Connecting…',famGone:'This family no longer exists',famCodeNote:'Send this code to family members: Family → Join',famShare:'Share code',famLeave:'Leave family',famMe:'Whose phone is this?',famCreated:'Family created',famFail:'Couldn\'t connect to the server',famBadCode:'Enter a valid code',famNotFound:'No family found with this code',famJoined:'You joined the family',famJoinConfirm:'The data on this phone will be replaced by the family\'s data. Continue?',famLeaveConfirm:'Leave the family? Your data stays on this phone but will no longer sync.',famShareText:'Süfrə family code: {c}\nApp: https://github.com/ZekiAnar/sufre/releases/latest/download/Sufre.apk\niPhone: https://zekianar.github.io/sufre/',
  disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='4.0';
+const VERSION='4.1';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
@@ -582,7 +592,7 @@ let DB=null, UID=null, saveTimer=null, saving=Promise.resolve(), syncNote=null;
 function save(){
   S.updated=Date.now();
   try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}
-  snapshot();
+  snapshot(); if(FAM) famSchedule(); updateWidget();
   if(DB&&UID){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ const body={json:JSON.stringify(S),t:S.updated}; saving=saving.then(()=>DB.doc('data/users/'+UID+'/state').set(body)).catch(()=>{}); },1200); }
 }
 function snapshots(){ try{return JSON.parse(localStorage.getItem(LSN)||'[]')||[];}catch(e){return [];} }
@@ -962,7 +972,7 @@ function checkIn(m){
 function ringSVG(frac,color){const r=52,c=2*Math.PI*r,f=Math.max(0,Math.min(1,frac));return `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--line)" stroke-width="10"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c*f} ${c}" ${f<=0?'opacity="0"':''}/></svg>`;}
 const healthTips=m=>[...HC,...AL].filter(k=>has(m,k)&&L.az['tip_'+k]).map(k=>T('tip_'+k));
 function renderToday(){
-  const m=member(), t=todayISO(), p=pref(t), tg=target(m);
+  const m=member(), t=todayISO(), p=pref(t), tg=target(m)+stepBonus(m,t);
   if(p.i<0){ const i=dayIdx(t); view.innerHTML=`<div class="card stack"><div class="datebig">${dLong(t)}</div><p>${esc(T('notStarted',{d:dLong(S.prefs.start),n:-i}))}</p><button class="btn" id="startnow">${esc(T('startToday'))}</button></div>`; document.getElementById('startnow').onclick=()=>{S.prefs.start=t; generate(); save(); render();}; return; }
   const fast=fasting(m,t), ms=mealsFor(fast), tms=timesFor(t,fast,m);
   const i=dayIdx(t), pi=p.i, cycle=p.ram?0:Math.floor(i/PLAN_DAYS), day=p.P[pi], di=dayInfo(day,m,fast), Lg=getLog(m.id,t);
@@ -997,6 +1007,7 @@ function renderToday(){
      ${Math.abs(ci.newT-ci.oldT)>=30?`<div class="small"><b>${esc(T('ciChange',{a:fmt(ci.oldT),b:fmt(ci.newT)}))}</b></div><div class="row"><button class="btn sm" id="ciok">${esc(T('ciApply'))}</button><button class="btn plain sm" id="cino">${esc(T('ciSkip'))}</button></div>`:`<div class="small">${esc(T('ciSame'))}</div><div><button class="btn plain sm" id="cino">OK</button></div>`}
      ${ci.logged<7?`<p class="tiny muted" style="margin:0">${esc(T('ciFewLogs'))}</p>`:''}</div>`:''}
    ${ifc}
+   ${(S.prefs.health||{}).on?`<div class="card row between"><b>👣 ${fmt(stepsOf(m,t))} ${esc(T('steps'))}</b><span class="small muted">${stepBonus(m,t)?'+'+fmt(stepBonus(m,t))+' '+T('kcal')+' · ':''}${esc(T('stepsWeek',{n:fmt(Math.round(Array.from({length:7},(_,k)=>stepsOf(m,addDays(t,-k))).reduce((a,b)=>a+b,0)/7))}))}</span></div>`:''}
    <div class="card">${microRow(m,di)}<p class="tiny muted" style="margin:6px 0 0">${esc(T('microNote'))}</p></div>
    ${!p.ram&&pi===PLAN_DAYS-1?`<div class="tipbox">${esc(T('lastDay'))}</div>`:''}
    ${fast==='ram'&&fastRisk(m)?`<div class="warnbox">${esc(T('fastRisk'))}</div>`:''}
@@ -1506,10 +1517,12 @@ function renderFamily(){
     <h2>${esc(T('famTitle'))}</h2>
     ${S.members.map(m=>`<div class="member"><span class="avatar">${esc(m.name.slice(0,1))}</span><div style="flex:1"><b>${esc(m.name)}</b><div class="small muted">${memberLine(m)}</div></div><button class="btn plain sm" data-ed="${m.id}">${esc(T('change'))}</button></div>`).join('')}
     <button class="btn plain" id="addm">${esc(T('addMember'))}</button>
+    ${famCard()}
     <p class="tiny muted">${esc(T('disclaimer'))}</p>
   </div>`;
   view.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>memberForm(S.members.find(m=>m.id===b.dataset.ed)));
   document.getElementById('addm').onclick=()=>memberForm(null);
+  bindFamCard();
 }
 function memberForm(m){
   const isNew=!m; m=m||{id:uid(),name:'',sex:'f',age:30,h:165,w:70,goalW:null,act:1.2,goal:'lose',hc:[],al:[]};
@@ -1614,6 +1627,12 @@ function renderSettings(){
       ${(!NATIVE&&STANDALONE&&'Notification' in window&&Notification.permission==='default')?`<button class="btn plain sm" id="wrperm">${esc(T('wr_perm'))}</button>`:''}
       ${(!NATIVE&&(DL||STANDALONE))?`<button class="btn plain sm" id="wrics">${esc(T('wr_ics'))}</button>`:''}`:''}
     </div>
+    ${HC_()?`${secT('👣 Health Connect')}<div class="card stack">
+      ${toggle('hcon',!!(p.health||{}).on,T('hcToggle'))}
+      ${toggle('hcw',!!(p.health||{}).weight,T('hcWeight'))}
+      ${toggle('hcb',!!(p.health||{}).bonus,T('hcBonus'))}
+      <p class="tiny muted" style="margin:0">${esc(T('hcNote'))}</p>
+      ${(p.health||{}).on?`<button class="btn plain sm" id="hcset">${esc(T('hcSettings'))}</button>`:''}</div>`:''}
     ${secT(T('s_reminders'))}
     <div class="card stack">
       <div>${lbl(T('s_weighDay'))}${seg('wday',[...[1,2,3,4,5,6,0].map(d=>[d,T('daysShort')[d]]),[-1,'—']],p.weighDay)}</div>
@@ -1650,6 +1669,10 @@ function renderSettings(){
   on('[data-wg]',b=>{p.waterGoal=+b.dataset.wg; save(); render();});
   on('[data-wday]',b=>{p.weighDay=+b.dataset.wday; save(); render();});
   on('[data-af]',b=>{p.autoFreq=+b.dataset.af; save(); render();});
+  const hco=document.getElementById('hcon'); if(hco){ hco.onchange=e=>healthEnable(e.target.checked);
+    document.getElementById('hcw').onchange=e=>{ p.health=p.health||{}; p.health.weight=e.target.checked; save(); if(p.health.on) healthEnable(true); };
+    document.getElementById('hcb').onchange=e=>{ p.health=p.health||{}; p.health.bonus=e.target.checked; save(); };
+    const hs=document.getElementById('hcset'); if(hs) hs.onclick=()=>{ try{ HC_().openHealthConnectSettings(); }catch(e){} }; }
   const ron=document.getElementById('ron'); ron.onchange=e=>{p.ramadan.on=e.target.checked; save(); render(); applyWaterReminders(false);};
   const rch=(id,k,num)=>{const el=document.getElementById(id); if(el) el.onchange=e=>{ const v=num?Math.max(-30,Math.min(30,+e.target.value||0)):e.target.value; if(!num&&!v) return; p.ramadan[k]=v; if((k==='start'||k==='end')&&p.ramadan.end<p.ramadan.start) p.ramadan.end=addDays(p.ramadan.start,29); save(); render(); applyWaterReminders(false); };};
   rch('rst','start'); rch('ren','end'); rch('rcity','city'); rch('rmeth','method'); rch('radi','adjI',true); rch('radf','adjF',true);
@@ -1897,14 +1920,192 @@ async function autoDriveBackup(force){
     p.lastDrive=todayISO(); p.lastBackup=todayISO(); save(); toast(T('autoDriveDone')); if(tab==='settings'&&!sheetStack.length) render(); }catch(e){}
 }
 
+/* ================= home-screen widget (Android) ================= */
+let widgetTimer=null;
+function updateWidget(){
+  const W=NATIVE&&CP().SufreWidget; if(!W||!S.members.length) return;
+  clearTimeout(widgetTimer); widgetTimer=setTimeout(()=>{ try{
+    const m=member(), t=todayISO(), p=pref(t), f=fasting(m,t), Lg=getLog(m.id,t);
+    let line1='', line2='';
+    if(p.i>=0){ const day=p.P[p.i], tms=timesFor(t,f,m), x=nextMeal(t,f)||null;
+      line1=x?tms[x]+' · '+mealS(x,f)+': '+rn(R[slotRec(day,x,f)]):T('allDone');
+      const st=stepsOf(m,t); line2=fmt(eatenK(m,t))+' / '+fmt(target(m)+stepBonus(m,t))+' '+T('kcal')+(st?' · 👣 '+fmt(st):'');
+      if(f==='ram'){ const rt=ramTimes(t); line2+=' · 🌙 '+rt.iftar; } }
+    W.update({date:t,title:'Süfrə · '+m.name,line1,line2,stale:T('widgetStale'),plus:T('wr_plus'),wa:Lg.w||0,wb:waterGoal(m)});
+  }catch(e){} },400);
+}
+async function takeWidgetWater(){
+  const W=NATIVE&&CP().SufreWidget; if(!W||!S.members.length) return;
+  try{ const r=await W.takePending(); if(r&&r.water>0&&r.date){ const l=log(member().id,r.date); l.w=(l.w||0)+r.water; save(); if(!sheetStack.length) render(); } }catch(e){}
+}
+
+/* ================= Health Connect (Android): steps and weight ================= */
+const HC_=()=>NATIVE&&CP().Health;
+const stepsOf=(m,d)=>+((S.log[m.id]||{})[d]||{}).st||0;
+// walking above a 5000-step baseline (already in the activity factor) adds ~0.04 kcal per step per 70 kg
+function stepBonus(m,d){ const h=S.prefs.health||{}; if(!h.on||!h.bonus) return 0; return Math.round(Math.max(0,stepsOf(m,d)-5000)*0.04*m.w/70); }
+let hcLast=0;
+async function healthSync(force){
+  const H=HC_(), h=S.prefs.health||{}; if(!H||!h.on||!S.members.length) return;
+  if(!force&&Date.now()-hcLast<5*60000) return; hcLast=Date.now();
+  try{
+    const m=member(), start=parseISO(addDays(todayISO(),-6)), end=new Date();
+    const r=await H.queryAggregated({dataType:'steps',startDate:start.toISOString(),endDate:end.toISOString(),bucket:'day',aggregation:'sum'});
+    let ch=0; (r.samples||[]).forEach(s=>{ const d=iso(new Date(s.startDate)), v=Math.round(+s.value||0), L0=log(m.id,d); if(L0.st!==v){ L0.st=v; ch++; } });
+    if(h.weight){ const w=await H.readSamples({dataType:'weight',startDate:parseISO(addDays(todayISO(),-29)).toISOString(),endDate:end.toISOString(),limit:100});
+      (w.samples||[]).forEach(s=>{ const d=iso(new Date(s.startDate)), kg=Math.round((+s.value||0)*10)/10, L0=log(m.id,d); if(kg>30&&kg<300&&!L0.kg){ L0.kg=kg; if(d>=todayISO()) m.w=kg; ch++; } }); }
+    if(ch){ ADJ_CACHE.clear(); save(); if(!sheetStack.length&&(tab==='today'||tab==='progress')) render(); }
+  }catch(e){ if(force) toast(T('hcFail')); }
+}
+async function healthEnable(on){
+  const H=HC_(); S.prefs.health=S.prefs.health||{};
+  if(!on){ S.prefs.health.on=false; save(); render(); return; }
+  try{
+    const a=await H.isAvailable(); if(!a||!a.available){ toast(T('hcMissing')); try{ await H.openHealthConnectSettings(); }catch(e){} render(); return; }
+    const read=['steps'].concat(S.prefs.health.weight?['weight']:[]);
+    const st=await H.requestAuthorization({read,write:[]});
+    if(!st||!(st.readAuthorized||[]).includes('steps')){ toast(T('hcDenied')); S.prefs.health.on=false; save(); render(); return; }
+    S.prefs.health.on=true; save(); await healthSync(true); render(); toast(T('hcOn'));
+  }catch(e){ toast(T('hcFail')); render(); }
+}
+
+/* ================= family sync (Firebase) ================= */
+const FIREBASE_CONFIG=null; // {apiKey, authDomain, projectId, appId}: from the Firebase console
+const LSF='sufre-family-v1';
+let FAM=(()=>{try{return JSON.parse(localStorage.getItem(LSF)||'null');}catch(e){return null;}})();
+let fdb=null, fdoc=null, funsub=null, famTimer=null, famStatus='off', famBusy=false;
+const canFamily=()=>!!FIREBASE_CONFIG&&STANDALONE;
+const saveFAM=()=>{try{ if(FAM) localStorage.setItem(LSF,JSON.stringify(FAM)); else localStorage.removeItem(LSF); }catch(e){}};
+const loadScript=src=>new Promise((res,rej)=>{const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s);});
+async function fbReady(){
+  if(fdb) return fdb;
+  if(!window.firebase){ await loadScript('vendor/firebase-app-compat.js'); await loadScript('vendor/firebase-auth-compat.js'); await loadScript('vendor/firebase-firestore-compat.js'); }
+  if(!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+  try{ await firebase.firestore().enablePersistence({synchronizeTabs:true}); }catch(e){}
+  if(!firebase.auth().currentUser) await firebase.auth().signInAnonymously();
+  fdb=firebase.firestore(); return fdb;
+}
+const SHARED_PREFS=['start','cuisines','quick','excl','times','snack','leftovers','ramadan','weekStart'];
+// the shared state as flat "leaves": each person's day log, each bought tick and price is its own field, so two phones rarely overwrite each other
+function leaves(st){
+  const o={}, j=v=>JSON.stringify(v===undefined?null:v);
+  o.members=j(st.members); o.plan=j(st.plan); o.rplan=j(st.rplan||null); o.rkey=j(st.rkey||''); o.seed=j(st.seed||1); o.rseed=j(st.rseed||1); o.custom=j(st.custom||[]); o.cing=j(st.cing||[]);
+  const sp={}; SHARED_PREFS.forEach(k=>sp[k]=st.prefs[k]); o.prefs=j(sp);
+  Object.entries(st.prices||{}).forEach(([c,v])=>o['price|'+c]=j(v));
+  Object.entries(st.pantry||{}).forEach(([c,v])=>{ if(v) o['pantry|'+c]='true'; });
+  Object.entries(st.bought||{}).forEach(([k,mp])=>Object.entries(mp||{}).forEach(([c,v])=>{ if(v) o['bought|'+k+'|'+c]='true'; }));
+  Object.entries(st.log||{}).forEach(([mid,days])=>Object.entries(days||{}).forEach(([d,v])=>o['log|'+mid+'|'+d]=j(v)));
+  return o;
+}
+function applyLeaf(path,val){
+  const v=val===undefined?undefined:JSON.parse(val), p=path.split('|');
+  switch(p[0]){
+    case 'members': if(v) S.members=v; break;
+    case 'plan': if(v) S.plan=v; break;
+    case 'rplan': S.rplan=v||null; break;
+    case 'rkey': S.rkey=v||''; break;
+    case 'seed': S.seed=v||1; break;
+    case 'rseed': S.rseed=v||1; break;
+    case 'custom': S.custom=v||[]; break;
+    case 'cing': S.cing=v||[]; break;
+    case 'prefs': if(v) Object.assign(S.prefs,v); break;
+    case 'price': S.prices=S.prices||{}; if(v==null) delete S.prices[p[1]]; else S.prices[p[1]]=v; break;
+    case 'pantry': S.pantry=S.pantry||{}; if(!v) delete S.pantry[p[1]]; else S.pantry[p[1]]=true; break;
+    case 'bought': { S.bought=S.bought||{}; const k=p.slice(1,-1).join('|'), c=p[p.length-1]; S.bought[k]=S.bought[k]||{}; if(v) S.bought[k][c]=true; else delete S.bought[k][c]; break; }
+    case 'log': { S.log[p[1]]=S.log[p[1]]||{}; if(v==null) delete S.log[p[1]][p[2]]; else S.log[p[1]][p[2]]=v; break; }
+  }
+}
+function pruneBought(){ const lim=addDays(todayISO(),-56); Object.keys(S.bought||{}).forEach(k=>{ if(k.split('|')[0]<lim) delete S.bought[k]; }); }
+function famSchedule(){ if(!FAM||!fdoc) return; clearTimeout(famTimer); famTimer=setTimeout(famFlush,1500); }
+async function famFlush(){
+  if(!FAM||!fdoc||famBusy) return; famBusy=true;
+  try{
+    pruneBought();
+    const cur=leaves(S), last=FAM.last||{}, upd=[];
+    for(const k in cur) if(cur[k]!==last[k]) upd.push([k,cur[k]]);
+    for(const k in last) if(!(k in cur)) upd.push([k,null]);
+    const FV=firebase.firestore.FieldValue, FP=firebase.firestore.FieldPath;
+    for(let i=0;i<upd.length;i+=300){
+      const chunk=upd.slice(i,i+300), a=[];
+      chunk.forEach(([k,v])=>{ a.push(new FP('d',k), v===null?FV.delete():v); });
+      a.push(new FP('t'), FV.serverTimestamp());
+      await fdoc.update(...a);
+      chunk.forEach(([k,v])=>{ if(v===null) delete last[k]; else last[k]=v; });
+      FAM.last=last; saveFAM();
+    }
+    famStatus='ok';
+  }catch(e){ famStatus='err'; }
+  famBusy=false;
+}
+function famListen(){
+  if(funsub) funsub();
+  funsub=fdoc.onSnapshot(snap=>{
+    if(!snap.exists){ famStatus='gone'; if(tab==='family') render(); return; }
+    if(snap.metadata.hasPendingWrites) return;
+    const d=(snap.data()||{}).d||{}, last=FAM.last||{}; let ch=0;
+    for(const k in d) if(d[k]!==last[k]){ applyLeaf(k,d[k]); last[k]=d[k]; ch++; }
+    for(const k in last) if(!(k in d)){ applyLeaf(k,undefined); delete last[k]; ch++; }
+    famStatus='ok';
+    if(ch){ FAM.last=last; saveFAM(); migrate(); registerCustom(); ADJ_CACHE.clear();
+      if(!S.members.find(x=>x.id===S.active)) S.active=(FAM.me&&S.members.find(x=>x.id===FAM.me))?FAM.me:(S.members[0]||{}).id;
+      try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}
+      if(!sheetStack.length) render(); updateWidget(); }
+    else if(tab==='family'&&!sheetStack.length) render();
+  },()=>{ famStatus='err'; if(tab==='family'&&!sheetStack.length) render(); });
+}
+const FAM_CHARS='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const famCode=()=>Array.from(crypto.getRandomValues(new Uint8Array(8)),b=>FAM_CHARS[b%FAM_CHARS.length]).join('');
+async function famCreate(){
+  famStatus='busy'; render();
+  try{ await fbReady(); pruneBought(); let id, ref;
+    for(let k=0;k<5;k++){ id=famCode(); ref=fdb.collection('families').doc(id); const s=await ref.get(); if(!s.exists) break; }
+    const d=leaves(S); await ref.set({d,t:firebase.firestore.FieldValue.serverTimestamp()});
+    FAM={id,last:d,me:S.active}; saveFAM(); fdoc=ref; famListen(); famStatus='ok'; toast(T('famCreated')); }
+  catch(e){ famStatus='err'; toast(T('famFail')); }
+  render();
+}
+async function famJoin(code){
+  code=String(code||'').toUpperCase().replace(/[^A-Z0-9]/g,''); if(code.length<6){ toast(T('famBadCode')); return; }
+  famStatus='busy'; render();
+  try{ await fbReady(); const ref=fdb.collection('families').doc(code), s=await ref.get();
+    if(!s.exists){ famStatus='off'; toast(T('famNotFound')); render(); return; }
+    const d=(s.data()||{}).d||{};
+    const go=()=>{ S.log={}; S.bought={}; S.prices={}; S.pantry={}; Object.entries(d).forEach(([k,v])=>applyLeaf(k,v)); migrate(); registerCustom(); ADJ_CACHE.clear();
+      S.active=(S.members[0]||{}).id; FAM={id:code,last:{...d},me:null}; saveFAM(); fdoc=ref; save(); famListen(); famStatus='ok'; tab='family'; render(); toast(T('famJoined')); };
+    if(S.members.length) confirmBox(T('famJoinConfirm'),go); else go();
+  }catch(e){ famStatus='err'; toast(T('famFail')); render(); }
+}
+function famLeave(){ confirmBox(T('famLeaveConfirm'),()=>{ if(funsub) funsub(); funsub=null; fdoc=null; FAM=null; saveFAM(); famStatus='off'; render(); }); }
+async function famStart(){ if(!canFamily()||!FAM) return; try{ await fbReady(); fdoc=fdb.collection('families').doc(FAM.id); famListen(); famSchedule(); }catch(e){ famStatus='err'; } }
+function famCard(){
+  if(!canFamily()) return '';
+  if(!FAM) return `<div class="card stack"><b>👨‍👩‍👧 ${esc(T('famSync'))}</b><p class="small muted" style="margin:0">${esc(T('famIntro'))}</p>
+    <button class="btn" id="famNew" ${famStatus==='busy'?'disabled':''}>${famStatus==='busy'?'<span class="spinner"></span> ':''}${esc(T('famCreate'))}</button>
+    <div class="row" style="gap:6px"><input id="famCode" type="text" placeholder="${esc(T('famCodePh'))}" autocapitalize="characters" style="flex:1;letter-spacing:.15em"><button class="btn plain" id="famJoinB">${esc(T('famJoin'))}</button></div></div>`;
+  const st={ok:T('famOk'),err:T('famErr'),busy:T('famBusy'),gone:T('famGone'),off:T('famBusy')}[famStatus]||'';
+  return `<div class="card stack"><b>👨‍👩‍👧 ${esc(T('famSync'))}</b>
+    <div class="famcode">${FAM.id.replace(/(.{4})/,'$1 ')}</div><p class="small muted" style="margin:0;text-align:center">${esc(T('famCodeNote'))}</p>
+    <div class="row" style="justify-content:center;flex-wrap:wrap"><button class="btn plain sm" id="famShare">${esc(T('famShare'))}</button><button class="btn ghost sm" id="famOut">${esc(T('famLeave'))}</button></div>
+    <div>${lbl(T('famMe'))}<div class="chips">${S.members.map(x=>`<button class="chip" data-me="${x.id}" aria-pressed="${FAM.me===x.id}">${esc(x.name)}</button>`).join('')}</div></div>
+    <p class="tiny ${famStatus==='err'||famStatus==='gone'?'':'muted'}" style="margin:0">${famStatus==='ok'?'🟢':famStatus==='err'||famStatus==='gone'?'🔴':'🟡'} ${esc(st)}</p></div>`;
+}
+function bindFamCard(){
+  const n=document.getElementById('famNew'); if(n) n.onclick=famCreate;
+  const j=document.getElementById('famJoinB'); if(j) j.onclick=()=>famJoin(document.getElementById('famCode').value);
+  const o=document.getElementById('famOut'); if(o) o.onclick=famLeave;
+  const sh=document.getElementById('famShare'); if(sh) sh.onclick=async()=>{ const txt=T('famShareText',{c:FAM.id}); try{ if(NATIVE&&CP().Share) await CP().Share.share({text:txt}); else if(navigator.share) await navigator.share({text:txt}); else { await navigator.clipboard.writeText(txt); toast(T('copied')); } }catch(e){} };
+  document.querySelectorAll('[data-me]').forEach(b=>b.onclick=()=>{ FAM.me=b.dataset.me; saveFAM(); S.active=FAM.me; try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){} render(); updateWidget(); });
+}
+
 /* ================= boot ================= */
 registerCustom();
 renderTabs();
 const h0=(location.hash||'').slice(1); if(VIEWS.includes(h0)&&h0!=='today'){ tab=h0; }
 if(S.members.length&&!S.active) S.active=S.members[0].id;
-render(); syncGuard(); snapshot(); applyWaterReminders(false); if(NDRIVE) setTimeout(()=>autoDriveBackup(false),3000);
+if(FAM&&FAM.me&&S.members.find(x=>x.id===FAM.me)) S.active=FAM.me;
+render(); syncGuard(); snapshot(); applyWaterReminders(false); famStart(); takeWidgetWater(); updateWidget(); healthSync(false); if(NDRIVE) setTimeout(()=>autoDriveBackup(false),3000);
 let lastDay=todayISO();
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&NDRIVE) autoDriveBackup(false); if(!document.hidden&&todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } });
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ takeWidgetWater(); healthSync(false); updateWidget(); } if(!document.hidden&&NDRIVE) autoDriveBackup(false); if(!document.hidden&&todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } });
 setInterval(()=>{ if(todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } else if(tab==='today'&&!sheetStack.length&&!document.hidden){ const v=view.scrollTop; render(); view.scrollTop=v; } },300000);
 (async()=>{
   try{
