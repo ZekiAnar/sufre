@@ -49,11 +49,12 @@ h1,h2,h3{font-family:var(--display);line-height:1.2;margin:0;text-wrap:balance}
 h1{font-size:1.5rem} h2{font-size:1.25rem} h3{font-size:1.05rem}
 a{color:var(--accent)}
 #app{height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;background:var(--bg)}
-header.bar{flex:none;min-height:56px;box-sizing:border-box;padding:calc(10px + var(--safe-area-inset-top, env(safe-area-inset-top, 0px))) 16px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--bg)}
-header.bar .brand{flex:none;line-height:1.3;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--accent);margin-right:auto}
-.who{display:flex;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:6px 2px;margin:-6px 0;min-width:0}
+header.bar{flex:none;min-height:56px;box-sizing:border-box;padding:calc(10px + var(--safe-area-inset-top, env(safe-area-inset-top, 0px))) 16px 8px;display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;column-gap:10px;border-bottom:1px solid var(--line);background:var(--bg)}
+#hback{grid-column:1}header.bar .brand{grid-column:2}#who{grid-column:3;justify-self:end}#gear{grid-column:4}
+header.bar .brand{line-height:1.3;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--accent);margin-right:auto}
+.who{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px;min-width:0;overflow:visible}
 .who::-webkit-scrollbar{display:none}
-.who button{flex:none;line-height:1.25;box-sizing:border-box;min-height:34px;display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;white-space:nowrap;cursor:pointer}
+.who button{flex:none;max-width:9em;overflow:hidden;text-overflow:ellipsis;line-height:1.3;box-sizing:border-box;min-height:34px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;white-space:nowrap;cursor:pointer}
 .who button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 28px}
 nav.tabs{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);background:var(--surface);padding-bottom:var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))}
@@ -195,8 +196,8 @@ details summary{cursor:pointer;font-weight:600}
 .micros .mc b{font-variant-numeric:tabular-nums}
 .micros .mc.lo b{color:var(--saffron)}
 .micros .mc.ok b{color:var(--good)}
-.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--accent);border-radius:6px}
+.pbar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--accent);border-radius:6px}
 .lnk{background:none;border:none;padding:2px 0;color:var(--accent);font:inherit;font-size:.82rem;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .sheet-wrap.cookwrap .sheet{height:100%;max-height:100%;border-radius:0}
 .cook .timers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
@@ -499,7 +500,7 @@ range:'Date range',rangeText:'Choose the menu\'s start and end dates: every day 
  prem:'Süfrə Premium',premOn:'Premium is active',premPlan:'Plan: {p}',premFree:'Right now every feature is free for everyone.',premWhy:'A Premium subscription supports the app. Later, some features will need Premium:',premFeat:['Menus up to 365 days','Unlimited family members and phone sync','Adaptive calories, forecast and body measurements','Google Drive backup and Health Connect','Own recipes, prices and cost totals'],premMonthly:'Monthly',premYearly:'Yearly',premBuy:'Subscribe',premRestore:'Restore purchases',premManage:'Manage subscription',premNoStore:'Subscriptions work in the Android app installed from Google Play.',premNotReady:'The subscription is not active in the store yet.',premThanks:'Thank you! Premium is active.',premNone:'No active subscription found.',premErr:'Purchase failed: {e}',premFamily:'One subscription covers the whole family.',upd:'Updates',updAuto:'Check for updates automatically',updCheck:'Check now',updNew:'New version available: {v}',updNewText:'You have {c}. Download and install it — your data stays.',updGet:'Download',updLater:'Later',updOk:'You have the latest version ({v}).',updFail:"Couldn't check. Check your internet connection.",updWeb:'This version updates itself when online.',updCur:'Version: {v}', wEat:'✓ Eaten', wr_title:'Weekly report',wr_this:'This week',wr_last:'Last week',wr_w:'weight {n}',wr_meals:'{a}/{b} meals eaten',wr_water:'water goal {a}/{b} days',wr_kcal:'avg {n} kcal',wr_ntitle:'{n}, your week',wr_toggle:'Weekly report notification on Sunday evening',wr_note:'Arrives at 20:00: weight change, meals eaten, water. Also shown under Progress.', m1:'1 month',shopOut:'The menu ends on {d}: later days are not in the list.',shopMax:'You can choose up to {n} days.', eatFor:'Mark for',famAte:'{a} of {b} in the family have eaten',famMarked:'Marked for the whole family', famNeed:'For the whole family ({n} people):', disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='4.11';
+const VERSION='4.12';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
@@ -1082,7 +1083,7 @@ function renderToday(){
   const ci=checkIn(m), sg=v=>(v>0?'+':v<0?'−':'')+fmt1(Math.abs(v));
   let ifc=''; if(fast==='if'){ const w=ifWindow(m), nm2=nowM+(nowM<w.open&&w.close>1440?1440:0), open=nm2>=w.open&&nm2<w.close, left=open?w.close-nm2:((w.open-nowM+1440)%1440), pct=open?(nm2-w.open)/w.len:1-left/(1440-w.len);
     ifc=`<div class="card stack"><div class="row between"><b>⏳ ${esc(T('ifTitle',{h:m.ifw.h,e:24-m.ifw.h}))}</b><span class="small muted">${hm(w.open)}–${hm(w.close)}</span></div>
-      <div class="small">${esc(T(open?'ifOpen':'ifFasting',{t:Math.floor(left/60)+':'+pad(left%60)}))}</div><div class="bar"><i style="width:${Math.round(Math.max(0,Math.min(1,pct))*100)}%;background:${open?'var(--good)':'var(--saffron)'}"></i></div></div>`; }
+      <div class="small">${esc(T(open?'ifOpen':'ifFasting',{t:Math.floor(left/60)+':'+pad(left%60)}))}</div><div class="pbar"><i style="width:${Math.round(Math.max(0,Math.min(1,pct))*100)}%;background:${open?'var(--good)':'var(--saffron)'}"></i></div></div>`; }
   view.innerHTML=`<div class="stack">
    ${rt?`<div class="card ram"><div class="row between"><b>🌙 ${esc(T('ramDay',{n:ramDayN(t)}))}</b><span class="small">${esc(CITIES[ramP().city][0])}</span></div>
      <div class="ramt"><div><span class="tiny">${esc(T('imsak'))}</span><b class="num">${rt.imsak}</b></div><div><span class="tiny">${esc(T('iftar'))}</span><b class="num">${rt.iftar}</b></div>
@@ -1295,7 +1296,7 @@ function openCook(code,scope,rows,steps){
       <button class="btn big" data-nav="1">${esc(T('cookGo'))} ›</button></div>`;
       body.querySelectorAll('[data-cg]').forEach(cb=>cb.onchange=()=>{got[cb.dataset.cg]=cb.checked; cb.closest('li').classList.toggle('got',cb.checked);});
     } else if(pg<=n){ const s=steps[pg-1], mins=stepMinutes(r.steps[pg-1]||s)||stepMinutes(s);
-      body.innerHTML=`<div class="ckstep"><div class="small muted">${esc(T('stepOf',{a:pg,b:n}))}</div><div class="bar"><i style="width:${Math.round(pg/n*100)}%"></i></div>
+      body.innerHTML=`<div class="ckstep"><div class="small muted">${esc(T('stepOf',{a:pg,b:n}))}</div><div class="pbar"><i style="width:${Math.round(pg/n*100)}%"></i></div>
         <div class="cktext" id="cktx"><span class="zone l"></span><p>${esc(s)}</p><span class="zone r"></span></div>
         ${mins?`<button class="btn" id="ctm">⏱ ${esc(T('timerStart',{n:mins}))}</button>`:''}
         <div class="row between cknav"><button class="btn plain big" data-nav="-1">‹ ${esc(T('prev'))}</button><button class="btn big" data-nav="1">${esc(pg===n?T('cookFinish'):T('next'))} ›</button></div>
