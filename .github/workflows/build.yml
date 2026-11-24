@@ -67,6 +67,11 @@ jobs:
             cat ../native/signing.gradle >> app/build.gradle
             ./gradlew assembleRelease --no-daemon
             cp app/build/outputs/apk/release/app-release.apk ../Sufre.apk
+            echo "Google Play üçün AAB (yeniləmə yoxlaması söndürülür, Play özü yeniləyir)"
+            sed -i 's/const STORE_BUILD=false;/const STORE_BUILD=true;/' app/src/main/assets/public/index.html
+            grep -q 'const STORE_BUILD=true;' app/src/main/assets/public/index.html
+            ./gradlew bundleRelease --no-daemon
+            cp app/build/outputs/bundle/release/app-release.aab ../Sufre.aab
           else
             echo "::warning::SUFRE_KEYSTORE secret yoxdur — müvəqqəti açarla imzalanır"
             ./gradlew assembleDebug --no-daemon
@@ -76,7 +81,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Sufre-apk
-          path: Sufre.apk
+          path: |
+            Sufre.apk
+            Sufre.aab
+          if-no-files-found: warn
 
       - name: Buraxılış (Releases) yarat
         uses: softprops/action-gh-release@v2
@@ -86,7 +94,11 @@ jobs:
           body: |
             Android telefon üçün quraşdırma faylı: **Sufre.apk**.
             Telefonda yükləyin, açın və "Quraşdır" düyməsinə basın. Lazım olsa "Naməlum mənbələrdən quraşdırma"ya icazə verin.
-          files: Sufre.apk
+            **Sufre.aab** — Google Play Console-a yükləmək üçündür, telefona quraşdırılmır.
+          files: |
+            Sufre.apk
+            Sufre.aab
+          fail_on_unmatched_files: false
           make_latest: true
 
       - name: Veb versiya (iPhone) — GitHub Pages
