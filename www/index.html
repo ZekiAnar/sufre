@@ -172,6 +172,10 @@ details summary{cursor:pointer;font-weight:600}
 .hb[aria-pressed="true"]{color:var(--accent)}
 .sheet .sh{position:relative;touch-action:none}
 .sheet .grab{position:absolute;top:5px;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:4px;background:var(--line)}
+.card.ram{background:linear-gradient(135deg,#1e2a4a,#3b2f63);color:#fff;border:none}
+.card.ram .tiny{color:#d9d4f0;display:block}
+.ramt{display:flex;gap:22px;margin-top:8px}
+.ramt b{font-size:1.35rem}
 .water-toast{bottom:auto;top:calc(70px + env(safe-area-inset-top));text-align:center;padding:12px 16px;min-width:260px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 </style>
 </head>
@@ -256,6 +260,9 @@ az:{
  s_waterRem:'Su xatırlatması',wr_on:'Mütəmadi su içməyi xatırlat',wr_every:'Nə qədər tez-tez',wr_from:'Başlanğıc saatı',wr_to:'Son saat',wr_native:'Telefon bildirişi gələcək, app bağlı olsa da.',wr_web:'App açıq olanda xatırladacaq. App bağlı olanda da xatırlatma gəlsin deyə su xatırlatmalarını telefonun təqviminə yükləyin.',wr_ics:'Su xatırlatmalarını təqvimə yüklə (.ics)',wr_perm:'Bildirişlərə icazə ver',wr_denied:'Bildirişə icazə verilmədi. Telefonun parametrlərində Süfrə üçün bildirişləri açın.',wr_title:'Su vaxtıdır 💧',wr_body:'1 stəkan su için. Bu gün: {a} / {b} stəkan',wr_plus:'+1 stəkan',wr_saved:'Su xatırlatmaları quruldu',wr_off:'Su xatırlatmaları söndürüldü',wr_list:'Gündə {n} xatırlatma: {t}',everyMin:'{n} dəq',everyH:'{n} saat',
  s_auto:'Avtomatik ehtiyat nüsxə',s_autoFreq:'Nə qədər tez-tez',af_0:'Söndürülüb',af_1:'Hər gün',af_3:'3 gündən bir',af_7:'Həftədə bir',af_14:'2 həftədən bir',s_autoKeep:'Neçə nüsxə saxlanılsın',s_autoDrive:'Avtomatik nüsxəni Google Drive-a da yüklə',s_autoNote:'Seçilən tezliklə yeni bərpa nöqtəsi yaradılır, ən köhnəsi silinir. Bu nüsxələr yalnız bu cihazdadır: app silinəndə onlar da silinir. Ona görə vaxtaşırı faylı və ya Google Drive nüsxəsini də çıxarın.',s_lastAuto:'Son avtomatik nüsxə: {d}',autoDriveDone:'Avtomatik nüsxə Google Drive-a yükləndi',
  gd_signin:'Google hesabı ilə daxil ol',gd_signed:'Google hesabı: {e}',gd_signout:'Hesabdan çıx',gd_out:'Google hesabından çıxıldı',gd_need:'Avtomatik Google Drive nüsxəsi üçün hesaba yenidən daxil olun.',gd_folder:'Nüsxələr Google Drive-da "Süfrə" qovluğuna yüklənir. App yalnız özünün yaratdığı fayllara baxa bilir.',gd_notset:'Google hesabı ilə giriş hələ qurulmayıb.',
+ rm_S:'Sahur',rm_Q:'İftar açılışı',rm_N:'İftar',rm_D:'Gecə yeməyi',ramDay:'Ramazanın {n}. günü',imsak:'İmsak',iftar:'İftar',toIftar:'İftara qalıb',notFasting:'{n} oruc tutmur: menyu adi saatlarla göstərilir.',ramSoon:'Ramazan {d} başlayır ({n} gün qalıb). Oruc tutanları Ailə bölməsində profildə qeyd edin.',ramMenu:'Ramazan menyusu',ramMenuNote:'İftar isti şorba ilə başlayır; sahur yeməkləri uzun müddət tox saxlayan və az duzlu seçilir. Oruc tutmayan ailə üzvləri eyni yeməkləri adi saatlarda yeyir.',fastRisk:'Diabet, insulin direnci, hamiləlik, əmizdirmə, böyrək xəstəliyi, anemiya və ya 15 yaşdan kiçik yaşda oruc tutmazdan əvvəl həkimlə məsləhətləşin.',ramWater:'Su iftardan imsaka qədər: iftardan sonra hər saat 1 stəkan, sahurda 2 stəkan.',fastToggle:'Ramazanda oruc tutur',
+ s_ram:'Ramazan',ram_on:'Ramazan rejimi',ram_start:'Ramazanın 1-ci günü',ram_end:'Son oruc günü',ram_city:'Şəhər (imsak və iftar vaxtları üçün)',ram_adjI:'İmsak düzəlişi, dəq',ram_adjF:'İftar düzəlişi, dəq',ram_first:'{d}: imsak {i}, iftar {f}',ram_note:'Vaxtlar günəşin mövqeyinə görə hesablanır və Qafqaz Müsəlmanları İdarəsinin təqvimindən 1–2 dəqiqə fərqlənə bilər; lazım olsa düzəlişlə uyğunlaşdırın. 2027-ci il üçün tarixlər ehtimalidir: fətva elan olunanda yoxlayın.',ram_regen:'Ramazan menyusunu yenidən yarat',ram_noFaster:'Ramazan menyusu üçün Ailə bölməsində oruc tutanların profilində "Ramazanda oruc tutur" seçin.',
+ rtips:['Sahuru buraxmayın: gün ərzində enerji və tox qalmaq üçün ən vacib yeməkdir.','Orucu 1–3 xurma və su ilə açın, sonra isti şorba ilə davam edin.','İftarda tələsməyin: yavaş yeyin, birinci boşqabdan sonra 10 dəqiqə gözləyin.','Sahurda duzlu pendir, turşu və kolbasa susuzluq yaradır.','İftardan imsaka qədər 8–10 stəkan su için, çayı sudan sayamayın.','Qızartma və şərbətli şirniyyatı (paxlava, şəkərbura) həftədə bir dəfə ilə məhdudlaşdırın.','İftardan 1–2 saat sonra yüngül gəzinti həzmi yaxşılaşdırır.','Sahurda yulaf, yumurta, kəsmik və tam taxıllı çörək uzun müddət tox saxlayır.'],
  disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
 },
 ru:{
@@ -322,6 +329,9 @@ ru:{
  s_waterRem:'Напоминание о воде',wr_on:'Регулярно напоминать пить воду',wr_every:'Как часто',wr_from:'С',wr_to:'До',wr_native:'Придёт уведомление на телефон, даже если приложение закрыто.',wr_web:'Напоминает, пока приложение открыто. Чтобы напоминания приходили и при закрытом приложении, загрузите их в календарь телефона.',wr_ics:'Загрузить напоминания о воде в календарь (.ics)',wr_perm:'Разрешить уведомления',wr_denied:'Уведомления не разрешены. Включите их для Süfrə в настройках телефона.',wr_title:'Время пить воду 💧',wr_body:'Выпейте стакан воды. Сегодня: {a} / {b} стаканов',wr_plus:'+1 стакан',wr_saved:'Напоминания о воде настроены',wr_off:'Напоминания о воде выключены',wr_list:'{n} напоминаний в день: {t}',everyMin:'{n} мин',everyH:'{n} ч',
  s_auto:'Автоматическая резервная копия',s_autoFreq:'Как часто',af_0:'Выключено',af_1:'Каждый день',af_3:'Раз в 3 дня',af_7:'Раз в неделю',af_14:'Раз в 2 недели',s_autoKeep:'Сколько копий хранить',s_autoDrive:'Также загружать автокопию в Google Drive',s_autoNote:'С выбранной частотой создаётся новая точка восстановления, самая старая удаляется. Эти копии хранятся только на этом устройстве и удаляются вместе с приложением, поэтому иногда сохраняйте и файл или копию в Google Drive.',s_lastAuto:'Последняя автокопия: {d}',autoDriveDone:'Автокопия загружена в Google Drive',
  gd_signin:'Войти через Google',gd_signed:'Аккаунт Google: {e}',gd_signout:'Выйти',gd_out:'Вы вышли из аккаунта Google',gd_need:'Для автокопии в Google Drive войдите в аккаунт ещё раз.',gd_folder:'Копии загружаются в папку «Süfrə» в Google Drive. Приложение видит только созданные им файлы.',gd_notset:'Вход через Google ещё не настроен.',
+ rm_S:'Сухур',rm_Q:'Открытие ифтара',rm_N:'Ифтар',rm_D:'Поздний ужин',ramDay:'Рамадан, день {n}',imsak:'Имсак',iftar:'Ифтар',toIftar:'До ифтара',notFasting:'{n} не держит пост: меню в обычное время.',ramSoon:'Рамадан начинается {d} (через {n} дн.). Отметьте постящихся в профилях в разделе «Семья».',ramMenu:'Меню на Рамадан',ramMenuNote:'Ифтар начинается с горячего супа; на сухур — сытные и малосолёные блюда. Не постящиеся члены семьи едят те же блюда в обычное время.',fastRisk:'При диабете, инсулинорезистентности, беременности, кормлении, болезни почек, анемии или в возрасте до 15 лет посоветуйтесь с врачом перед постом.',ramWater:'Вода от ифтара до имсака: после ифтара по стакану каждый час, на сухур — 2 стакана.',fastToggle:'Держит пост в Рамадан',
+ s_ram:'Рамадан',ram_on:'Режим Рамадана',ram_start:'Первый день Рамадана',ram_end:'Последний день поста',ram_city:'Город (для времени имсака и ифтара)',ram_adjI:'Поправка имсака, мин',ram_adjF:'Поправка ифтара, мин',ram_first:'{d}: имсак {i}, ифтар {f}',ram_note:'Время рассчитывается по положению солнца и может отличаться от календаря Управления мусульман Кавказа на 1–2 минуты; при необходимости задайте поправку. Даты на 2027 год предварительные: проверьте после объявления фетвы.',ram_regen:'Создать меню на Рамадан заново',ram_noFaster:'Для меню на Рамадан отметьте «Держит пост в Рамадан» в профилях постящихся (раздел «Семья»).',
+ rtips:['Не пропускайте сухур: это главный приём пищи, чтобы весь день оставаться сытым и бодрым.','Открывайте пост 1–3 финиками и водой, затем горячий суп.','Не торопитесь на ифтаре: ешьте медленно, после первой тарелки подождите 10 минут.','Солёный сыр, соленья и колбаса на сухур вызывают жажду.','От ифтара до имсака выпейте 8–10 стаканов воды; чай не заменяет воду.','Жареное и сиропные сладости (пахлава, шекербура) — не чаще раза в неделю.','Лёгкая прогулка через 1–2 часа после ифтара улучшает пищеварение.','Овсянка, яйца, творог и цельнозерновой хлеб на сухур дают сытость надолго.'],
  disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
 },
 en:{
@@ -388,18 +398,27 @@ en:{
  s_waterRem:'Water reminder',wr_on:'Remind me to drink water regularly',wr_every:'How often',wr_from:'From',wr_to:'Until',wr_native:'You get a phone notification even when the app is closed.',wr_web:'Reminds you while the app is open. To get reminders when it is closed too, add them to your phone calendar.',wr_ics:'Add water reminders to calendar (.ics)',wr_perm:'Allow notifications',wr_denied:'Notifications are not allowed. Turn them on for Süfrə in your phone settings.',wr_title:'Time for water 💧',wr_body:'Drink a glass of water. Today: {a} / {b} glasses',wr_plus:'+1 glass',wr_saved:'Water reminders set',wr_off:'Water reminders turned off',wr_list:'{n} reminders a day: {t}',everyMin:'{n} min',everyH:'{n} h',
  s_auto:'Automatic backup',s_autoFreq:'How often',af_0:'Off',af_1:'Every day',af_3:'Every 3 days',af_7:'Every week',af_14:'Every 2 weeks',s_autoKeep:'How many copies to keep',s_autoDrive:'Also upload the automatic copy to Google Drive',s_autoNote:'A new restore point is created at the chosen frequency and the oldest is removed. These copies live only on this device and are deleted with the app, so also save a file or a Google Drive copy from time to time.',s_lastAuto:'Last automatic copy: {d}',autoDriveDone:'Automatic copy uploaded to Google Drive',
  gd_signin:'Sign in with Google',gd_signed:'Google account: {e}',gd_signout:'Sign out',gd_out:'Signed out of Google',gd_need:'Sign in to Google again for the automatic Drive copy.',gd_folder:'Copies go to the "Süfrə" folder in Google Drive. The app can only see files it created.',gd_notset:'Google sign-in is not set up yet.',
+ rm_S:'Suhoor',rm_Q:'Iftar opener',rm_N:'Iftar',rm_D:'Late dinner',ramDay:'Ramadan, day {n}',imsak:'Imsak',iftar:'Iftar',toIftar:'Until iftar',notFasting:'{n} is not fasting: the menu uses normal times.',ramSoon:'Ramadan starts {d} (in {n} days). Mark who fasts in their profile under Family.',ramMenu:'Ramadan menu',ramMenuNote:'Iftar starts with a warm soup; suhoor dishes keep you full and are low in salt. Family members who do not fast eat the same dishes at normal times.',fastRisk:'With diabetes, insulin resistance, pregnancy, breastfeeding, kidney disease, anaemia or under 15, talk to a doctor before fasting.',ramWater:'Water from iftar to imsak: a glass every hour after iftar, 2 glasses at suhoor.',fastToggle:'Fasts during Ramadan',
+ s_ram:'Ramadan',ram_on:'Ramadan mode',ram_start:'First day of Ramadan',ram_end:'Last fasting day',ram_city:'City (for imsak and iftar times)',ram_adjI:'Imsak adjustment, min',ram_adjF:'Iftar adjustment, min',ram_first:'{d}: imsak {i}, iftar {f}',ram_note:'Times are calculated from the sun\'s position and may differ from the Caucasus Muslims Office calendar by 1–2 minutes; adjust if needed. The 2027 dates are estimates: check them when the fatwa is announced.',ram_regen:'Create a new Ramadan menu',ram_noFaster:'For a Ramadan menu, tick "Fasts during Ramadan" in the profiles of those who fast (Family).',
+ rtips:['Do not skip suhoor: it is the meal that keeps you full and energetic all day.','Break the fast with 1–3 dates and water, then a warm soup.','Do not rush iftar: eat slowly and wait 10 minutes after the first plate.','Salty cheese, pickles and sausage at suhoor make you thirsty.','Drink 8–10 glasses of water between iftar and imsak; tea does not replace water.','Limit fried food and syrupy sweets (baklava, shekerbura) to once a week.','A light walk 1–2 hours after iftar helps digestion.','Oats, eggs, cottage cheese and wholegrain bread at suhoor keep you full for longer.'],
  disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='3.2';
+const VERSION='3.3';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
+ING.finik={n:'Xurma (ərəb xurması)',k:282,p:2.5,f:0.4,c:75,g:'Meyvə və qoz-fındıq',tr:['Финики','Dates']};
+R.RIF={code:'RIF',cu:'all',meal:'Q',kind:'snack',min:2,batch:0,nat:1,name:'İftar açılışı: xurma və su',nm:['Открытие ифтара: финики и вода','Iftar opener: dates and water'],
+ ing:[['finik',30,'3 ədəd']],
+ steps:['Orucu 1–3 ədəd xurma və 1 stəkan otaq temperaturunda su ilə açın.','Sonra 10–15 dəqiqə ara verin (namaz vaxtı): mədə yeməyə hazırlaşır.','Əsas iftara isti şorba ilə başlayın, sonra əsas yeməyə keçin.','Orucu şirin içki, şirə və ya şirniyyatla açmayın.'],
+ tip:'Qan şəkəri problemi varsa, 1 xurma kifayətdir.'};
 const MEALS=['S','N','Q','D'];
 const PLAN_DAYS=28;
 const CUIS={az:['AZ','#a3263b'],tr:['TR','#c2410c'],ge:['GE','#7c3aed'],it:['IT','#15803d'],gr:['GR','#1d4ed8'],cn:['CN','#b91c1c'],in:['IN','#b45309'],mx:['MX','#0f766e']};
 const CU_KEYS=Object.keys(CUIS);
 const LANGS=['az','ru','en'];
+const RAM_DEF={on:true,start:'2027-02-08',end:'2027-03-08',city:'baku',adjI:0,adjF:0};
 
 /* ================= i18n ================= */
 let LANG='az';
@@ -410,7 +429,7 @@ const inm=c=>LANG==='az'||!ING[c].tr?ING[c].n:ING[c].tr[LI(LANG)];
 const grn=g=>LANG==='az'||!D.groups[g]?g:D.groups[g][LI(LANG)];
 const cuN=k=>T('cu_'+k);
 const cuTag=k=>CUIS[k]?`<span class="cu" style="--cu:${CUIS[k][1]}">${CUIS[k][0]}</span>`:'';
-const mealN=x=>T('meal_'+x), mealS=x=>T('ms_'+x);
+const mealN=(x,fast)=>T((fast?'rm_':'meal_')+x), mealS=(x,fast)=>T((fast?'rm_':'ms_')+x);
 const fmt=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 const fmt1=n=>{const s=(Math.round(n*10)/10).toString(); return LANG==='en'?s:s.replace('.',',');};
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -483,7 +502,7 @@ const LS='sufre-state-v1', LSP='sufre-photos-v1', LSN='sufre-snap-v1', LST='sufr
 const DEF_TIMES={S:'08:00',N:'13:00',Q:'16:30',D:'19:30'};
 let S=null, PH={}, STR={};
 function detectLang(){ const n=((navigator.language||'az')+'').slice(0,2).toLowerCase(); return n==='ru'?'ru':n==='en'?'en':'az'; }
-function blank(){return {v:1,members:[],active:null,prefs:{start:todayISO(),cuisines:['az'],quick:false,excl:[],times:{...DEF_TIMES},lang:detectLang(),theme:'system',unit:'kg',weekStart:1,snack:true,glass:250,waterGoal:0,weighDay:1,lastBackup:null,waterRem:{on:false,every:90,from:'09:00',to:'21:00'},autoFreq:1,autoKeep:7,autoDrive:false,lastDrive:null},plan:null,seed:1,log:{},bought:{},updated:0};}
+function blank(){return {v:1,members:[],active:null,prefs:{start:todayISO(),cuisines:['az'],quick:false,excl:[],times:{...DEF_TIMES},lang:detectLang(),theme:'system',unit:'kg',weekStart:1,snack:true,glass:250,waterGoal:0,weighDay:1,lastBackup:null,waterRem:{on:false,every:90,from:'09:00',to:'21:00'},autoFreq:1,autoKeep:7,autoDrive:false,lastDrive:null,ramadan:{...RAM_DEF}},plan:null,seed:1,log:{},bought:{},updated:0};}
 try{S=JSON.parse(localStorage.getItem(LS)||'null');}catch(e){S=null;}
 if(!S||S.v!==1) S=blank();
 try{PH=JSON.parse(localStorage.getItem(LSP)||'{}')||{};}catch(e){PH={};}
@@ -494,6 +513,7 @@ function migrate(){
   Object.keys(b).forEach(k=>{ if(p[k]===undefined) p[k]=b[k]; });
   if(!LANGS.includes(p.lang)) p.lang='az';
   p.waterRem={...b.waterRem,...(p.waterRem||{})};
+  p.ramadan={...RAM_DEF,...(p.ramadan||{})};
   if(S.plan) S.plan.forEach(d=>{ if(!d.cu) d.cu=(R[d.N]&&R[d.N].cu)||'az'; });
   S.members.forEach(m=>{ m.hc=m.hc||[]; m.al=m.al||[]; if(m.anemia&&!m.hc.includes('anemia')) m.hc.push('anemia'); if(m.insulin&&!m.hc.includes('insulin')) m.hc.push('insulin'); delete m.anemia; delete m.insulin; });
 }
@@ -539,7 +559,7 @@ function tagSet(tags){const s=new Set(); tags.forEach(t=>(TAGS[t]||[]).forEach(c
 // household planning exclusions: prefs + every member's allergies
 function exclSet(){ const t=[...(S.prefs.excl||[])]; S.members.forEach(m=>t.push(...memberTags(m))); return tagSet(t); }
 function okExcl(r){ const ex=exclSet(); return !r.ing.some(([c])=>ex.has(c)&&core(r,c)); }
-const INS_MUL={bal:0,quru_erik:0,kartof:0.5,duyu:0.6,lavas:0.6,corek:0.6,un:0.7,vermisel:0.7,makaron:0.7,nar:0.5,banan:0,xurma:0};
+const INS_MUL={finik:0.34,bal:0,quru_erik:0,kartof:0.5,duyu:0.6,lavas:0.6,corek:0.6,un:0.7,vermisel:0.7,makaron:0.7,nar:0.5,banan:0,xurma:0};
 const SALTY={ag_pendir:0.5,zeytun:0.5,soya_sousu:0.5,holland:0.5};
 const CHOL={xama:0.5,holland:0.5,ag_pendir:0.7};
 const ADJ_CACHE=new Map();
@@ -568,12 +588,16 @@ function adj(code,m){
   ing.forEach(([c,g])=>{v.k+=ING[c].k*g/100;v.p+=ING[c].p*g/100;v.f+=ING[c].f*g/100;v.c+=ING[c].c*g/100;});
   ADJ_CACHE.set(key,v); return v;
 }
-function dayInfo(i,m){
-  const day=S.plan[i], ms=meals(); let k=0;
-  ms.forEach(x=>k+=adj(day[x],m).k);
+// fast=true: member fasts on this date (Ramadan): Q slot becomes the iftar opener (dates + water)
+const slotRec=(day,x,fast)=>fast&&x==='Q'?'RIF':day[x];
+const RMEALS=['S','Q','N','D']; // Ramadan order: suhoor, iftar opener, iftar, late dinner
+const mealsFor=fast=>fast?RMEALS:meals();
+function dayInfo(day,m,fast){
+  const ms=mealsFor(fast); let k=0;
+  ms.forEach(x=>k+=adj(slotRec(day,x,fast),m).k);
   let f=target(m)/k; f=Math.min(1.5,Math.max(0.5,f));
   const out={f,k:k*f,p:0,fat:0,c:0};
-  ms.forEach(x=>{const a=adj(day[x],m); out.p+=a.p*f; out.fat+=a.f*f; out.c+=a.c*f;});
+  ms.forEach(x=>{const a=adj(slotRec(day,x,fast),m); out.p+=a.p*f; out.fat+=a.f*f; out.c+=a.c*f;});
   return out;
 }
 const r5=g=>Math.max(5,Math.round(g/5)*5);
@@ -592,11 +616,11 @@ function dayCuisines(){
   }
   return out;
 }
-function pickDay(cu,d,ctx,rnd,keepQ){
+function pickDay(cu,d,ctx,rnd,keepQ,ramDate){
   const pool=m=>{ let p=D.rec.filter(r=>r.meal===m&&okExcl(r)&&(m==='Q'?(r.cu==='all'||S.prefs.cuisines.includes(r.cu)||r.cu===cu):r.cu===cu)); if(!p.length) p=D.rec.filter(r=>r.meal===m&&okExcl(r)&&(r.cu==='az'||r.cu==='all')); if(!p.length) p=D.rec.filter(r=>r.meal===m&&okExcl(r)); if(!p.length) p=D.rec.filter(r=>r.meal===m); return p; };
   const Sp=pool('S').concat(D.rec.filter(r=>r.meal==='S'&&okExcl(r)&&r.cu!==cu&&S.prefs.cuisines.includes(r.cu)));
   const Np=pool('N'), Dp=pool('D'), Qp=keepQ&&R[keepQ]?[R[keepQ]]:pool('Q');
-  const wd=parseISO(addDays(S.prefs.start,d)).getDay(); const weekday=wd>=1&&wd<=5;
+  const wd=parseISO(ramDate||addDays(S.prefs.start,d)).getDay(); const weekday=wd>=1&&wd<=5;
   const cnt=ctx.cnt, last=ctx.last; let best=null,bs=1e9;
   for(const s of Sp) for(const n of Np) for(const dd of Dp) for(const q of Qp){
     let sc=Math.abs(baseK(s.code)+baseK(n.code)+baseK(dd.code)+baseK(q.code)-1910)/15;
@@ -608,6 +632,7 @@ function pickDay(cu,d,ctx,rnd,keepQ){
     if(!keepQ&&last.Q.slice(-1).includes(q.code)) sc+=15;
     if(n.kind===dd.kind) sc+=20;
     if(S.prefs.quick&&weekday&&(n.min>45||dd.min>45)) sc+=80;
+    if(ramDate){ if(n.kind!=='soup') sc+=35; if(s.ing.some(([c])=>c in SALTY)) sc+=12; if(['porridge','eggs','kuku'].includes(s.kind)) sc-=6; if(dd.kind==='kebab') sc+=8; }
     sc+=rnd()*6;
     if(sc<bs){bs=sc;best={S:s.code,N:n.code,D:dd.code,Q:q.code,cu};}
   }
@@ -624,18 +649,73 @@ function generate(){
   }
   S.plan=plan;
 }
-function setDayCuisine(i,cu){
+function setDayCuisine(P,i,cu,date){
   const ctx={cnt:{},last:{S:[],N:[],D:[],Q:[]}};
-  S.plan.forEach((d,k)=>{ if(k===i) return; MEALS.forEach(m=>ctx.cnt[d[m]]=(ctx.cnt[d[m]]||0)+1); });
-  for(let k=Math.max(0,i-3);k<i;k++) MEALS.forEach(m=>ctx.last[m].push(S.plan[k][m]));
-  const p=pickDay(cu,i,ctx,rng(Date.now()%100000),S.plan[i].Q);
-  S.plan[i]={...p,Q:S.plan[i].Q,cu};
+  P.forEach((d,k)=>{ if(k===i) return; MEALS.forEach(m=>ctx.cnt[d[m]]=(ctx.cnt[d[m]]||0)+1); });
+  for(let k=Math.max(0,i-3);k<i;k++) MEALS.forEach(m=>ctx.last[m].push(P[k][m]));
+  const p=pickDay(cu,i,ctx,rng(Date.now()%100000),P[i].Q,P===S.rplan?date:null);
+  P[i]={...p,Q:P[i].Q,cu};
 }
 // after allergy changes: replace any planned dish that now breaks a household exclusion
 function repairPlan(){
   if(!S.plan) return; ADJ_CACHE.clear(); let n=0;
-  S.plan.forEach((d,i)=>{ if(MEALS.some(x=>!okExcl(R[d[x]]))){ const q=okExcl(R[d.Q])?d.Q:null; const ctx={cnt:{},last:{S:[],N:[],D:[],Q:[]}}; S.plan.forEach((o,k)=>{ if(k!==i) MEALS.forEach(m=>ctx.cnt[o[m]]=(ctx.cnt[o[m]]||0)+1); }); const p=pickDay(d.cu,i,ctx,rng(i*31+S.seed),q); S.plan[i]={...p,cu:d.cu}; n++; } });
+  [S.plan,S.rplan].forEach(P=>{ if(!P) return; const ram=P===S.rplan;
+    P.forEach((d,i)=>{ if(MEALS.some(x=>!okExcl(R[d[x]]))){ const q=okExcl(R[d.Q])?d.Q:null; const ctx={cnt:{},last:{S:[],N:[],D:[],Q:[]}}; P.forEach((o,k)=>{ if(k!==i) MEALS.forEach(m=>ctx.cnt[o[m]]=(ctx.cnt[o[m]]||0)+1); }); const p=pickDay(d.cu,i,ctx,rng(i*31+S.seed),q,ram?addDays(S.prefs.ramadan.start,i):null); P[i]={...p,cu:d.cu}; n++; } }); });
   return n;
+}
+
+/* ================= Ramadan ================= */
+const CITIES={baku:['Bakı',40.4093,49.8671],sumqayit:['Sumqayıt',40.5897,49.6686],gence:['Gəncə',40.6828,46.3606],mingecevir:['Mingəçevir',40.764,47.0595],seki:['Şəki',41.1919,47.1706],quba:['Quba',41.3611,48.5134],qebele:['Qəbələ',40.9814,47.8458],samaxi:['Şamaxı',40.6314,48.6364],sirvan:['Şirvan',39.9317,48.9203],lenkeran:['Lənkəran',38.7529,48.8475],zaqatala:['Zaqatala',41.6316,46.6433],naxcivan:['Naxçıvan',39.2089,45.4122]};
+// sun altitude crossing (NOAA formulas), local time in minutes, UTC+4. Imsak: sun at -17°, iftar: sunset (calibrated to the Caucasus Muslims Office calendar)
+function sunMin(dateISO,lat,lon,angle,morning){
+  const rad=Math.PI/180, d=parseISO(dateISO), N=Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2000,0,1))/864e5)+0.5, tz=4;
+  const calc=th=>{
+    const jd=2451545+N-0.5+(th-tz)/24, Tc=(jd-2451545)/36525;
+    const L0=(280.46646+Tc*(36000.76983+Tc*0.0003032))%360, M=357.52911+Tc*(35999.05029-0.0001537*Tc), e=0.016708634-Tc*(0.000042037+0.0000001267*Tc), Mr=M*rad;
+    const C=Math.sin(Mr)*(1.914602-Tc*(0.004817+0.000014*Tc))+Math.sin(2*Mr)*(0.019993-0.000101*Tc)+Math.sin(3*Mr)*0.000289;
+    const lam=L0+C-0.00569-0.00478*Math.sin((125.04-1934.136*Tc)*rad);
+    const eps=23+(26+(21.448-Tc*(46.815+Tc*(0.00059-Tc*0.001813)))/60)/60+0.00256*Math.cos((125.04-1934.136*Tc)*rad);
+    const dec=Math.asin(Math.sin(eps*rad)*Math.sin(lam*rad))/rad, yv=Math.tan(eps/2*rad)**2, L0r=L0*rad;
+    const eqt=4*(yv*Math.sin(2*L0r)-2*e*Math.sin(Mr)+4*e*yv*Math.sin(Mr)*Math.cos(2*L0r)-0.5*yv*yv*Math.sin(4*L0r)-1.25*e*e*Math.sin(2*Mr))/rad;
+    const noon=(720-4*lon-eqt+tz*60)/60;
+    const cosH=(Math.sin(angle*rad)-Math.sin(lat*rad)*Math.sin(dec*rad))/(Math.cos(lat*rad)*Math.cos(dec*rad));
+    const H=Math.acos(Math.max(-1,Math.min(1,cosH)))/rad/15;
+    return morning?noon-H:noon+H;
+  };
+  let t=morning?6:18; for(let k=0;k<3;k++) t=calc(t); return Math.round(t*60);
+}
+const hm=mins=>{mins=((Math.round(mins)%1440)+1440)%1440; return pad(Math.floor(mins/60))+':'+pad(mins%60);};
+const ramP=()=>S.prefs.ramadan||RAM_DEF;
+const isRam=date=>{const r=ramP(); return !!r.on&&date>=r.start&&date<=r.end;};
+const ramLen=()=>{const r=ramP(); return Math.max(1,Math.min(31,diffDays(r.start,r.end)+1));};
+const ramDayN=date=>diffDays(ramP().start,date)+1;
+const hasFaster=()=>S.members.some(m=>m.fast);
+function ramTimes(date){ const r=ramP(), c=CITIES[r.city]||CITIES.baku; const im=sunMin(date,c[1],c[2],-17,true)+(+r.adjI||0), ift=sunMin(date,c[1],c[2],-0.833,false)+(+r.adjF||0); return {im,ift,imsak:hm(im),iftar:hm(ift)}; }
+const fasting=(m,date)=>!!(m&&m.fast&&isRam(date));
+const FAST_RISK=['diabetes','insulin','preg','breast','kidney','anemia'];
+const fastRisk=m=>!!m&&(m.age<15||FAST_RISK.some(k=>has(m,k)));
+function generateRam(){
+  ADJ_CACHE.clear(); const r=ramP(), n=ramLen(), rnd=rng((S.rseed||1)*7919+13);
+  const sel=S.prefs.cuisines.length?S.prefs.cuisines:['az'], others=sel.filter(c=>c!=='az');
+  const ctx={cnt:{},last:{S:[],N:[],D:[],Q:[]}}, plan=[];
+  for(let d=0; d<n; d++){
+    const cu=sel.length===1?sel[0]:sel.includes('az')?(d%2===0?'az':others[Math.floor(d/2)%others.length]):sel[d%sel.length];
+    const best=pickDay(cu,d,ctx,rnd,null,addDays(r.start,d));
+    plan.push(best); MEALS.forEach(m=>{ctx.cnt[best[m]]=(ctx.cnt[best[m]]||0)+1; ctx.last[m].push(best[m]);});
+  }
+  S.rplan=plan; S.rkey=r.start+'|'+r.end;
+}
+// which plan and index a date uses: the Ramadan plan inside the Ramadan dates (when someone fasts), the 28-day plan otherwise
+function pref(date){
+  if(isRam(date)&&hasFaster()){
+    const r=ramP(); if(!S.rplan||S.rkey!==r.start+'|'+r.end){ generateRam(); save(); }
+    return {P:S.rplan,i:ramDayN(date)-1,ram:true};
+  }
+  return {P:S.plan,i:planIdx(date),ram:false};
+}
+function timesFor(date,fast){
+  if(!fast) return S.prefs.times;
+  const t=ramTimes(date); return {S:hm(t.im-45),Q:t.iftar,N:hm(t.ift+15),D:hm(t.ift+165)};
 }
 
 /* ================= day helpers ================= */
@@ -644,15 +724,15 @@ const planIdx=dateISO=>{const i=dayIdx(dateISO); if(i<0) return -1; return i%PLA
 function log(mid,date){S.log[mid]=S.log[mid]||{}; return S.log[mid][date]=S.log[mid][date]||{e:{},w:0,x:[]};}
 function getLog(mid,date){return (S.log[mid]||{})[date]||{e:{},w:0,x:[]};}
 function eatenK(m,date){
-  const i=planIdx(date); if(i<0) return 0; const Lg=getLog(m.id,date), di=dayInfo(i,m); let k=0;
-  meals().forEach(x=>{ if(Lg.e[x]) k+=adj(S.plan[i][x],m).k*di.f; });
+  const p=pref(date); if(p.i<0) return 0; const day=p.P[p.i], fast=fasting(m,date), Lg=getLog(m.id,date), di=dayInfo(day,m,fast); let k=0;
+  mealsFor(fast).forEach(x=>{ if(Lg.e[x]) k+=adj(slotRec(day,x,fast),m).k*di.f; });
   (Lg.x||[]).forEach(e=>k+=+e.k||0); return k;
 }
-const fullDay=(m,date)=>{const Lg=getLog(m.id,date); return meals().every(x=>Lg.e[x]);};
+const fullDay=(m,date)=>{const Lg=getLog(m.id,date); return mealsFor(fasting(m,date)).every(x=>Lg.e[x]);};
 function streak(m){ let n=0, d=todayISO(); if(!fullDay(m,d)) d=addDays(d,-1); while(dayIdx(d)>=0&&fullDay(m,d)){n++; d=addDays(d,-1);} return n; }
-function nextMeal(){
-  const now=new Date(), mins=now.getHours()*60+now.getMinutes(), t=S.prefs.times;
-  for(const x of meals()){const [h,mm]=t[x].split(':').map(Number); if(h*60+mm+60>=mins) return x;}
+function nextMeal(date,fast){
+  const now=new Date(), mins=now.getHours()*60+now.getMinutes(), t=timesFor(date||todayISO(),fast);
+  for(const x of mealsFor(fast)){const [h,mm]=t[x].split(':').map(Number); if(h*60+mm+60>=mins) return x;}
   return null;
 }
 const waterGoal=m=>{ const ml=S.prefs.waterGoal>0?S.prefs.waterGoal:Math.round(m.w*30/250)*250+(has(m,'breast')?600:0)+(has(m,'gout')?300:0); return Math.min(16,Math.max(4,Math.round(ml/(S.prefs.glass||250)))); };
@@ -791,36 +871,45 @@ function confirmBox(text,onYes){
 function ringSVG(frac,color){const r=52,c=2*Math.PI*r,f=Math.max(0,Math.min(1,frac));return `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--line)" stroke-width="10"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c*f} ${c}" ${f<=0?'opacity="0"':''}/></svg>`;}
 const healthTips=m=>[...HC,...AL].filter(k=>has(m,k)&&L.az['tip_'+k]).map(k=>T('tip_'+k));
 function renderToday(){
-  const m=member(), t=todayISO(), i=dayIdx(t), tg=target(m), ms=meals();
-  if(i<0){ view.innerHTML=`<div class="card stack"><div class="datebig">${dLong(t)}</div><p>${esc(T('notStarted',{d:dLong(S.prefs.start),n:-i}))}</p><button class="btn" id="startnow">${esc(T('startToday'))}</button></div>`; document.getElementById('startnow').onclick=()=>{S.prefs.start=t; generate(); save(); render();}; return; }
-  const pi=i%PLAN_DAYS, cycle=Math.floor(i/PLAN_DAYS), day=S.plan[pi], di=dayInfo(pi,m), Lg=getLog(m.id,t);
-  const eaten=eatenK(m,t), nm=nextMeal();
+  const m=member(), t=todayISO(), p=pref(t), tg=target(m);
+  if(p.i<0){ const i=dayIdx(t); view.innerHTML=`<div class="card stack"><div class="datebig">${dLong(t)}</div><p>${esc(T('notStarted',{d:dLong(S.prefs.start),n:-i}))}</p><button class="btn" id="startnow">${esc(T('startToday'))}</button></div>`; document.getElementById('startnow').onclick=()=>{S.prefs.start=t; generate(); save(); render();}; return; }
+  const fast=fasting(m,t), ms=mealsFor(fast), tms=timesFor(t,fast);
+  const i=dayIdx(t), pi=p.i, cycle=p.ram?0:Math.floor(i/PLAN_DAYS), day=p.P[pi], di=dayInfo(day,m,fast), Lg=getLog(m.id,t);
+  const eaten=eatenK(m,t), nm=nextMeal(t,fast);
   const wg=waterGoal(m), gl=S.prefs.glass||250;
-  const st=streak(m), tips=T('tips'), tip=tips[(i+m.name.length)%tips.length];
+  const st=streak(m), tips=p.ram?T('rtips'):T('tips'), tip=tips[(Math.max(0,i)+m.name.length)%tips.length];
   const ht=healthTips(m);
   const wday=S.prefs.weighDay>=0&&parseISO(t).getDay()===S.prefs.weighDay&&!Lg.kg;
   const lb=S.prefs.lastBackup, sinceB=lb?diffDays(lb,t):diffDays(S.prefs.start,t);
+  const rt=isRam(t)?ramTimes(t):null, nowM=new Date().getHours()*60+new Date().getMinutes();
+  const soonRam=!isRam(t)&&ramP().on&&diffDays(t,ramP().start)>0&&diffDays(t,ramP().start)<=14;
   view.innerHTML=`<div class="stack">
+   ${rt?`<div class="card ram"><div class="row between"><b>🌙 ${esc(T('ramDay',{n:ramDayN(t)}))}</b><span class="small">${esc(CITIES[ramP().city][0])}</span></div>
+     <div class="ramt"><div><span class="tiny">${esc(T('imsak'))}</span><b class="num">${rt.imsak}</b></div><div><span class="tiny">${esc(T('iftar'))}</span><b class="num">${rt.iftar}</b></div>
+     ${fast&&nowM>=rt.im&&nowM<rt.ift?`<div><span class="tiny">${esc(T('toIftar'))}</span><b class="num">${Math.floor((rt.ift-nowM)/60)}:${pad((rt.ift-nowM)%60)}</b></div>`:''}</div>
+     ${!m.fast?`<p class="tiny" style="margin:6px 0 0">${esc(T('notFasting',{n:m.name}))}</p>`:''}</div>`:''}
+   ${soonRam?`<div class="tipbox">🌙 ${esc(T('ramSoon',{d:dLong(ramP().start),n:diffDays(t,ramP().start)}))}</div>`:''}
    <div class="card hero">
      <div class="ring">${ringSVG(eaten/tg,'var(--accent)')}<div class="c"><b>${fmt(eaten)}</b><span class="tiny muted">/ ${fmt(tg)} ${T('kcal')}</span></div></div>
      <div><div class="datebig">${dLong(t)}</div>
-       <div class="muted">${esc(LANG==='az'?dayN(pi+1)+' / '+PLAN_DAYS:T('dayOf',{n:pi+1,t:PLAN_DAYS}))}${cycle?' · '+esc(cycleN(cycle+1)):''}</div>
+       <div class="muted">${p.ram?esc(T('ramMenu')):esc(LANG==='az'?dayN(pi+1)+' / '+PLAN_DAYS:T('dayOf',{n:pi+1,t:PLAN_DAYS}))+(cycle?' · '+esc(cycleN(cycle+1)):'')}</div>
        <div class="small" style="margin-top:4px">${cuTag(day.cu)} ${esc(T('cuisineOf',{c:cuN(day.cu)}))} · <button class="btn plain sm" id="chcu" style="padding:2px 8px">${esc(T('change'))}</button></div>
        <div class="small" style="margin-top:6px">${esc(T('left'))}: <b class="num">${fmt(Math.max(0,tg-eaten))} ${T('kcal')}</b> · ${esc(T('proteinGoal'))} <b class="num">${fmt(di.p)} ${T('g')}</b></div>
        ${st?`<div class="small" style="margin-top:4px">${esc(T('streak',{n:st}))}</div>`:''}
      </div>
    </div>
-   ${pi===PLAN_DAYS-1?`<div class="tipbox">${esc(T('lastDay'))}</div>`:''}
+   ${!p.ram&&pi===PLAN_DAYS-1?`<div class="tipbox">${esc(T('lastDay'))}</div>`:''}
+   ${fast&&fastRisk(m)?`<div class="warnbox">${esc(T('fastRisk'))}</div>`:''}
    ${wday?`<div class="tipbox">${esc(T('weighDay'))}</div>`:''}
    ${sinceB>=14?`<div class="tipbox">${esc(T('backupRemind',{n:sinceB}))}</div>`:''}
    ${ht.length?`<div class="warnbox">${ht.map(esc).join('<br>')}</div>`:''}
    <div class="row between"><h2>${esc(T('todayMenu'))}</h2><button class="btn plain sm" id="openday">${esc(T('dayDetail'))}</button></div>
    <div class="stack" id="meals">`+ms.map(x=>{
-      const r=R[day[x]], a=adj(day[x],m), done=!!Lg.e[x];
+      const code=slotRec(day,x,fast), r=R[code], a=adj(code,m), done=!!Lg.e[x];
       return `<div class="meal ${done?'done':''} ${!done&&x===nm?'next':''}">
-        <button class="check" role="checkbox" aria-checked="${done}" data-eat="${x}" aria-label="${esc(mealN(x)+' '+T('eaten'))}">${done?ICONS.ok:''}</button>
+        <button class="check" role="checkbox" aria-checked="${done}" data-eat="${x}" aria-label="${esc(mealN(x,fast)+' '+T('eaten'))}">${done?ICONS.ok:''}</button>
         <div class="art">${photoOrArt(r)}</div>
-        <div><span class="pill p-${x}">${S.prefs.times[x]} · ${esc(mealS(x))}</span>${!done&&x===nm?` <span class="tiny" style="color:var(--accent);font-weight:700">${esc(T('next'))}</span>`:''}
+        <div><span class="pill p-${x}">${tms[x]} · ${esc(mealS(x,fast))}</span>${!done&&x===nm?` <span class="tiny" style="color:var(--accent);font-weight:700">${esc(T('next'))}</span>`:''}
           <div class="mt" data-r="${r.code}">${esc(rn(r))}</div>
           <div class="ms">${fmt(a.k*di.f)} ${T('kcal')} · ${fmt(a.p*di.f)} ${T('g')} ${T('protein')} · ${r.min} ${T('min')}</div></div>
         <button class="ic" data-r="${r.code}" aria-label="${esc(T('openRecipe'))}">›</button>
@@ -828,7 +917,8 @@ function renderToday(){
    ${(Lg.x||[]).length?`<div class="card"><b>${esc(T('extras'))}</b><ul class="list">${Lg.x.map((e,j)=>`<li><span>${esc(e.n)}</span><span class="row"><span class="num">${fmt(e.k)} ${T('kcal')}</span><button class="ic" data-delx="${j}" aria-label="${esc(T('delete'))}">${ICONS.x}</button></span></li>`).join('')}</ul></div>`:''}
    <button class="btn plain" id="addx">${esc(T('addExtra'))}</button>
    <div class="card stack"><div class="row between"><b>${esc(T('water'))}</b><span class="small muted num">${esc(T('glasses',{a:Lg.w||0,b:wg,ml:gl}))}</span></div>
-     <div class="water" id="water">${Array.from({length:wg},(_,j)=>`<button aria-pressed="${j<(Lg.w||0)}" data-w="${j+1}" aria-label="${j+1}"></button>`).join('')}</div></div>
+     <div class="water" id="water">${Array.from({length:wg},(_,j)=>`<button aria-pressed="${j<(Lg.w||0)}" data-w="${j+1}" aria-label="${j+1}"></button>`).join('')}</div>
+     ${fast?`<p class="tiny muted" style="margin:0">${esc(T('ramWater'))}</p>`:''}</div>
    <div class="tipbox"><b>${esc(T('tipOfDay'))}:</b> ${esc(tip)}</div>
   </div>`;
   view.querySelectorAll('[data-eat]').forEach(b=>b.onclick=()=>{const x=b.dataset.eat; const l=log(m.id,t); l.e[x]=!l.e[x]; save(); render(); if(l.e[x]&&ms.every(y=>l.e[y])) toast(T('allDone'));});
@@ -853,32 +943,34 @@ function addExtra(date){
 
 /* ================= DAY sheet ================= */
 function openDay(date,replace){
-  const m=member(), i=planIdx(date);
+  const m=member(), p=pref(date), i=p.i;
   if(i<0){toast(T('beforeStart'));return;}
-  const day=S.plan[i], di=dayInfo(i,m), Lg=getLog(m.id,date);
+  const P=p.P, day=P[i], fast=fasting(m,date), tms=timesFor(date,fast), di=dayInfo(day,m,fast), Lg=getLog(m.id,date);
+  const rt=isRam(date)?ramTimes(date):null;
   openSheet(dLong(date),`<div class="stack">
-    <div class="muted small">${esc(dayN(i+1))} · ${esc(m.name)} · ${esc(T('cuisineOf',{c:cuN(day.cu)}))}</div>
+    <div class="muted small">${esc(p.ram?T('ramDay',{n:ramDayN(date)}):dayN(i+1))} · ${esc(m.name)} · ${esc(T('cuisineOf',{c:cuN(day.cu)}))}</div>
+    ${rt?`<div class="small">🌙 ${esc(T('imsak'))} <b class="num">${rt.imsak}</b> · ${esc(T('iftar'))} <b class="num">${rt.iftar}</b></div>`:''}
     <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:0 0 6px">${esc(T('todaysCuisine'))}</span><div class="chips">${CU_KEYS.map(k=>`<button class="chip" data-dcu="${k}" aria-pressed="${day.cu===k}">${esc(cuN(k))}</button>`).join('')}</div></div>
     <div><span class="macros"><span><b>${fmt(di.k)}</b> ${T('kcal')}</span><span><b>${fmt(di.p)} ${T('g')}</b> ${T('protein')}</span><span><b>${fmt(di.fat)} ${T('g')}</b> ${T('fat')}</span><span><b>${fmt(di.c)} ${T('g')}</b> ${T('carbs')}</span></span></div>
-    ${meals().map(x=>{const r=R[day[x]], a=adj(day[x],m); return `<div class="meal ${Lg.e[x]?'done':''}">
-      <button class="check" role="checkbox" aria-checked="${!!Lg.e[x]}" data-eat="${x}" aria-label="${esc(mealN(x)+' '+T('eaten'))}">${Lg.e[x]?ICONS.ok:''}</button>
+    ${mealsFor(fast).map(x=>{const code=slotRec(day,x,fast), r=R[code], a=adj(code,m); return `<div class="meal ${Lg.e[x]?'done':''}">
+      <button class="check" role="checkbox" aria-checked="${!!Lg.e[x]}" data-eat="${x}" aria-label="${esc(mealN(x,fast)+' '+T('eaten'))}">${Lg.e[x]?ICONS.ok:''}</button>
       <div class="art">${photoOrArt(r)}</div>
-      <div><span class="pill p-${x}">${S.prefs.times[x]} · ${esc(mealS(x))}</span><div class="mt" data-r="${r.code}">${esc(rn(r))}</div><div class="ms">${fmt(a.k*di.f)} ${T('kcal')} · ${r.min} ${T('min')}</div></div>
-      <button class="btn plain sm" data-swap="${x}">${esc(T('change'))}</button></div>`;}).join('')}
+      <div><span class="pill p-${x}">${tms[x]} · ${esc(mealS(x,fast))}</span><div class="mt" data-r="${r.code}">${esc(rn(r))}</div><div class="ms">${fmt(a.k*di.f)} ${T('kcal')} · ${r.min} ${T('min')}</div></div>
+      ${code==='RIF'?'<span></span>':`<button class="btn plain sm" data-swap="${x}">${esc(T('change'))}</button>`}</div>`;}).join('')}
     <p class="tiny muted">${esc(T('dayHint'))}</p>
   </div>`,(sb,wrap)=>{
     const reopen=()=>{ closeSheet(wrap,true); openDay(date); };
     sb.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>openRecipe(b.dataset.r));
     sb.querySelectorAll('[data-eat]').forEach(b=>b.onclick=()=>{const x=b.dataset.eat; const l=log(m.id,date); l.e[x]=!l.e[x]; save(); render(); reopen();});
-    sb.querySelectorAll('[data-swap]').forEach(b=>b.onclick=()=>swapMeal(date,i,b.dataset.swap,wrap));
-    sb.querySelectorAll('[data-dcu]').forEach(b=>b.onclick=()=>{ if(b.dataset.dcu===S.plan[i].cu) return; setDayCuisine(i,b.dataset.dcu); save(); render(); reopen(); toast(T('cuChosen',{c:cuN(b.dataset.dcu)})); });
+    sb.querySelectorAll('[data-swap]').forEach(b=>b.onclick=()=>swapMeal(date,b.dataset.swap,wrap));
+    sb.querySelectorAll('[data-dcu]').forEach(b=>b.onclick=()=>{ if(b.dataset.dcu===P[i].cu) return; setDayCuisine(P,i,b.dataset.dcu,date); save(); render(); reopen(); toast(T('cuChosen',{c:cuN(b.dataset.dcu)})); });
   });
 }
-function swapMeal(date,i,x,parent){
-  const m=member(), cur=S.plan[i][x], dcu=S.plan[i].cu;
+function swapMeal(date,x,parent){
+  const m=member(), p=pref(date), P=p.P, i=p.i, cur=P[i][x], dcu=P[i].cu, fast=fasting(m,date);
   const alts=D.rec.filter(r=>r.meal===x&&r.code!==cur&&okExcl(r)).sort((a,b)=>((a.cu===dcu||a.cu==='all')?0:1)-((b.cu===dcu||b.cu==='all')?0:1)||Math.abs(adj(a.code,m).k-adj(cur,m).k)-Math.abs(adj(b.code,m).k-adj(cur,m).k));
-  openSheet(T('altFor',{m:mealS(x)}),`<div class="stack">${alts.map(r=>`<button class="alt" data-c="${r.code}"><span>${photoOrArt(r)}</span><span>${cuTag(r.cu)} <b>${esc(rn(r))}</b><br><span class="small muted">${fmt(adj(r.code,m).k)} ${T('kcal')} (${esc(T('basePortion'))}) · ${r.min} ${T('min')}</span></span><span class="muted">›</span></button>`).join('')}</div>`,(sb,w)=>{
-    sb.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{S.plan[i][x]=b.dataset.c; save(); closeSheet(w,true); if(parent) closeSheet(parent,true); render(); openDay(date); toast(T('swapped'));});
+  openSheet(T('altFor',{m:mealS(x,fast)}),`<div class="stack">${alts.map(r=>`<button class="alt" data-c="${r.code}"><span>${photoOrArt(r)}</span><span>${cuTag(r.cu)} <b>${esc(rn(r))}</b><br><span class="small muted">${fmt(adj(r.code,m).k)} ${T('kcal')} (${esc(T('basePortion'))}) · ${r.min} ${T('min')}</span></span><span class="muted">›</span></button>`).join('')}</div>`,(sb,w)=>{
+    sb.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{P[i][x]=b.dataset.c; save(); closeSheet(w,true); if(parent) closeSheet(parent,true); render(); openDay(date); toast(T('swapped'));});
   });
 }
 
@@ -886,7 +978,7 @@ function swapMeal(date,i,x,parent){
 function photoOrArt(r){ return PH[r.code]?`<img src="${PH[r.code]}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`:art(r.kind); }
 const STEPDONE={};
 function relevantSubs(r){const names=r.ing.map(([c])=>ING[c].n.toLowerCase()); return D.subs.filter(s=>names.some(n=>n.startsWith(s[0].toLowerCase().split(' (')[0].split(',')[0])||s[0].toLowerCase().startsWith(n.split(' (')[0])));}
-const avgF=m=>{let s=0;for(let i=0;i<PLAN_DAYS;i++) s+=dayInfo(i,m).f; return s/PLAN_DAYS;};
+const avgF=m=>{let s=0;for(let i=0;i<PLAN_DAYS;i++) s+=dayInfo(S.plan[i],m,false).f; return s/PLAN_DAYS;};
 function openRecipe(code,scope){
   const r=R[code], m=member(); scope=scope||'me';
   const a=adj(code,m), af=avgF(m);
@@ -950,35 +1042,49 @@ function setPhoto(code,file,done){
 }
 
 /* ================= MENU (calendar) ================= */
+let menuMode=null;
 function renderMenu(){
-  const m=member(), t=todayISO(), start=addDays(S.prefs.start,Math.floor(Math.max(0,dayIdx(t))/PLAN_DAYS)*PLAN_DAYS);
-  const end=addDays(start,PLAN_DAYS-1), ws=S.prefs.weekStart===0?0:1;
+  const m=member(), t=todayISO(), r=ramP(), ramAvail=!!r.on&&hasFaster();
+  if(menuMode===null) menuMode=ramAvail&&isRam(t)?'ram':'base';
+  if(!ramAvail) menuMode='base';
+  const ram=menuMode==='ram';
+  if(ram) pref(r.start);
+  const start=ram?r.start:addDays(S.prefs.start,Math.floor(Math.max(0,dayIdx(t))/PLAN_DAYS)*PLAN_DAYS);
+  const n=ram?ramLen():PLAN_DAYS, end=addDays(start,n-1), ws=S.prefs.weekStart===0?0:1;
   const sd=parseISO(start); const off=(sd.getDay()-ws+7)%7; let cur=addDays(start,-off);
   const hdr=Array.from({length:7},(_,k)=>T('daysShort')[(k+ws)%7]);
-  let html=`<div class="stack"><div class="row between"><div><h2>${esc(T('menuTitle'))}</h2><div class="small muted">${dShort(start)} – ${dShort(end)}</div></div><button class="btn plain sm" id="gotoday">${esc(T('today'))}</button></div>
+  const at=d=>{const p=pref(d); return p.i<0?null:{day:p.P[p.i],ram:p.ram,i:p.i};};
+  let html=`<div class="stack">
+    ${ramAvail?`<div class="chips"><button class="chip" data-mm="base" aria-pressed="${!ram}">${esc(T('menuTitle'))}</button><button class="chip" data-mm="ram" aria-pressed="${ram}">🌙 ${esc(T('ramMenu'))}</button></div>`:''}
+    <div class="row between"><div><h2>${esc(ram?T('ramMenu'):T('menuTitle'))}</h2><div class="small muted">${dShort(start)} – ${dShort(end)}${ram?' · '+esc(CITIES[r.city][0]):''}</div></div><button class="btn plain sm" id="gotoday">${esc(T('today'))}</button></div>
+    ${ram?`<p class="tiny muted" style="margin:0">${esc(T('ramMenuNote'))}</p>`:''}
     <div class="wkh">${hdr.map(g=>`<span>${esc(g)}</span>`).join('')}</div>`;
   while(diffDays(cur,end)>=0){
     html+=`<div class="wk">`;
     for(let k=0;k<7;k++){
       const d=addDays(cur,k), i=diffDays(start,d);
-      if(i<0||i>=PLAN_DAYS){ html+=`<div class="dc out"></div>`; continue; }
-      const Lg=getLog(m.id,d), dd=parseISO(d);
+      if(i<0||i>=n){ html+=`<div class="dc out"></div>`; continue; }
+      const x=at(d); if(!x){ html+=`<div class="dc out"></div>`; continue; }
+      const Lg=getLog(m.id,d), dd=parseISO(d), fast=fasting(m,d);
       html+=`<button class="dc ${d===t?'today':''} ${diffDays(d,t)>0?'past':''}" data-d="${d}" aria-label="${esc(dLong(d))}">
-        <span class="tiny muted">${dd.getDate()===1||i===0?esc(T('months')[dd.getMonth()].slice(0,3)):'&nbsp;'}</span><span class="dn">${dd.getDate()}</span>${cuTag(S.plan[i].cu)}
-        <span class="dots">${meals().map(x=>`<i class="${Lg.e[x]?'on':''}"></i>`).join('')}</span></button>`;
+        <span class="tiny muted">${dd.getDate()===1||i===0?esc(T('months')[dd.getMonth()].slice(0,3)):(x.ram&&!ram?'🌙':'&nbsp;')}</span><span class="dn">${dd.getDate()}</span>${cuTag(x.day.cu)}
+        <span class="dots">${mealsFor(fast).map(y=>`<i class="${Lg.e[y]?'on':''}"></i>`).join('')}</span></button>`;
     }
     html+=`</div>`; cur=addDays(cur,7);
   }
   html+=`<p class="tiny muted">${esc(T('calHint'))}</p><h3 class="mlabel">${esc(T('dayList'))}</h3><div class="stack">`;
-  for(let i=0;i<PLAN_DAYS;i++){
-    const d=addDays(start,i), day=S.plan[i], di=dayInfo(i,m);
+  for(let i=0;i<n;i++){
+    const d=addDays(start,i), x=at(d); if(!x) continue;
+    const fast=fasting(m,d), tms=timesFor(d,fast), di=dayInfo(x.day,m,fast), rt=isRam(d)?ramTimes(d):null;
     html+=`<button class="card" style="text-align:left;cursor:pointer;${d===t?'border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)':''}" data-d="${d}">
-      <div class="row between"><b>${esc(dLong(d))}</b><span class="small muted num">${cuTag(day.cu)} ${esc(dayN(i+1))} · ${fmt(di.k)} ${T('kcal')}</span></div>
-      <div class="small" style="margin-top:4px">${meals().map(x=>`<span class="muted">${S.prefs.times[x]}</span> ${esc(rn(R[day[x]]).split(' (')[0])}`).join(' · ')}</div></button>`;
+      <div class="row between"><b>${esc(dLong(d))}</b><span class="small muted num">${cuTag(x.day.cu)} ${esc(x.ram?T('ramDay',{n:x.i+1}):dayN(x.i+1))} · ${fmt(di.k)} ${T('kcal')}</span></div>
+      ${rt?`<div class="tiny" style="margin-top:2px">🌙 ${esc(T('imsak'))} <b class="num">${rt.imsak}</b> · ${esc(T('iftar'))} <b class="num">${rt.iftar}</b></div>`:''}
+      <div class="small" style="margin-top:4px">${mealsFor(fast).map(y=>`<span class="muted">${tms[y]}</span> ${esc(rn(R[slotRec(x.day,y,fast)]).split(' (')[0])}`).join(' · ')}</div></button>`;
   }
   html+=`</div></div>`;
   view.innerHTML=html;
   view.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>openDay(b.dataset.d));
+  view.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{menuMode=b.dataset.mm; renderMenu(); view.scrollTop=0;});
   document.getElementById('gotoday').onclick=()=>{const el=view.querySelector('.dc.today'); if(el){el.scrollIntoView({block:'center'}); el.focus();} else toast(T('notInRange'));};
 }
 
@@ -1054,7 +1160,7 @@ function amount(code,g){
 }
 function shopGroups(w,scope){
   const tot={}, mem=scope==='me'?[member()]:S.members;
-  for(let k=0;k<7;k++){ const i=(w*7+k)%PLAN_DAYS; mem.forEach(m=>{const di=dayInfo(i,m); meals().forEach(x=>adj(S.plan[i][x],m).ing.forEach(([c,g])=>{tot[c]=(tot[c]||0)+g*di.f;}));}); }
+  for(let k=0;k<7;k++){ const d=addDays(w,k), p=pref(d); if(p.i<0) continue; const day=p.P[p.i]; mem.forEach(m=>{const fast=fasting(m,d), di=dayInfo(day,m,fast); mealsFor(fast).forEach(x=>adj(slotRec(day,x,fast),m).ing.forEach(([c,g])=>{tot[c]=(tot[c]||0)+g*di.f;}));}); }
   const groups={}; Object.entries(tot).forEach(([c,g])=>{if(g<1) return; const gr=ING[c].g; (groups[gr]=groups[gr]||[]).push([c,g]);});
   Object.values(groups).forEach(a=>a.sort((x,y)=>y[1]-x[1]));
   return groups;
@@ -1064,7 +1170,7 @@ function renderShop(){
   if(shopWeek===null) shopWeek=Math.floor((i%PLAN_DAYS)/7);
   const base=Math.floor(i/PLAN_DAYS)*PLAN_DAYS, wStart=addDays(S.prefs.start,base+shopWeek*7);
   const key=wStart+'|'+shopScope; const bought=S.bought[key]||{};
-  const groups=shopGroups(shopWeek,shopScope);
+  const groups=shopGroups(wStart,shopScope);
   const all=Object.values(groups).flat(), got=all.filter(([c])=>bought[c]).length;
   view.innerHTML=`<div class="stack">
     <h2>${esc(T('shopTitle'))}</h2>
@@ -1139,7 +1245,7 @@ function drawWeight(m,ws,startW){
 /* ================= FAMILY ================= */
 function memberLine(m){
   const hc=[...(m.hc||[]).map(k=>T('h_'+k)),...(m.al||[]).map(k=>T('a_'+k))];
-  return `${esc(m.sex==='m'?T('male'):T('female'))}, ${m.age} ${esc(T('age'))}, ${m.h} cm, ${fmt1(wOut(m.w))} ${wU()} · ${esc(T('goals')[m.goal])} · <b class="num">${fmt(target(m))} ${T('kcal')}</b>${hc.length?'<br><span class="tiny">'+hc.map(esc).join(' · ')+'</span>':''}`;
+  return `${esc(m.sex==='m'?T('male'):T('female'))}, ${m.age} ${esc(T('age'))}, ${m.h} cm, ${fmt1(wOut(m.w))} ${wU()} · ${esc(T('goals')[m.goal])} · <b class="num">${fmt(target(m))} ${T('kcal')}</b>${hc.length?'<br><span class="tiny">'+hc.map(esc).join(' · ')+'</span>':''}${m.fast?'<br><span class="tiny">🌙 '+esc(T('fastToggle'))+'</span>':''}`;
 }
 function renderFamily(){
   view.innerHTML=`<div class="stack">
@@ -1167,18 +1273,22 @@ function memberForm(m){
     <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:4px 0 6px">${esc(T('health'))}</span><div class="chips">${HC.filter(k=>!(m.sex==='m'&&['pcos','preg','breast'].includes(k))).map(k=>chip(k,'h',hc)).join('')}</div></div>
     <div><span class="f" style="display:block;font-size:.82rem;font-weight:600;margin:4px 0 6px">${esc(T('allergies'))}</span><div class="chips">${AL.map(k=>chip(k,'a',al)).join('')}</div></div>
     <p class="tiny muted" style="margin:0">${esc(T('healthNote'))}</p>
+    <label class="row small" style="cursor:pointer"><input type="checkbox" id="mfast" ${m.fast?'checked':''} style="width:20px;height:20px;accent-color:var(--accent);flex:none"> 🌙 ${esc(T('fastToggle'))}</label>
+    <div class="warnbox small" id="mfastw" style="display:none">${esc(T('fastRisk'))}</div>
     <div class="tipbox small" id="mprev"></div>
     <div class="row" style="flex-wrap:wrap"><button class="btn" type="submit">${esc(T('save'))}</button>${!isNew&&S.members.length>1?`<button class="btn ghost" type="button" id="mdel">${esc(T('deleteProfile'))}</button>`:''}</div>
   </form>`,(sb,w)=>{
     const num=id=>+String(sb.querySelector(id).value).replace(',','.');
-    const read=()=>({...m,name:sb.querySelector('#mn').value.trim(),sex:sb.querySelector('#msx').value,age:num('#mag'),h:num('#mh'),w:Math.round(wIn(num('#mw'))*10)/10,goalW:num('#mgw')?Math.round(wIn(num('#mgw'))*10)/10:null,goal:sb.querySelector('#mgo').value,act:+sb.querySelector('#mac').value,hc:[...hc],al:[...al]});
+    const read=()=>({...m,name:sb.querySelector('#mn').value.trim(),sex:sb.querySelector('#msx').value,age:num('#mag'),h:num('#mh'),w:Math.round(wIn(num('#mw'))*10)/10,goalW:num('#mgw')?Math.round(wIn(num('#mgw'))*10)/10:null,goal:sb.querySelector('#mgo').value,act:+sb.querySelector('#mac').value,hc:[...hc],al:[...al],fast:sb.querySelector('#mfast').checked});
     const prev=()=>{const x=read(); if(!(x.age>0&&x.h>0&&x.w>0)) return; const b=bmi(x), tg=target(x), td=tdee(x);
       sb.querySelector('#mprev').innerHTML=`${esc(T('prevDaily'))}: <b>${fmt(td)} ${T('kcal')}</b> · ${esc(T('prevTarget'))}: <b>${fmt(tg)} ${T('kcal')}</b> · ${esc(T('bmi'))}: <b>${fmt1(b)}</b>${td-tg>100?` · ~${fmt1(wOut((td-tg)*7/7700))} ${wU()}/${LANG==='en'?'wk':LANG==='ru'?'нед':'həftə'}`:''}${x.age<18?'<br>'+esc(T('prevMinor')):''}${b<20&&(x.goal==='lose'||x.goal==='light')?'<br>'+esc(T('prevLowBmi')):''}${noDeficit(x)?'<br>'+esc(T('prevPreg')):''}`;};
     sb.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',prev));
     sb.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{const k=b.dataset.h; hc.has(k)?hc.delete(k):hc.add(k); if(k==='insulin'&&hc.has('diabetes')) hc.delete('diabetes'); if(k==='diabetes'&&hc.has('insulin')) hc.delete('insulin'); sb.querySelectorAll('[data-h]').forEach(x=>x.setAttribute('aria-pressed',hc.has(x.dataset.h))); prev();});
     sb.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const k=b.dataset.a; al.has(k)?al.delete(k):al.add(k); b.setAttribute('aria-pressed',al.has(k)); prev();});
     sb.querySelector('#msx').addEventListener('change',()=>{ if(sb.querySelector('#msx').value==='m') ['pcos','preg','breast'].forEach(k=>hc.delete(k)); });
-    prev();
+    const fw=()=>{ sb.querySelector('#mfastw').style.display=sb.querySelector('#mfast').checked&&fastRisk(read())?'':'none'; };
+    sb.querySelectorAll('input,select,button').forEach(el=>el.addEventListener('click',()=>setTimeout(fw,0))); sb.querySelectorAll('input').forEach(el=>el.addEventListener('input',fw));
+    prev(); fw();
     sb.querySelector('#mf').onsubmit=e=>{e.preventDefault(); const x=read(); if(!x.name){toast(T('nameReq'));return;}
       if(!(x.w>30&&x.w<300&&x.h>100&&x.age>=10)){ toast(T('badWeight')); return; }
       if(isNew){ x.startW=x.w; S.members.push(x); S.active=x.id; } else { Object.assign(m,x); }
@@ -1216,6 +1326,16 @@ function renderSettings(){
       <div class="row" style="flex-wrap:wrap"><button class="btn" id="regen">${esc(T('s_regen'))}</button><button class="btn ghost" id="restore">${esc(T('s_restore'))}</button></div>
       <p class="tiny muted" style="margin:0">${esc(T('s_regenNote'))}</p>
     </div>
+    ${secT('🌙 '+T('s_ram'))}
+    <div class="card stack">
+      ${toggle('ron',p.ramadan.on,T('ram_on'))}
+      ${p.ramadan.on?`<div class="grid2"><div><label class="f" for="rst">${esc(T('ram_start'))}</label><input id="rst" type="date" value="${p.ramadan.start}"></div><div><label class="f" for="ren">${esc(T('ram_end'))}</label><input id="ren" type="date" value="${p.ramadan.end}"></div></div>
+      <div><label class="f" for="rcity">${esc(T('ram_city'))}</label><select id="rcity">${Object.entries(CITIES).map(([k,c])=>`<option value="${k}" ${p.ramadan.city===k?'selected':''}>${esc(c[0])}</option>`).join('')}</select></div>
+      <div class="grid2"><div><label class="f" for="radi">${esc(T('ram_adjI'))}</label><input id="radi" type="number" min="-30" max="30" value="${p.ramadan.adjI||0}"></div><div><label class="f" for="radf">${esc(T('ram_adjF'))}</label><input id="radf" type="number" min="-30" max="30" value="${p.ramadan.adjF||0}"></div></div>
+      <p class="small" style="margin:0">${(()=>{const t=ramTimes(p.ramadan.start); return esc(T('ram_first',{d:dLong(p.ramadan.start),i:t.imsak,f:t.iftar}));})()}</p>
+      <p class="tiny muted" style="margin:0">${esc(T('ram_note'))}</p>
+      ${hasFaster()?`<button class="btn plain sm" id="rgen">${esc(T('ram_regen'))}</button>`:`<div class="tipbox small">${esc(T('ram_noFaster'))}</div>`}`:''}
+    </div>
     ${secT(T('s_times'))}
     <div class="card"><div class="grid2">${MEALS.map(x=>`<div><label class="f" for="tm${x}">${esc(mealS(x))}</label><input id="tm${x}" type="time" value="${p.times[x]}"></div>`).join('')}</div></div>
     ${secT(T('s_water'))}
@@ -1228,7 +1348,7 @@ function renderSettings(){
       ${toggle('wron',p.waterRem.on,T('wr_on'))}
       ${p.waterRem.on?`<div>${lbl(T('wr_every'))}${seg('wre',[[60,T('everyH',{n:1})],[90,T('everyMin',{n:90})],[120,T('everyH',{n:2})],[180,T('everyH',{n:3})]],p.waterRem.every)}</div>
       <div class="grid2"><div><label class="f" for="wrf">${esc(T('wr_from'))}</label><input id="wrf" type="time" value="${p.waterRem.from}"></div><div><label class="f" for="wrt">${esc(T('wr_to'))}</label><input id="wrt" type="time" value="${p.waterRem.to}"></div></div>
-      <p class="small muted" style="margin:0">${esc(T('wr_list',{n:waterTimes().length,t:waterTimes().join(', ')}))}</p>
+      <p class="small muted" style="margin:0">${esc(T('wr_list',{n:waterTimes(todayISO()).length,t:waterTimes(todayISO()).join(', ')}))}</p>
       <p class="tiny muted" style="margin:0">${esc(T(NATIVE?'wr_native':'wr_web'))}</p>
       ${(!NATIVE&&STANDALONE&&'Notification' in window&&Notification.permission==='default')?`<button class="btn plain sm" id="wrperm">${esc(T('wr_perm'))}</button>`:''}
       ${(!NATIVE&&(DL||STANDALONE))?`<button class="btn plain sm" id="wrics">${esc(T('wr_ics'))}</button>`:''}`:''}
@@ -1269,6 +1389,10 @@ function renderSettings(){
   on('[data-wg]',b=>{p.waterGoal=+b.dataset.wg; save(); render();});
   on('[data-wday]',b=>{p.weighDay=+b.dataset.wday; save(); render();});
   on('[data-af]',b=>{p.autoFreq=+b.dataset.af; save(); render();});
+  const ron=document.getElementById('ron'); ron.onchange=e=>{p.ramadan.on=e.target.checked; save(); render(); applyWaterReminders(false);};
+  const rch=(id,k,num)=>{const el=document.getElementById(id); if(el) el.onchange=e=>{ const v=num?Math.max(-30,Math.min(30,+e.target.value||0)):e.target.value; if(!num&&!v) return; p.ramadan[k]=v; if((k==='start'||k==='end')&&p.ramadan.end<p.ramadan.start) p.ramadan.end=addDays(p.ramadan.start,29); save(); render(); applyWaterReminders(false); };};
+  rch('rst','start'); rch('ren','end'); rch('rcity','city'); rch('radi','adjI',true); rch('radf','adjF',true);
+  const rg=document.getElementById('rgen'); if(rg) rg.onclick=()=>{ S.rseed=(S.rseed||1)+1; generateRam(); save(); toast(T('newMenu')); menuMode='ram'; setTab('menu'); };
   on('[data-ak]',b=>{p.autoKeep=+b.dataset.ak; save(); render();});
   const adr=document.getElementById('adr'); if(adr) adr.onchange=e=>{p.autoDrive=e.target.checked; save(); if(p.autoDrive) autoDriveBackup(true);};
   document.getElementById('wron').onchange=async e=>{p.waterRem.on=e.target.checked; save(); render(); await applyWaterReminders(true);};
@@ -1299,10 +1423,10 @@ async function downloadICS(){
   const p=S.prefs, lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sufre//'+LANG.toUpperCase(),'CALSCALE:GREGORIAN'];
   const t=todayISO(); const i0=Math.max(0,dayIdx(t));
   for(let k=0;k<PLAN_DAYS;k++){
-    const d=addDays(p.start,i0+k), i=(i0+k)%PLAN_DAYS;
-    meals().forEach(x=>{ const [h,mm]=p.times[x].split(':'); const dt=d.replace(/-/g,'')+'T'+h+mm+'00';
+    const d=addDays(p.start,i0+k), pr=pref(d); if(pr.i<0) continue; const day=pr.P[pr.i], fast=fasting(member(),d), tms=timesFor(d,fast);
+    mealsFor(fast).forEach(x=>{ const [h,mm]=tms[x].split(':'); const dt=d.replace(/-/g,'')+'T'+h+mm+'00';
       const end=d.replace(/-/g,'')+'T'+pad((+h+(+mm>=30?1:0))%24)+pad((+mm+30)%60)+'00';
-      lines.push('BEGIN:VEVENT','UID:'+d+x+'@sufre','DTSTAMP:'+t.replace(/-/g,'')+'T000000','DTSTART:'+dt,'DTEND:'+end,'SUMMARY:'+mealS(x)+': '+rn(R[S.plan[i][x]]).replace(/[,;]/g,' '),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+mealS(x),'TRIGGER:-PT10M','END:VALARM','END:VEVENT'); });
+      lines.push('BEGIN:VEVENT','UID:'+d+x+'@sufre','DTSTAMP:'+t.replace(/-/g,'')+'T000000','DTSTART:'+dt,'DTEND:'+end,'SUMMARY:'+mealS(x,fast)+': '+rn(R[slotRec(day,x,fast)]).replace(/[,;]/g,' '),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+mealS(x,fast),'TRIGGER:-PT10M','END:VALARM','END:VEVENT'); });
   }
   lines.push('END:VCALENDAR');
   const ok=await saveFile('sufre-menu.ics',lines.join('\r\n'),'text/calendar'); toast(ok?T('icsDone'):T('dlCancel'));
@@ -1447,10 +1571,16 @@ async function driveRestore(){
 
 /* ================= water reminders ================= */
 const toMin=s=>{const [h,m]=s.split(':').map(Number); return h*60+m;};
-function waterTimes(){
-  const w=S.prefs.waterRem, a=toMin(w.from), b=toMin(w.to), out=[];
+function waterTimes(date){
+  const w=S.prefs.waterRem, out=[], step=Math.max(30,+w.every||90);
+  if(date&&fasting(member(),date)){ // only between iftar and imsak
+    const rt=ramTimes(date), endM=Math.min(1425,Math.max(toMin(w.to),rt.ift+240));
+    for(let t=rt.ift+30;t<=endM&&out.length<12;t+=Math.max(60,step)) out.push(hm(t));
+    out.push(hm(rt.im-60)); return out;
+  }
+  const a=toMin(w.from), b=toMin(w.to);
   if(!(b>a)) return out;
-  for(let t=a;t<=b&&out.length<24;t+=Math.max(30,+w.every||90)) out.push(pad(Math.floor(t/60))+':'+pad(t%60));
+  for(let t=a;t<=b&&out.length<24;t+=step) out.push(pad(Math.floor(t/60))+':'+pad(t%60));
   return out;
 }
 const WATER_ID0=7000;
@@ -1459,12 +1589,15 @@ async function applyWaterReminders(feedback){
   if(!NATIVE){ if(feedback) toast(T(w.on?'wr_saved':'wr_off')); return; }
   const LN=CP().LocalNotifications; if(!LN) return;
   try{
-    const pend=await LN.getPending(); const old=(pend.notifications||[]).filter(n=>n.id>=WATER_ID0&&n.id<WATER_ID0+100).map(n=>({id:n.id}));
+    const pend=await LN.getPending(); const old=(pend.notifications||[]).filter(n=>n.id>=WATER_ID0&&n.id<WATER_ID0+1000).map(n=>({id:n.id}));
     if(old.length) await LN.cancel({notifications:old});
     if(!w.on){ if(feedback) toast(T('wr_off')); return; }
     let perm=await LN.checkPermissions(); if(perm.display!=='granted') perm=await LN.requestPermissions();
     if(perm.display!=='granted'){ toast(T('wr_denied')); return; }
-    await LN.schedule({notifications:waterTimes().map((t,i)=>{const [h,mm]=t.split(':').map(Number); return {id:WATER_ID0+i,title:T('wr_title'),body:T('wr_body',{a:0,b:0}).split('.')[0]+'.',schedule:{on:{hour:h,minute:mm},allowWhileIdle:true}};})});
+    // dated reminders for the next 14 days (Ramadan days follow iftar–imsak); refreshed every time the app opens
+    const list=[], now=Date.now(), body=T('wr_body',{a:0,b:0}).split('.')[0]+'.';
+    for(let k=0;k<14;k++){ const d=addDays(todayISO(),k); waterTimes(d).forEach((t,j)=>{ const [h,mm]=t.split(':').map(Number); const at=parseISO(d); at.setHours(h,mm,0,0); if(at.getTime()>now+30000&&j<24) list.push({id:WATER_ID0+k*24+j,title:T('wr_title'),body,schedule:{at,allowWhileIdle:true}}); }); }
+    if(list.length) await LN.schedule({notifications:list});
     if(feedback) toast(T('wr_saved'));
   }catch(e){ if(feedback) toast(T('wr_denied')); }
 }
@@ -1472,8 +1605,8 @@ async function applyWaterReminders(feedback){
 const WFIRED={};
 function waterTick(){
   const w=S.prefs.waterRem; if(NATIVE||!w.on||!S.members.length) return;
-  const now=new Date(), hm=pad(now.getHours())+':'+pad(now.getMinutes()), d=todayISO();
-  if(!waterTimes().includes(hm)||WFIRED[d+hm]) return; WFIRED[d+hm]=1;
+  const now=new Date(), hm_=pad(now.getHours())+':'+pad(now.getMinutes()), d=todayISO();
+  if(!waterTimes(d).includes(hm_)||WFIRED[d+hm_]) return; WFIRED[d+hm_]=1;
   const m=member(), Lg=getLog(m.id,d), g=waterGoal(m); if((Lg.w||0)>=g) return;
   const body=T('wr_body',{a:Lg.w||0,b:g});
   if(STANDALONE&&'Notification' in window&&Notification.permission==='granted'&&document.hidden){ try{ new Notification(T('wr_title'),{body,icon:'icon-192.png',tag:'sufre-water'}); }catch(e){} }
@@ -1487,7 +1620,7 @@ function waterTick(){
 setInterval(waterTick,20000);
 async function downloadWaterICS(){
   const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sufre//water','CALSCALE:GREGORIAN'], d=todayISO().replace(/-/g,'');
-  waterTimes().forEach((t,i)=>{ const hm=t.replace(':',''); const e=toMin(t)+5;
+  waterTimes(null).forEach((t,i)=>{ const hm=t.replace(':',''); const e=toMin(t)+5;
     lines.push('BEGIN:VEVENT','UID:water-'+i+'@sufre','DTSTAMP:'+d+'T000000','DTSTART:'+d+'T'+hm+'00','DTEND:'+d+'T'+pad(Math.floor(e/60)%24)+pad(e%60)+'00','RRULE:FREQ=DAILY','SUMMARY:'+T('wr_title'),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+T('wr_title'),'TRIGGER:PT0M','END:VALARM','END:VEVENT'); });
   lines.push('END:VCALENDAR');
   const ok=await saveFile('sufre-water.ics',lines.join('\r\n'),'text/calendar'); toast(ok?T('icsDone'):T('dlCancel'));
