@@ -49,11 +49,11 @@ h1,h2,h3{font-family:var(--display);line-height:1.2;margin:0;text-wrap:balance}
 h1{font-size:1.5rem} h2{font-size:1.25rem} h3{font-size:1.05rem}
 a{color:var(--accent)}
 #app{height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;background:var(--bg)}
-header.bar{padding:calc(10px + env(safe-area-inset-top)) 16px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--bg)}
-header.bar .brand{font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--accent);margin-right:auto}
-.who{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+header.bar{flex:none;min-height:56px;box-sizing:border-box;padding:calc(10px + env(safe-area-inset-top)) 16px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--bg)}
+header.bar .brand{flex:none;line-height:1.3;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--accent);margin-right:auto}
+.who{display:flex;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:2px 0;min-width:0}
 .who::-webkit-scrollbar{display:none}
-.who button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;white-space:nowrap;cursor:pointer}
+.who button{flex:none;line-height:1.3;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;white-space:nowrap;cursor:pointer}
 .who button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 28px}
 nav.tabs{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);background:var(--surface);padding-bottom:env(safe-area-inset-bottom)}
@@ -113,6 +113,16 @@ nav.tabs button:focus-visible,.btn:focus-visible,.chip:focus-visible,.ic:focus-v
 .dc.today{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .dc.past{opacity:.7}
 .dc.out{visibility:hidden}
+.dc.none{opacity:.35;cursor:default;background:transparent}
+.mnav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mnav .mname{font-family:var(--display);font-size:1.15rem;text-transform:capitalize}
+.mnav .mnext svg{transform:scaleX(-1)}
+.mnav button:disabled{opacity:.25;cursor:default}
+.cal{touch-action:pan-y}
+.cal.slide-l{animation:calL .22s ease-out}.cal.slide-r{animation:calR .22s ease-out}
+@keyframes calL{from{transform:translateX(40px);opacity:.3}to{transform:none;opacity:1}}
+@keyframes calR{from{transform:translateX(-40px);opacity:.3}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.cal.slide-l,.cal.slide-r{animation:none}}
 .dc .dots{display:flex;gap:2px}
 .dc .dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}
 .dc .dots i.on{background:var(--good)}
@@ -246,7 +256,7 @@ az:{
  subsTitle:'Tapılmasa nə ilə əvəz etmək olar',yourPortion:'Sizin porsiyanızda',
  stepsLangNote:'',translateAI:'AI ilə tərcümə et',translating:'Tərcümə olunur…',
  n_removed:'{i} çıxarılıb',n_half:'{i} yarıya endirilib',n_less:'{i} azaldılıb',n_swap:'{a} əvəzinə {b}',n_salad:'yanına pomidor-xiyar salatı əlavə olunub',n_excl:'{i} çıxarılıb (istisna)',
- menuTitle:'Menyu',today:'Bu gün',notInRange:'Bu gün menyunun tarix aralığında deyil',calHint:'Rəngli nişan günün mətbəxidir, nöqtələr yeyilmiş yeməklərdir. Günə toxunun: yeməklər, mətbəx seçimi və "Dəyiş" düyməsi açılır.',dayList:'Günlərin siyahısı',
+ menuTitle:'Menyu',today:'Bu gün',notInRange:'Bu gün menyunun tarix aralığında deyil',calHint:'Rəngli nişan günün mətbəxidir, nöqtələr yeyilmiş yeməklərdir. Günə toxunun: yeməklər, mətbəx seçimi və "Dəyiş" düyməsi açılır. Başqa aya keçmək üçün təqvimi sola və ya sağa sürüşdürün.',monthsNom:['yanvar','fevral','mart','aprel','may','iyun','iyul','avqust','sentyabr','oktyabr','noyabr','dekabr'],prevMonth:'Əvvəlki ay',nextMonth:'Növbəti ay',dayList:'Günlərin siyahısı',
  aiHelper:'AI köməkçi',aiPhoto:'Yeməyin şəklindən kalori',aiFridge:'Evdə olan ərzaqdan resept',aiNote:'Cavablar təxminidir. AI ilk istifadədə icazə soruşur.',
  search:'Yemək və ya ərzaq axtar (məsələn: toyuq)',all:'Hamısı',allCuisines:'Bütün mətbəxlər',nRecipes:'{n} resept',nothing:'Heç nə tapılmadı',
  aiAnalyzing:'Şəkil təhlil olunur…',aiParseErr:'Cavabı oxumaq alınmadı. Yenidən cəhd edin.',aiBusy:'Çox sorğu göndərildi, bir az sonra yenidən cəhd edin.',aiFail:'AI cavab vermədi. Bir az sonra yenidən cəhd edin.',aiEstimate:'Bu, AI-nin təxminidir və ±20–30% fərqlənə bilər.',addToday:'Bu günə əlavə et ({n})',addedToday:'Bu günə əlavə olundu',
@@ -303,7 +313,7 @@ range:'Tarix aralığı',rangeText:'Menyunun başlanğıc və son tarixini seçi
  s_weighRem:'Çəki xatırlatması',s_mealRem:'Yemək xatırlatması',
  s_season:'Mövsümə uyğun yeməklər (yay/qış)',s_seasonNote:'Mövsüm seçimi menyu yaradılanda və uzadılanda nəzərə alınır: qışda isti yeməklər, yayda yüngül və soyuq yeməklər; mövsümü olmayan meyvə-tərəvəz seçilmir.',inSeason:'Mövsümündədir',outSeason:'Mövsüm deyil: {i}. İstixana və ya idxal məhsuludur, adətən bahalı olur.',outStrict:'{i} bu aylarda adətən satılmır. Menyuda bu yeməyi başqası ilə əvəz edin.',seasonFixed:'Mövsümə uyğun olmayan {n} yemək dəyişdirildi',m4:'4 ay',m6:'6 ay',y1:'1 il',
  building:'Menyu hazırlanır…',
- disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
+ prem:'Süfrə Premium',premOn:'Premium aktivdir',premPlan:'Plan: {p}',premFree:'Hazırda bütün imkanlar hamı üçün pulsuz açıqdır.',premWhy:'Premium abunə app-in inkişafına dəstəkdir. Gələcəkdə bəzi imkanlar yalnız Premium ilə olacaq:',premFeat:['365 günə qədər menyu','Ailədə limitsiz üzv və telefonlar arası sinxronizasiya','Adaptiv kalori, proqnoz və bədən ölçüləri','Google Drive backup və Health Connect','Öz reseptlər, qiymət və xərc hesabı'],premMonthly:'Aylıq',premYearly:'İllik',premBuy:'Abunə ol',premRestore:'Alışları bərpa et',premManage:'Abunəni idarə et',premNoStore:'Abunə Android app-də, Google Play-dən yüklənəndə aktiv olacaq.',premNotReady:'Abunə hələ mağazada aktiv deyil.',premThanks:'Təşəkkürlər! Premium aktivdir.',premNone:'Aktiv abunə tapılmadı.',premErr:'Alış alınmadı: {e}',premFamily:'Bir abunə bütün ailəyə aiddir.',upd:'Yeniləmə',updAuto:'Yeniləməni avtomatik yoxla',updCheck:'İndi yoxla',updNew:'Yeni versiya var: {v}',updNewText:'Sizdəki versiya: {c}. Yükləyib quraşdırın — məlumatlarınız qalır.',updGet:'Yüklə',updLater:'Sonra',updOk:'Ən son versiya quraşdırılıb ({v}).',updFail:'Yoxlamaq alınmadı. İnternet bağlantısını yoxlayın.',updWeb:'Bu versiya internetə qoşulanda özü yenilənir.',updCur:'Versiya: {v}', disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
 },
 ru:{
  langName:'Русский',
@@ -335,7 +345,7 @@ ru:{
  subsTitle:'Чем заменить, если нет в продаже',yourPortion:'В вашей порции',
  stepsLangNote:'Инструкции пока на азербайджанском языке.',translateAI:'Перевести с помощью ИИ',translating:'Перевод…',
  n_removed:'{i}: убрано',n_half:'{i}: вдвое меньше',n_less:'{i}: меньше',n_swap:'{b} вместо: {a}',n_salad:'добавлен салат из помидоров и огурцов',n_excl:'{i}: убрано (исключение)',
- menuTitle:'Меню',today:'Сегодня',notInRange:'Сегодняшний день вне диапазона меню',calHint:'Цветная метка — кухня дня, точки — съеденные приёмы пищи. Нажмите на день: блюда, выбор кухни и кнопка «Изменить».',dayList:'Список дней',
+ menuTitle:'Меню',today:'Сегодня',notInRange:'Сегодняшний день вне диапазона меню',calHint:'Цветная метка — кухня дня, точки — съеденные приёмы пищи. Нажмите на день: блюда, выбор кухни и кнопка «Изменить». Чтобы перейти на другой месяц, проведите по календарю влево или вправо.',monthsNom:['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'],prevMonth:'Предыдущий месяц',nextMonth:'Следующий месяц',dayList:'Список дней',
  aiHelper:'ИИ-помощник',aiPhoto:'Калории по фото блюда',aiFridge:'Рецепт из того, что есть дома',aiNote:'Ответы приблизительные. При первом использовании ИИ спросит разрешение.',
  search:'Поиск блюда или продукта (например: курица)',all:'Все',allCuisines:'Все кухни',nRecipes:'Рецептов: {n}',nothing:'Ничего не найдено',
  aiAnalyzing:'Анализ фото…',aiParseErr:'Не удалось прочитать ответ. Попробуйте ещё раз.',aiBusy:'Слишком много запросов, попробуйте позже.',aiFail:'ИИ не ответил. Попробуйте позже.',aiEstimate:'Это оценка ИИ, погрешность ±20–30%.',addToday:'Добавить в сегодня ({n})',addedToday:'Добавлено в сегодня',
@@ -392,7 +402,7 @@ range:'Период',rangeText:'Выберите даты начала и кон
  s_weighRem:'Напоминание о взвешивании',s_mealRem:'Напоминания о еде',
  s_season:'Блюда по сезону (лето/зима)',s_seasonNote:'Сезон учитывается при создании и продлении меню: зимой — горячие блюда, летом — лёгкие и холодные; несезонные фрукты и овощи не выбираются.',inSeason:'Сейчас сезон',outSeason:'Не сезон: {i}. Тепличный или импортный продукт, обычно дороже.',outStrict:'{i} в эти месяцы обычно не продаётся. Замените это блюдо в меню.',seasonFixed:'Заменено несезонных блюд: {n}',m4:'4 месяца',m6:'6 месяцев',y1:'1 год',
  building:'Составляем меню…',
- disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
+ prem:'Süfrə Premium',premOn:'Premium активен',premPlan:'План: {p}',premFree:'Сейчас все функции бесплатны для всех.',premWhy:'Подписка Premium поддерживает развитие приложения. В будущем некоторые функции будут только в Premium:',premFeat:['Меню до 365 дней','Без лимита членов семьи и синхронизация телефонов','Адаптивные калории, прогноз и замеры тела','Резервная копия в Google Drive и Health Connect','Свои рецепты, цены и расчёт расходов'],premMonthly:'Месяц',premYearly:'Год',premBuy:'Подписаться',premRestore:'Восстановить покупки',premManage:'Управлять подпиской',premNoStore:'Подписка будет доступна в Android-приложении из Google Play.',premNotReady:'Подписка ещё не активна в магазине.',premThanks:'Спасибо! Premium активен.',premNone:'Активная подписка не найдена.',premErr:'Покупка не удалась: {e}',premFamily:'Одна подписка — на всю семью.',upd:'Обновление',updAuto:'Проверять обновления автоматически',updCheck:'Проверить сейчас',updNew:'Доступна новая версия: {v}',updNewText:'У вас версия {c}. Скачайте и установите — данные сохранятся.',updGet:'Скачать',updLater:'Позже',updOk:'Установлена последняя версия ({v}).',updFail:'Не удалось проверить. Проверьте интернет.',updWeb:'Эта версия обновляется сама при подключении к интернету.',updCur:'Версия: {v}', disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
 },
 en:{
  langName:'English',
@@ -424,7 +434,7 @@ en:{
  subsTitle:"Substitutes if you can't find it",yourPortion:'In your portion',
  stepsLangNote:'The method is in Azerbaijani for now.',translateAI:'Translate with AI',translating:'Translating…',
  n_removed:'{i} removed',n_half:'{i} halved',n_less:'{i} reduced',n_swap:'{b} instead of {a}',n_salad:'tomato-cucumber salad added',n_excl:'{i} removed (excluded)',
- menuTitle:'Menu',today:'Today',notInRange:"Today isn't within the menu dates",calHint:'The colour tag is the cuisine of the day, dots are meals eaten. Tap a day for its dishes, cuisine choice and the "Change" button.',dayList:'All days',
+ menuTitle:'Menu',today:'Today',notInRange:"Today isn't within the menu dates",calHint:'The colour tag is the cuisine of the day, dots are meals eaten. Tap a day for its dishes, cuisine choice and the "Change" button. Swipe the calendar left or right to change month.',monthsNom:['January','February','March','April','May','June','July','August','September','October','November','December'],prevMonth:'Previous month',nextMonth:'Next month',dayList:'All days',
  aiHelper:'AI helper',aiPhoto:'Calories from a food photo',aiFridge:'Recipe from what I have at home',aiNote:'Answers are estimates. AI asks for permission the first time.',
  search:'Search a dish or ingredient (e.g. chicken)',all:'All',allCuisines:'All cuisines',nRecipes:'{n} recipes',nothing:'Nothing found',
  aiAnalyzing:'Analysing the photo…',aiParseErr:"Couldn't read the answer. Try again.",aiBusy:'Too many requests, try again later.',aiFail:"AI didn't respond. Try again later.",aiEstimate:'This is an AI estimate and may differ by ±20–30%.',addToday:'Add to today ({n})',addedToday:'Added to today',
@@ -481,10 +491,10 @@ range:'Date range',rangeText:'Choose the menu\'s start and end dates: every day 
  s_weighRem:'Weigh-in reminder',s_mealRem:'Meal reminders',
  s_season:'Seasonal dishes (summer/winter)',s_seasonNote:'The season is used when a menu is created or extended: warm dishes in winter, light and cold ones in summer; out-of-season fruit and vegetables are avoided.',inSeason:'In season',outSeason:'Out of season: {i}. Greenhouse or imported, usually pricier.',outStrict:'{i} is usually not sold in these months. Swap this dish on your menu.',seasonFixed:'{n} out-of-season dishes were replaced',m4:'4 months',m6:'6 months',y1:'1 year',
  building:'Building the menu…',
- disclaimer:'This app provides general information and does not replace medical advice.',
+ prem:'Süfrə Premium',premOn:'Premium is active',premPlan:'Plan: {p}',premFree:'Right now every feature is free for everyone.',premWhy:'A Premium subscription supports the app. Later, some features will need Premium:',premFeat:['Menus up to 365 days','Unlimited family members and phone sync','Adaptive calories, forecast and body measurements','Google Drive backup and Health Connect','Own recipes, prices and cost totals'],premMonthly:'Monthly',premYearly:'Yearly',premBuy:'Subscribe',premRestore:'Restore purchases',premManage:'Manage subscription',premNoStore:'Subscriptions work in the Android app installed from Google Play.',premNotReady:'The subscription is not active in the store yet.',premThanks:'Thank you! Premium is active.',premNone:'No active subscription found.',premErr:'Purchase failed: {e}',premFamily:'One subscription covers the whole family.',upd:'Updates',updAuto:'Check for updates automatically',updCheck:'Check now',updNew:'New version available: {v}',updNewText:'You have {c}. Download and install it — your data stays.',updGet:'Download',updLater:'Later',updOk:'You have the latest version ({v}).',updFail:"Couldn't check. Check your internet connection.",updWeb:'This version updates itself when online.',updCur:'Version: {v}', disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='4.6';
+const VERSION='4.7';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
@@ -1361,7 +1371,7 @@ function setPhoto(code,file,done){
 }
 
 /* ================= MENU (calendar) ================= */
-let menuMode=null;
+let menuMode=null, menuMonth=null, menuMonthKey='';
 function renderMenu(){
   const m=member(), t=todayISO(), r=ramP(), ramAvail=!!r.on&&hasFaster();
   if(menuMode===null) menuMode=ramAvail&&isRam(t)?'ram':'base';
@@ -1370,42 +1380,44 @@ function renderMenu(){
   if(ram) pref(r.start);
   const start=ram?r.start:S.prefs.start;
   const n=ram?ramLen():planLen(), end=addDays(start,n-1), ws=S.prefs.weekStart===0?0:1;
-  const sd=parseISO(start); const off=(sd.getDay()-ws+7)%7; let cur=addDays(start,-off);
   const hdr=Array.from({length:7},(_,k)=>T('daysShort')[(k+ws)%7]);
   const at=d=>{const p=pref(d); return p.i<0?null:{day:p.P[p.i],ram:p.ram,i:p.i};};
+  // one month at a time; swipe left/right (or the arrows) to change month
+  const mk=d=>d.slice(0,7), m0=mk(start), m1=mk(end);
+  if(!menuMonth||menuMonthKey!==menuMode+'|'+start+'|'+end){ menuMonthKey=menuMode+'|'+start+'|'+end; menuMonth=(t>=start&&t<=end)?mk(t):m0; }
+  if(menuMonth<m0) menuMonth=m0; if(menuMonth>m1) menuMonth=m1;
+  const [yy,mm]=menuMonth.split('-').map(Number), first=menuMonth+'-01', dim=new Date(yy,mm,0).getDate(), last=menuMonth+'-'+pad(dim);
+  const off=(parseISO(first).getDay()-ws+7)%7; let cur=addDays(first,-off);
   let html=`<div class="stack">
     ${ramAvail?`<div class="chips"><button class="chip" data-mm="base" aria-pressed="${!ram}">${esc(T('menuTitle'))}</button><button class="chip" data-mm="ram" aria-pressed="${ram}">🌙 ${esc(T('ramMenu'))}</button></div>`:''}
     <div class="row between"><div><h2>${esc(ram?T('ramMenu'):T('menuTitle'))}</h2><div class="small muted">${dShort(start)} – ${dShort(end)} · ${esc(T('nDays',{n}))}${ram?' · '+esc(CITIES[r.city][0]):''}</div></div><div class="row" style="gap:6px">${ram?'':`<button class="btn plain sm" id="rangeb">📅 ${esc(T('range'))}</button>`}<button class="btn plain sm" id="gotoday">${esc(T('today'))}</button></div></div>
     ${ram?`<p class="tiny muted" style="margin:0">${esc(T('ramMenuNote'))}</p>`:''}
-    <div class="wkh">${hdr.map(g=>`<span>${esc(g)}</span>`).join('')}</div>`;
-  while(diffDays(cur,end)>=0){
+    <div class="mnav"><button class="ic hb" id="mprev" aria-label="${esc(T('prevMonth'))}" ${menuMonth<=m0?'disabled':''}>${ICONS.back}</button><b class="mname">${esc(T('monthsNom')[mm-1])} ${yy}</b><button class="ic hb mnext" id="mnext" aria-label="${esc(T('nextMonth'))}" ${menuMonth>=m1?'disabled':''}>${ICONS.back}</button></div>
+    <div id="cal" class="cal"><div class="wkh">${hdr.map(g=>`<span>${esc(g)}</span>`).join('')}</div>`;
+  while(diffDays(cur,last)>=0){
     html+=`<div class="wk">`;
     for(let k=0;k<7;k++){
-      const d=addDays(cur,k), i=diffDays(start,d);
-      if(i<0||i>=n){ html+=`<div class="dc out"></div>`; continue; }
-      const x=at(d); if(!x){ html+=`<div class="dc out"></div>`; continue; }
-      const Lg=getLog(m.id,d), dd=parseISO(d), fast=fasting(m,d);
+      const d=addDays(cur,k), i=diffDays(start,d), dd=parseISO(d), inM=mk(d)===menuMonth;
+      const x=(i>=0&&i<n&&inM)?at(d):null;
+      if(!x){ html+=`<div class="dc ${inM?'none':'out'}"><span class="tiny">&nbsp;</span><span class="dn">${inM?dd.getDate():''}</span></div>`; continue; }
+      const Lg=getLog(m.id,d), fast=fasting(m,d);
       html+=`<button class="dc ${d===t?'today':''} ${diffDays(d,t)>0?'past':''}" data-d="${d}" aria-label="${esc(dLong(d))}">
-        <span class="tiny muted">${dd.getDate()===1||i===0?esc(T('months')[dd.getMonth()].slice(0,3)):(x.ram&&!ram?'🌙':'&nbsp;')}</span><span class="dn">${dd.getDate()}</span>${cuTag(x.day.cu)}
+        <span class="tiny muted">${x.ram&&!ram?'🌙':'&nbsp;'}</span><span class="dn">${dd.getDate()}</span>${cuTag(x.day.cu)}
         <span class="dots">${mealsFor(fast).map(y=>`<i class="${Lg.e[y]?'on':''}"></i>`).join('')}</span></button>`;
     }
     html+=`</div>`; cur=addDays(cur,7);
   }
-  html+=`<p class="tiny muted">${esc(T('calHint'))}</p><h3 class="mlabel">${esc(T('dayList'))}</h3><div class="stack">`;
-  for(let i=0;i<n;i++){
-    const d=addDays(start,i), x=at(d); if(!x) continue;
-    const fast=fasting(m,d), tms=timesFor(d,fast,m), di=dayInfo(x.day,m,fast), rt=isRam(d)?ramTimes(d):null;
-    html+=`<button class="card" style="text-align:left;cursor:pointer;${d===t?'border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)':''}" data-d="${d}">
-      <div class="row between"><b>${esc(dLong(d))}</b><span class="small muted num">${cuTag(x.day.cu)} ${esc(x.ram?T('ramDay',{n:x.i+1}):dayN(x.i+1))} · ${fmt(di.k)} ${T('kcal')}</span></div>
-      ${rt?`<div class="tiny" style="margin-top:2px">🌙 ${esc(T('imsak'))} <b class="num">${rt.imsak}</b> · ${esc(T('iftar'))} <b class="num">${rt.iftar}</b></div>`:''}
-      <div class="small" style="margin-top:4px">${mealsFor(fast).map(y=>`<span class="muted">${tms[y]}</span> ${esc(rn(R[slotRec(x.day,y,fast)]).split(' (')[0])}`).join(' · ')}</div></button>`;
-  }
-  html+=`</div></div>`;
+  html+=`</div><p class="tiny muted">${esc(T('calHint'))}</p></div>`;
   view.innerHTML=html;
   view.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>openDay(b.dataset.d));
   view.querySelectorAll('[data-mm]').forEach(b=>b.onclick=()=>{menuMode=b.dataset.mm; renderMenu(); view.scrollTop=0;});
   const rb=document.getElementById('rangeb'); if(rb) rb.onclick=()=>rangeSheet(null);
-  document.getElementById('gotoday').onclick=()=>{const el=view.querySelector('.dc.today'); if(el){el.scrollIntoView({block:'center'}); el.focus();} else toast(T('notInRange'));};
+  document.getElementById('gotoday').onclick=()=>{ if(t<start||t>end){ toast(T('notInRange')); return; } menuMonth=t.slice(0,7); renderMenu(); const el=view.querySelector('.dc.today'); if(el){ el.scrollIntoView({block:'center'}); el.focus(); } };
+  const goM=dir=>{ const [y,mo]=menuMonth.split('-').map(Number), d=new Date(y,mo-1+dir,1), k=d.getFullYear()+'-'+pad(d.getMonth()+1); if(k<m0||k>m1) return false; menuMonth=k; renderMenu(); const c=document.getElementById('cal'); if(c){ c.classList.add(dir>0?'slide-l':'slide-r'); } return true; };
+  document.getElementById('mprev').onclick=()=>goM(-1); document.getElementById('mnext').onclick=()=>goM(1);
+  const cal=document.getElementById('cal'); let tx=null, ty=0;
+  cal.addEventListener('touchstart',e=>{ const p=e.touches[0]; if(p.clientX<=24){ tx=null; return; } tx=p.clientX; ty=p.clientY; },{passive:true});
+  cal.addEventListener('touchend',e=>{ if(tx===null) return; const p=e.changedTouches[0], dx=p.clientX-tx, dy=p.clientY-ty; tx=null; if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){ if(!goM(dx<0?1:-1)) cal.animate&&cal.animate([{transform:'translateX(0)'},{transform:`translateX(${dx<0?-12:12}px)`},{transform:'translateX(0)'}],{duration:220}); } },{passive:true});
 }
 
 /* ================= menu date range ================= */
@@ -1686,6 +1698,7 @@ function renderSettings(){
   const syncText=STANDALONE?T('s_local'):(syncNote?T(syncNote):T('s_local'));
   view.innerHTML=`<div class="stack">
     <h2>${esc(T('settings'))}</h2>
+    ${premCard()}
     ${secT(T('s_general'))}
     <div class="card stack">
       <div>${lbl(T('language'))}${langChips('sl')}</div>
@@ -1767,6 +1780,8 @@ function renderSettings(){
       ${NDRIVE&&!GA.email?`<button class="btn sm" id="gdin">${esc(T('gd_signin'))}</button>`:`<div class="row" style="flex-wrap:wrap"><button class="btn sm" id="gdup">${esc(T('s_gdUp'))}</button><button class="btn ghost sm" id="gddown">${esc(T('s_gdDown'))}</button>${NDRIVE?`<button class="btn plain sm" id="gdoutb">${esc(T('gd_signout'))}</button>`:''}</div>`}</div>`:''}
     <details class="card"><summary>${esc(T('s_snapshots'))} (${snaps.length})</summary><p class="tiny muted">${esc(T('s_snapNote'))}</p><ul class="list">${snaps.map((s,j)=>`<li><span>${esc(dLong(s.u||s.d))}</span><button class="btn plain sm" data-snap="${s.d}">${esc(T('restore'))}</button></li>`).join('')||`<li class="muted">${esc(T('noData'))}</li>`}</ul></details>
     <details class="card"><summary>${esc(T('s_reset'))}</summary><p class="small">${esc(T('s_resetText'))}</p><button class="btn ghost sm" id="reset">${esc(T('s_resetBtn'))}</button></details>
+    ${secT(T('upd'))}
+    ${updCard()}
     ${secT(T('s_about'))}
     <div class="card"><p class="small" style="margin:0">${esc(T('s_aboutText'))}</p><p class="tiny muted" style="margin:8px 0 0">Süfrə · ${esc(T('version'))} ${VERSION}${NATIVE?' · Android':''}</p></div>
   </div>`;
@@ -1788,6 +1803,7 @@ function renderSettings(){
     const hs=document.getElementById('hcset'); if(hs) hs.onclick=()=>{ try{ HC_().openHealthConnectSettings(); }catch(e){} }; }
   const ron=document.getElementById('ron'); ron.onchange=e=>{p.ramadan.on=e.target.checked; save(); render(); applyWaterReminders(false);};
   const rch=(id,k,num)=>{const el=document.getElementById(id); if(el) el.onchange=e=>{ const v=num?Math.max(-30,Math.min(30,+e.target.value||0)):e.target.value; if(!num&&!v) return; p.ramadan[k]=v; if((k==='start'||k==='end')&&p.ramadan.end<p.ramadan.start) p.ramadan.end=addDays(p.ramadan.start,29); save(); render(); applyWaterReminders(false); };};
+  bindPremCard(); bindUpdCard();
   rch('rst','start'); rch('ren','end'); rch('rcity','city'); rch('rmeth','method'); { const el=document.getElementById('rmeals'); if(el) el.onchange=e=>{ p.ramadan.meals=+e.target.value; save(); render(); }; } rch('radi','adjI',true); rch('radf','adjF',true);
   const rg=document.getElementById('rgen'); if(rg) rg.onclick=()=>{ S.rseed=(S.rseed||1)+1; generateRam(); save(); toast(T('newMenu')); menuMode='ram'; setTab('menu'); };
   on('[data-ak]',b=>{p.autoKeep=+b.dataset.ak; save(); render();});
@@ -2249,6 +2265,99 @@ function bindFamCard(){
   document.querySelectorAll('[data-me]').forEach(b=>b.onclick=()=>{ FAM.me=b.dataset.me; saveFAM(); S.active=FAM.me; try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){} render(); updateWidget(); });
 }
 
+/* ================= Premium (Google Play subscription) ================= */
+// The subscription works, but nothing is locked yet: while LIMITS_ON is false every feature stays free.
+// Later, gate a feature with  if(!premOK()) return premSheet();
+const LIMITS_ON=false;
+const PREM_PRODUCT='sufre_premium', PREM_PLANS=[['monthly','premMonthly'],['yearly','premYearly']], LSPR='sufre-prem-v1';
+let PREM=(()=>{ try{ return JSON.parse(localStorage.getItem(LSPR)||'null')||{}; }catch(e){ return {}; } })();
+const NP=()=>NATIVE?CP().NativePurchases:null;
+const isPremium=()=>!!PREM.active;
+const premOK=()=>!LIMITS_ON||isPremium();
+function premSave(){ try{ localStorage.setItem(LSPR,JSON.stringify(PREM)); }catch(e){} }
+async function premRefresh(){
+  const N=NP(); if(!N) return;
+  try{ const {purchases}=await N.getPurchases({productType:'subs'});
+    const p=(purchases||[]).find(x=>(x.productIdentifier===PREM_PRODUCT||x.planIdentifier===PREM_PRODUCT)&&(x.purchaseState===undefined||String(x.purchaseState)==='1'));
+    PREM={active:!!p,plan:p?(p.basePlanId||PREM.plan||null):null,checked:Date.now()}; premSave();
+  }catch(e){}
+}
+async function premProducts(){
+  const N=NP(); if(!N) return [];
+  try{ const b=await N.isBillingSupported(); if(!b||!b.isBillingSupported) return [];
+    const {products}=await N.getProducts({productIdentifiers:[PREM_PRODUCT],productType:'subs'}); return products||[];
+  }catch(e){ return []; }
+}
+function premCard(){
+  const on=isPremium();
+  return `<div class="card stack prem">
+    <div class="row between"><b>⭐ ${esc(T('prem'))}</b>${on?`<span class="pill p-N">${esc(T('premOn'))}</span>`:''}</div>
+    ${on?'':`<p class="small" style="margin:0">${esc(T('premFree'))} ${esc(T('premWhy'))}</p><ul class="small" style="margin:0;padding-left:20px">${T('premFeat').map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`}
+    <p class="tiny muted" style="margin:0">${esc(T('premFamily'))}</p>
+    <div id="premplans" class="stack">${NATIVE?'<span class="spinner"></span>':`<div class="tipbox small">${esc(T('premNoStore'))}</div>`}</div>
+    ${NATIVE?`<div class="row" style="flex-wrap:wrap"><button class="btn plain sm" id="premrest">${esc(T('premRestore'))}</button>${on?`<button class="btn plain sm" id="premman">${esc(T('premManage'))}</button>`:''}</div>`:''}
+  </div>`;
+}
+function bindPremCard(){
+  const N=NP(); if(!N) return;
+  const rs=document.getElementById('premrest'); if(rs) rs.onclick=async()=>{ try{ if(N.restorePurchases) await N.restorePurchases(); }catch(e){} await premRefresh(); toast(T(isPremium()?'premThanks':'premNone')); if(tab==='settings') render(); };
+  const mg=document.getElementById('premman'); if(mg) mg.onclick=()=>{ try{ N.manageSubscriptions(); }catch(e){} };
+  premProducts().then(list=>{
+    const box=document.getElementById('premplans'); if(!box) return;
+    const rows=PREM_PLANS.map(([id,lbl])=>{ const p=list.find(x=>x.identifier===id); return p?{id,lbl,price:p.priceString}:null; }).filter(Boolean);
+    if(isPremium()){ box.innerHTML=''; return; }
+    if(!rows.length){ box.innerHTML=`<div class="tipbox small">${esc(T('premNotReady'))}</div>`; return; }
+    box.innerHTML=rows.map(r=>`<button class="btn" data-plan="${r.id}">${esc(T('premBuy'))} · ${esc(T(r.lbl))} — ${esc(r.price)}</button>`).join('');
+    box.querySelectorAll('[data-plan]').forEach(b=>b.onclick=async()=>{
+      b.disabled=true;
+      try{ await N.purchaseProduct({productIdentifier:PREM_PRODUCT,planIdentifier:b.dataset.plan,productType:'subs',quantity:1});
+        await premRefresh(); PREM.plan=b.dataset.plan; premSave(); if(isPremium()) toast(T('premThanks')); render();
+      }catch(e){ b.disabled=false; const msg=String((e&&e.message)||e||''); if(!/cancel/i.test(msg)) toast(T('premErr',{e:msg.slice(0,80)})); }
+    });
+  });
+}
+
+/* ================= update check (APK from GitHub) ================= */
+// Android builds installed from the APK look for a newer GitHub release. Turn this off for the Play Store build.
+const UPD_REPO='ZekiAnar/sufre', LSUP='sufre-upd-v1';
+let UPD=(()=>{ try{ return JSON.parse(localStorage.getItem(LSUP)||'null')||{}; }catch(e){ return {}; } })();
+if(UPD.auto===undefined) UPD.auto=true;
+const updSave=()=>{ try{ localStorage.setItem(LSUP,JSON.stringify(UPD)); }catch(e){} };
+async function appInfo(){ try{ const i=await CP().App.getInfo(); return {b:+i.build||0,v:i.version||''}; }catch(e){ return null; } }
+async function checkUpdate(manual){
+  if(!NATIVE){ if(manual) toast(T('updWeb')); return; }
+  const me=await appInfo(); if(!me){ if(manual) toast(T('updFail')); return; }
+  try{
+    const r=await fetch('https://api.github.com/repos/'+UPD_REPO+'/releases/latest',{headers:{Accept:'application/vnd.github+json'}});
+    if(!r.ok) throw new Error(r.status);
+    const j=await r.json(), tag=String(j.tag_name||'').replace(/^v/,''), nb=+tag.split('.').pop()||0;
+    UPD.last=Date.now(); updSave();
+    if(nb>me.b){
+      if(!manual&&UPD.skip===tag) return;
+      const a=(j.assets||[]).find(x=>/\.apk$/i.test(x.name));
+      updPrompt(tag,me.v,a?a.browser_download_url:'https://github.com/'+UPD_REPO+'/releases/latest/download/Sufre.apk');
+    } else if(manual) toast(T('updOk',{v:me.v}));
+  }catch(e){ if(manual) toast(T('updFail')); }
+}
+function updPrompt(tag,cur,url){
+  openSheet(T('updNew',{v:tag}),`<div class="stack"><p class="small" style="margin:0">${esc(T('updNewText',{c:cur}))}</p>
+    <div class="row" style="flex-wrap:wrap"><a class="btn" id="updget" href="${esc(url)}">${esc(T('updGet'))}</a><button class="btn plain" id="updlater">${esc(T('updLater'))}</button></div></div>`,(sb,w)=>{
+    sb.querySelector('#updlater').onclick=()=>{ UPD.skip=tag; updSave(); closeSheet(w,true); };
+    sb.querySelector('#updget').onclick=()=>{ setTimeout(()=>closeSheet(w,true),300); };
+  });
+}
+function updCard(){
+  if(!NATIVE) return `<div class="card"><p class="small" style="margin:0">${esc(T('updWeb'))}</p></div>`;
+  return `<div class="card stack">
+    <label class="row small" style="cursor:pointer"><input type="checkbox" id="updauto" ${UPD.auto?'checked':''} style="width:20px;height:20px;accent-color:var(--accent);flex:none"> ${esc(T('updAuto'))}</label>
+    <button class="btn plain sm" id="updnow" style="align-self:flex-start">${esc(T('updCheck'))}</button></div>`;
+}
+function bindUpdCard(){
+  const a=document.getElementById('updauto'); if(a) a.onchange=e=>{ UPD.auto=e.target.checked; updSave(); };
+  const n=document.getElementById('updnow'); if(n) n.onclick=()=>checkUpdate(true);
+}
+function updTick(){ if(NATIVE&&UPD.auto&&Date.now()-(UPD.last||0)>12*3600e3) checkUpdate(false); }
+
 /* ================= boot ================= */
 registerCustom();
 renderTabs();
@@ -2256,9 +2365,9 @@ const h0=(location.hash||'').slice(1); if(VIEWS.includes(h0)&&h0!=='today'){ tab
 if(S.members.length&&!S.active) S.active=S.members[0].id;
 if(FAM&&FAM.me&&S.members.find(x=>x.id===FAM.me)) S.active=FAM.me;
 if(S.plan&&S.prefs.seasonFix!==todayISO()){ seasonRepair(); S.prefs.seasonFix=todayISO(); try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){} }
-render(); syncGuard(); snapshot(); applyWaterReminders(false); applyWeighReminders(); famStart(); takeWidgetWater(); updateWidget(); healthSync(false); if(NDRIVE) setTimeout(()=>autoDriveBackup(false),3000);
+render(); syncGuard(); snapshot(); applyWaterReminders(false); applyWeighReminders(); famStart(); takeWidgetWater(); updateWidget(); healthSync(false); premRefresh(); setTimeout(updTick,4000); if(NDRIVE) setTimeout(()=>autoDriveBackup(false),3000);
 let lastDay=todayISO();
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ takeWidgetWater(); healthSync(false); updateWidget(); } if(!document.hidden&&NDRIVE) autoDriveBackup(false); if(!document.hidden&&todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } });
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ takeWidgetWater(); healthSync(false); updateWidget(); updTick(); } if(!document.hidden&&NDRIVE) autoDriveBackup(false); if(!document.hidden&&todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } });
 setInterval(()=>{ if(todayISO()!==lastDay){ lastDay=todayISO(); if(!sheetStack.length) render(); } else if(tab==='today'&&!sheetStack.length&&!document.hidden){ const v=view.scrollTop; render(); view.scrollTop=v; } },300000);
 (async()=>{
   try{
