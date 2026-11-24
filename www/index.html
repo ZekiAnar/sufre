@@ -466,7 +466,7 @@ famSync:'Family sync',famIntro:'The same menu, shopping list and logs on every f
  disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='4.1';
+const VERSION='4.2';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
@@ -1970,7 +1970,7 @@ async function healthEnable(on){
 }
 
 /* ================= family sync (Firebase) ================= */
-const FIREBASE_CONFIG=null; // {apiKey, authDomain, projectId, appId}: from the Firebase console
+const FIREBASE_CONFIG={apiKey:'AIzaSyCWT0T3WkhE0us5lfPTc7WVCldLJihok9s',authDomain:'sufre-515416.firebaseapp.com',projectId:'sufre-515416',storageBucket:'sufre-515416.firebasestorage.app',messagingSenderId:'101783932566',appId:'1:101783932566:web:3b4e4003d038a482873cb7'};
 const LSF='sufre-family-v1';
 let FAM=(()=>{try{return JSON.parse(localStorage.getItem(LSF)||'null');}catch(e){return null;}})();
 let fdb=null, fdoc=null, funsub=null, famTimer=null, famStatus='off', famBusy=false;
