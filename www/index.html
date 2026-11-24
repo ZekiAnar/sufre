@@ -300,6 +300,7 @@ famSync:'Ailə sinxronizasiyası',famIntro:'Bütün ailə telefonlarında eyni m
  menuEnded:'Menyu {d} tarixində bitib. Davam etmək üçün günlər əlavə edin və ya yeni tarix aralığı seçin.',nDays:'{n} gün',newRange:'Yeni tarix aralığı seç',extended:'Menyu {d} tarixinədək uzadıldı',endsToday:'Menyu bu gün bitir',endsIn:'Menyunun bitməsinə {n} gün qalıb',extAsk:'Menyuya əlavə günlər əlavə edilsinmi? Yeni günlər eyni qaydada, təkrarlanmayan yeməklərlə doldurulacaq.',extNo:'Lazım deyil',
 range:'Tarix aralığı',rangeText:'Menyunun başlanğıc və son tarixini seçin: bu aralıqdakı bütün günlər yeməklərlə doldurulacaq.',rangeFrom:'Başlanğıc',rangeTo:'Son',w1:'1 həftə',w2:'2 həftə',w4:'4 həftə',m2:'2 ay',rangeMake:'Menyunu hazırla',rangeNote:'Yeni menyu köhnəsini əvəz edir. Qeydləriniz (yeyilənlər, çəki, su) silinmir.',rangeBad:'Son tarix başlanğıcdan əvvəl ola bilməz',rangeMax:'Ən çox 120 gün seçmək olar',rangeSum:'{a} – {b}: {n} gün',
  wn_title:'⚖️ Bu gün çəki günüdür',wn_body:'Səhər ac qarına, tualetdən sonra çəkilin və Süfrə-də qeyd edin.',wn_log:'Çəkini yaz',s_weighTime:'Xatırlatma saatı',s_weighNotif:'Telefona bildiriş göndər',wn_noteN:'Bildiriş seçilən gün və saatda gəlir. Həmin gün çəki artıq yazılıbsa, gəlmir. Bildirişə toxunanda Proqres bölməsi açılır.',wn_noteW:'App açıq olanda xatırladacaq. App bağlı olanda da xatırlatma gəlsin deyə çəki gününü telefonun təqviminə yükləyin.',wn_ics:'Çəki gününü təqvimə yüklə (.ics)',
+ s_weighRem:'Çəki xatırlatması',s_mealRem:'Yemək xatırlatması',
  disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
 },
 ru:{
@@ -386,6 +387,7 @@ famSync:'Синхронизация семьи',famIntro:'Одно меню, с�
  menuEnded:'Меню закончилось {d}. Добавьте дни или выберите новый период.',nDays:'{n} дн.',newRange:'Выбрать новый период',extended:'Меню продлено до {d}',endsToday:'Меню заканчивается сегодня',endsIn:'До конца меню осталось {n} дн.',extAsk:'Добавить дни к меню? Новые дни заполнятся по тем же правилам, без повторов.',extNo:'Не нужно',
 range:'Период',rangeText:'Выберите даты начала и конца меню: все дни этого периода будут заполнены блюдами.',rangeFrom:'Начало',rangeTo:'Конец',w1:'1 неделя',w2:'2 недели',w4:'4 недели',m2:'2 месяца',rangeMake:'Составить меню',rangeNote:'Новое меню заменит старое. Ваши записи (съеденное, вес, вода) не удаляются.',rangeBad:'Конец не может быть раньше начала',rangeMax:'Можно выбрать не больше 120 дней',rangeSum:'{a} – {b}: {n} дн.',
  wn_title:'⚖️ Сегодня день взвешивания',wn_body:'Взвесьтесь утром натощак после туалета и запишите вес в Süfrə.',wn_log:'Записать вес',s_weighTime:'Время напоминания',s_weighNotif:'Присылать уведомление на телефон',wn_noteN:'Уведомление приходит в выбранный день и время. Если вес за этот день уже записан, оно не придёт. Нажатие открывает «Прогресс».',wn_noteW:'Напоминает, пока приложение открыто. Чтобы напоминание приходило и при закрытом приложении, загрузите день взвешивания в календарь телефона.',wn_ics:'Загрузить день взвешивания в календарь (.ics)',
+ s_weighRem:'Напоминание о взвешивании',s_mealRem:'Напоминания о еде',
  disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
 },
 en:{
@@ -472,6 +474,7 @@ famSync:'Family sync',famIntro:'The same menu, shopping list and logs on every f
  menuEnded:'The menu ended on {d}. Add days or choose a new date range.',nDays:'{n} days',newRange:'Choose a new date range',extended:'Menu extended to {d}',endsToday:'The menu ends today',endsIn:'{n} days left in the menu',extAsk:'Add more days to the menu? New days are filled the same way, without repeats.',extNo:'No thanks',
 range:'Date range',rangeText:'Choose the menu\'s start and end dates: every day in the range is filled with meals.',rangeFrom:'From',rangeTo:'To',w1:'1 week',w2:'2 weeks',w4:'4 weeks',m2:'2 months',rangeMake:'Create menu',rangeNote:'The new menu replaces the old one. Your logs (meals eaten, weight, water) are kept.',rangeBad:'The end date can\'t be before the start',rangeMax:'You can choose at most 120 days',rangeSum:'{a} – {b}: {n} days',
  wn_title:'⚖️ It\'s weigh-in day',wn_body:'Weigh yourself in the morning before eating and log it in Süfrə.',wn_log:'Log weight',s_weighTime:'Reminder time',s_weighNotif:'Send a phone notification',wn_noteN:'The notification arrives on the chosen day and time. If that day\'s weight is already logged, it won\'t come. Tapping it opens Progress.',wn_noteW:'Reminds you while the app is open. To get it when the app is closed too, add weigh-in day to your phone calendar.',wn_ics:'Add weigh-in day to calendar (.ics)',
+ s_weighRem:'Weigh-in reminder',s_mealRem:'Meal reminders',
  disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
@@ -1683,14 +1686,14 @@ function renderSettings(){
       ${toggle('hcb',!!(p.health||{}).bonus,T('hcBonus'))}
       <p class="tiny muted" style="margin:0">${esc(T('hcNote'))}</p>
       ${(p.health||{}).on?`<button class="btn plain sm" id="hcset">${esc(T('hcSettings'))}</button>`:''}</div>`:''}
-    ${secT(T('s_reminders'))}
+    ${secT(T('s_weighRem'))}
     <div class="card stack">
       <div>${lbl(T('s_weighDay'))}${seg('wday',[...[1,2,3,4,5,6,0].map(d=>[d,T('daysShort')[d]]),[-1,'—']],p.weighDay)}</div>
       ${p.weighDay>=0?`<div class="grid2"><div><label class="f" for="wtime">${esc(T('s_weighTime'))}</label><input id="wtime" type="time" value="${p.weighTime||'08:00'}"></div><div style="align-self:end">${toggle('wnot',p.weighNotif!==false,T('s_weighNotif'))}</div></div>
       <p class="tiny muted" style="margin:0">${esc(T(NATIVE?'wn_noteN':'wn_noteW'))}</p>
       ${(!NATIVE&&(DL||STANDALONE))?`<button class="btn plain sm" id="wics">${esc(T('wn_ics'))}</button>`:''}`:''}
-      ${(DL||STANDALONE)?`<p class="small muted" style="margin:0">${esc(T('s_icsText'))}</p><button class="btn plain" id="ics">${esc(T('s_ics'))}</button>`:''}
     </div>
+    ${(DL||STANDALONE)?`${secT(T('s_mealRem'))}<div class="card stack"><p class="small muted" style="margin:0">${esc(T('s_icsText'))}</p><button class="btn plain" id="ics">${esc(T('s_ics'))}</button></div>`:''}
     ${secT(T('s_data'))}
     <div class="card stack">
       <p class="small muted" style="margin:0">${esc(syncText)}<br>${esc(T('s_lastBackup',{d:p.lastBackup?dLong(p.lastBackup):T('never')}))}</p>
