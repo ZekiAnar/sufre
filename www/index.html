@@ -119,6 +119,8 @@ nav.tabs button:focus-visible,.btn:focus-visible,.chip:focus-visible,.ic:focus-v
 .mnav .mnext svg{transform:scaleX(-1)}
 .mnav button:disabled{opacity:.25;cursor:default}
 .cal{touch-action:pan-y}
+.grid2>*{min-width:0}
+input[type=date],input[type=time]{max-width:100%;min-width:0;box-sizing:border-box}
 .cal.slide-l{animation:calL .22s ease-out}.cal.slide-r{animation:calR .22s ease-out}
 @keyframes calL{from{transform:translateX(40px);opacity:.3}to{transform:none;opacity:1}}
 @keyframes calR{from{transform:translateX(-40px);opacity:.3}to{transform:none;opacity:1}}
@@ -313,7 +315,7 @@ range:'Tarix aralığı',rangeText:'Menyunun başlanğıc və son tarixini seçi
  s_weighRem:'Çəki xatırlatması',s_mealRem:'Yemək xatırlatması',
  s_season:'Mövsümə uyğun yeməklər (yay/qış)',s_seasonNote:'Mövsüm seçimi menyu yaradılanda və uzadılanda nəzərə alınır: qışda isti yeməklər, yayda yüngül və soyuq yeməklər; mövsümü olmayan meyvə-tərəvəz seçilmir.',inSeason:'Mövsümündədir',outSeason:'Mövsüm deyil: {i}. İstixana və ya idxal məhsuludur, adətən bahalı olur.',outStrict:'{i} bu aylarda adətən satılmır. Menyuda bu yeməyi başqası ilə əvəz edin.',seasonFixed:'Mövsümə uyğun olmayan {n} yemək dəyişdirildi',m4:'4 ay',m6:'6 ay',y1:'1 il',
  building:'Menyu hazırlanır…',
- prem:'Süfrə Premium',premOn:'Premium aktivdir',premPlan:'Plan: {p}',premFree:'Hazırda bütün imkanlar hamı üçün pulsuz açıqdır.',premWhy:'Premium abunə app-in inkişafına dəstəkdir. Gələcəkdə bəzi imkanlar yalnız Premium ilə olacaq:',premFeat:['365 günə qədər menyu','Ailədə limitsiz üzv və telefonlar arası sinxronizasiya','Adaptiv kalori, proqnoz və bədən ölçüləri','Google Drive backup və Health Connect','Öz reseptlər, qiymət və xərc hesabı'],premMonthly:'Aylıq',premYearly:'İllik',premBuy:'Abunə ol',premRestore:'Alışları bərpa et',premManage:'Abunəni idarə et',premNoStore:'Abunə Android app-də, Google Play-dən yüklənəndə aktiv olacaq.',premNotReady:'Abunə hələ mağazada aktiv deyil.',premThanks:'Təşəkkürlər! Premium aktivdir.',premNone:'Aktiv abunə tapılmadı.',premErr:'Alış alınmadı: {e}',premFamily:'Bir abunə bütün ailəyə aiddir.',upd:'Yeniləmə',updAuto:'Yeniləməni avtomatik yoxla',updCheck:'İndi yoxla',updNew:'Yeni versiya var: {v}',updNewText:'Sizdəki versiya: {c}. Yükləyib quraşdırın — məlumatlarınız qalır.',updGet:'Yüklə',updLater:'Sonra',updOk:'Ən son versiya quraşdırılıb ({v}).',updFail:'Yoxlamaq alınmadı. İnternet bağlantısını yoxlayın.',updWeb:'Bu versiya internetə qoşulanda özü yenilənir.',updCur:'Versiya: {v}', wEat:'✓ Yeyildi', wr_title:'Həftəlik hesabat',wr_this:'Bu həftə',wr_last:'Ötən həftə',wr_w:'çəki {n}',wr_meals:'{a}/{b} yemək yeyildi',wr_water:'su norması {a}/{b} gün',wr_kcal:'gündə orta {n} kkal',wr_ntitle:'{n}, həftənin hesabatı',wr_toggle:'Bazar günü axşam həftəlik hesabat bildirişi',wr_note:'Saat 20:00-da gəlir: çəki dəyişikliyi, yeyilən yeməklər, su. Proqres bölməsində də görünür.', disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
+ prem:'Süfrə Premium',premOn:'Premium aktivdir',premPlan:'Plan: {p}',premFree:'Hazırda bütün imkanlar hamı üçün pulsuz açıqdır.',premWhy:'Premium abunə app-in inkişafına dəstəkdir. Gələcəkdə bəzi imkanlar yalnız Premium ilə olacaq:',premFeat:['365 günə qədər menyu','Ailədə limitsiz üzv və telefonlar arası sinxronizasiya','Adaptiv kalori, proqnoz və bədən ölçüləri','Google Drive backup və Health Connect','Öz reseptlər, qiymət və xərc hesabı'],premMonthly:'Aylıq',premYearly:'İllik',premBuy:'Abunə ol',premRestore:'Alışları bərpa et',premManage:'Abunəni idarə et',premNoStore:'Abunə Android app-də, Google Play-dən yüklənəndə aktiv olacaq.',premNotReady:'Abunə hələ mağazada aktiv deyil.',premThanks:'Təşəkkürlər! Premium aktivdir.',premNone:'Aktiv abunə tapılmadı.',premErr:'Alış alınmadı: {e}',premFamily:'Bir abunə bütün ailəyə aiddir.',upd:'Yeniləmə',updAuto:'Yeniləməni avtomatik yoxla',updCheck:'İndi yoxla',updNew:'Yeni versiya var: {v}',updNewText:'Sizdəki versiya: {c}. Yükləyib quraşdırın — məlumatlarınız qalır.',updGet:'Yüklə',updLater:'Sonra',updOk:'Ən son versiya quraşdırılıb ({v}).',updFail:'Yoxlamaq alınmadı. İnternet bağlantısını yoxlayın.',updWeb:'Bu versiya internetə qoşulanda özü yenilənir.',updCur:'Versiya: {v}', wEat:'✓ Yeyildi', wr_title:'Həftəlik hesabat',wr_this:'Bu həftə',wr_last:'Ötən həftə',wr_w:'çəki {n}',wr_meals:'{a}/{b} yemək yeyildi',wr_water:'su norması {a}/{b} gün',wr_kcal:'gündə orta {n} kkal',wr_ntitle:'{n}, həftənin hesabatı',wr_toggle:'Bazar günü axşam həftəlik hesabat bildirişi',wr_note:'Saat 20:00-da gəlir: çəki dəyişikliyi, yeyilən yeməklər, su. Proqres bölməsində də görünür.', m1:'1 ay',shopOut:'Menyu {d} tarixində bitir: ondan sonrakı günlər siyahıya düşmür.',shopMax:'Ən çox {n} gün seçmək olar.', disclaimer:'Bu app ümumi məlumat verir və həkim məsləhətini əvəz etmir.',
 },
 ru:{
  langName:'Русский',
@@ -402,7 +404,7 @@ range:'Период',rangeText:'Выберите даты начала и кон
  s_weighRem:'Напоминание о взвешивании',s_mealRem:'Напоминания о еде',
  s_season:'Блюда по сезону (лето/зима)',s_seasonNote:'Сезон учитывается при создании и продлении меню: зимой — горячие блюда, летом — лёгкие и холодные; несезонные фрукты и овощи не выбираются.',inSeason:'Сейчас сезон',outSeason:'Не сезон: {i}. Тепличный или импортный продукт, обычно дороже.',outStrict:'{i} в эти месяцы обычно не продаётся. Замените это блюдо в меню.',seasonFixed:'Заменено несезонных блюд: {n}',m4:'4 месяца',m6:'6 месяцев',y1:'1 год',
  building:'Составляем меню…',
- prem:'Süfrə Premium',premOn:'Premium активен',premPlan:'План: {p}',premFree:'Сейчас все функции бесплатны для всех.',premWhy:'Подписка Premium поддерживает развитие приложения. В будущем некоторые функции будут только в Premium:',premFeat:['Меню до 365 дней','Без лимита членов семьи и синхронизация телефонов','Адаптивные калории, прогноз и замеры тела','Резервная копия в Google Drive и Health Connect','Свои рецепты, цены и расчёт расходов'],premMonthly:'Месяц',premYearly:'Год',premBuy:'Подписаться',premRestore:'Восстановить покупки',premManage:'Управлять подпиской',premNoStore:'Подписка будет доступна в Android-приложении из Google Play.',premNotReady:'Подписка ещё не активна в магазине.',premThanks:'Спасибо! Premium активен.',premNone:'Активная подписка не найдена.',premErr:'Покупка не удалась: {e}',premFamily:'Одна подписка — на всю семью.',upd:'Обновление',updAuto:'Проверять обновления автоматически',updCheck:'Проверить сейчас',updNew:'Доступна новая версия: {v}',updNewText:'У вас версия {c}. Скачайте и установите — данные сохранятся.',updGet:'Скачать',updLater:'Позже',updOk:'Установлена последняя версия ({v}).',updFail:'Не удалось проверить. Проверьте интернет.',updWeb:'Эта версия обновляется сама при подключении к интернету.',updCur:'Версия: {v}', wEat:'✓ Съедено', wr_title:'Недельный отчёт',wr_this:'Эта неделя',wr_last:'Прошлая неделя',wr_w:'вес {n}',wr_meals:'съедено {a}/{b} приёмов',wr_water:'норма воды {a}/{b} дн.',wr_kcal:'в среднем {n} ккал',wr_ntitle:'{n}, итоги недели',wr_toggle:'Уведомление с итогами недели в воскресенье вечером',wr_note:'Приходит в 20:00: изменение веса, съеденные блюда, вода. Также видно в разделе «Прогресс».', disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
+ prem:'Süfrə Premium',premOn:'Premium активен',premPlan:'План: {p}',premFree:'Сейчас все функции бесплатны для всех.',premWhy:'Подписка Premium поддерживает развитие приложения. В будущем некоторые функции будут только в Premium:',premFeat:['Меню до 365 дней','Без лимита членов семьи и синхронизация телефонов','Адаптивные калории, прогноз и замеры тела','Резервная копия в Google Drive и Health Connect','Свои рецепты, цены и расчёт расходов'],premMonthly:'Месяц',premYearly:'Год',premBuy:'Подписаться',premRestore:'Восстановить покупки',premManage:'Управлять подпиской',premNoStore:'Подписка будет доступна в Android-приложении из Google Play.',premNotReady:'Подписка ещё не активна в магазине.',premThanks:'Спасибо! Premium активен.',premNone:'Активная подписка не найдена.',premErr:'Покупка не удалась: {e}',premFamily:'Одна подписка — на всю семью.',upd:'Обновление',updAuto:'Проверять обновления автоматически',updCheck:'Проверить сейчас',updNew:'Доступна новая версия: {v}',updNewText:'У вас версия {c}. Скачайте и установите — данные сохранятся.',updGet:'Скачать',updLater:'Позже',updOk:'Установлена последняя версия ({v}).',updFail:'Не удалось проверить. Проверьте интернет.',updWeb:'Эта версия обновляется сама при подключении к интернету.',updCur:'Версия: {v}', wEat:'✓ Съедено', wr_title:'Недельный отчёт',wr_this:'Эта неделя',wr_last:'Прошлая неделя',wr_w:'вес {n}',wr_meals:'съедено {a}/{b} приёмов',wr_water:'норма воды {a}/{b} дн.',wr_kcal:'в среднем {n} ккал',wr_ntitle:'{n}, итоги недели',wr_toggle:'Уведомление с итогами недели в воскресенье вечером',wr_note:'Приходит в 20:00: изменение веса, съеденные блюда, вода. Также видно в разделе «Прогресс».', m1:'1 месяц',shopOut:'Меню заканчивается {d}: дни после этого в список не входят.',shopMax:'Можно выбрать не более {n} дней.', disclaimer:'Приложение носит информационный характер и не заменяет консультацию врача.',
 },
 en:{
  langName:'English',
@@ -491,10 +493,10 @@ range:'Date range',rangeText:'Choose the menu\'s start and end dates: every day 
  s_weighRem:'Weigh-in reminder',s_mealRem:'Meal reminders',
  s_season:'Seasonal dishes (summer/winter)',s_seasonNote:'The season is used when a menu is created or extended: warm dishes in winter, light and cold ones in summer; out-of-season fruit and vegetables are avoided.',inSeason:'In season',outSeason:'Out of season: {i}. Greenhouse or imported, usually pricier.',outStrict:'{i} is usually not sold in these months. Swap this dish on your menu.',seasonFixed:'{n} out-of-season dishes were replaced',m4:'4 months',m6:'6 months',y1:'1 year',
  building:'Building the menu…',
- prem:'Süfrə Premium',premOn:'Premium is active',premPlan:'Plan: {p}',premFree:'Right now every feature is free for everyone.',premWhy:'A Premium subscription supports the app. Later, some features will need Premium:',premFeat:['Menus up to 365 days','Unlimited family members and phone sync','Adaptive calories, forecast and body measurements','Google Drive backup and Health Connect','Own recipes, prices and cost totals'],premMonthly:'Monthly',premYearly:'Yearly',premBuy:'Subscribe',premRestore:'Restore purchases',premManage:'Manage subscription',premNoStore:'Subscriptions work in the Android app installed from Google Play.',premNotReady:'The subscription is not active in the store yet.',premThanks:'Thank you! Premium is active.',premNone:'No active subscription found.',premErr:'Purchase failed: {e}',premFamily:'One subscription covers the whole family.',upd:'Updates',updAuto:'Check for updates automatically',updCheck:'Check now',updNew:'New version available: {v}',updNewText:'You have {c}. Download and install it — your data stays.',updGet:'Download',updLater:'Later',updOk:'You have the latest version ({v}).',updFail:"Couldn't check. Check your internet connection.",updWeb:'This version updates itself when online.',updCur:'Version: {v}', wEat:'✓ Eaten', wr_title:'Weekly report',wr_this:'This week',wr_last:'Last week',wr_w:'weight {n}',wr_meals:'{a}/{b} meals eaten',wr_water:'water goal {a}/{b} days',wr_kcal:'avg {n} kcal',wr_ntitle:'{n}, your week',wr_toggle:'Weekly report notification on Sunday evening',wr_note:'Arrives at 20:00: weight change, meals eaten, water. Also shown under Progress.', disclaimer:'This app provides general information and does not replace medical advice.',
+ prem:'Süfrə Premium',premOn:'Premium is active',premPlan:'Plan: {p}',premFree:'Right now every feature is free for everyone.',premWhy:'A Premium subscription supports the app. Later, some features will need Premium:',premFeat:['Menus up to 365 days','Unlimited family members and phone sync','Adaptive calories, forecast and body measurements','Google Drive backup and Health Connect','Own recipes, prices and cost totals'],premMonthly:'Monthly',premYearly:'Yearly',premBuy:'Subscribe',premRestore:'Restore purchases',premManage:'Manage subscription',premNoStore:'Subscriptions work in the Android app installed from Google Play.',premNotReady:'The subscription is not active in the store yet.',premThanks:'Thank you! Premium is active.',premNone:'No active subscription found.',premErr:'Purchase failed: {e}',premFamily:'One subscription covers the whole family.',upd:'Updates',updAuto:'Check for updates automatically',updCheck:'Check now',updNew:'New version available: {v}',updNewText:'You have {c}. Download and install it — your data stays.',updGet:'Download',updLater:'Later',updOk:'You have the latest version ({v}).',updFail:"Couldn't check. Check your internet connection.",updWeb:'This version updates itself when online.',updCur:'Version: {v}', wEat:'✓ Eaten', wr_title:'Weekly report',wr_this:'This week',wr_last:'Last week',wr_w:'weight {n}',wr_meals:'{a}/{b} meals eaten',wr_water:'water goal {a}/{b} days',wr_kcal:'avg {n} kcal',wr_ntitle:'{n}, your week',wr_toggle:'Weekly report notification on Sunday evening',wr_note:'Arrives at 20:00: weight change, meals eaten, water. Also shown under Progress.', m1:'1 month',shopOut:'The menu ends on {d}: later days are not in the list.',shopMax:'You can choose up to {n} days.', disclaimer:'This app provides general information and does not replace medical advice.',
 }};
 
-const VERSION='4.8';
+const VERSION='4.9';
 const D=JSON.parse(document.getElementById('data').textContent);
 const R={}; D.rec.forEach(r=>R[r.code]=r);
 const ING=D.ing;
@@ -1434,7 +1436,7 @@ function rangeSheet(startAt){
     $('#rgs').oninput=prev; $('#rge').oninput=prev; prev();
     $('#rgok').onclick=()=>{ const a=$('#rgs').value, b=$('#rge').value, n=a&&b?diffDays(a,b)+1:0; if(n<1||n>MAX_DAYS){ toast(T(n>MAX_DAYS?'rangeMax':'rangeBad')); return; }
       const btn=$('#rgok'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> '+esc(T('building'));
-      setTimeout(()=>{ p.start=a; p.end=b; p.extAsk=null; generate(); save(); closeSheet(w,true); menuMode='base'; shopWeek=null; render(); toast(T('newMenu')); },50); };
+      setTimeout(()=>{ p.start=a; p.end=b; p.extAsk=null; generate(); save(); closeSheet(w,true); menuMode='base'; render(); toast(T('newMenu')); },50); };
   });
 }
 
@@ -1501,7 +1503,7 @@ function aiFridge(){
 }
 
 /* ================= SHOP ================= */
-let shopWeek=null, shopScope='fam';
+let shopScope='fam';
 const ORDER=['Ət və balıq','Zülal','Süd məhsulları','Yarma və paxlalılar','Çörək','Tərəvəz','Göyərti','Meyvə və qoz-fındıq','Yağ və digər'];
 function amount(code,g){
   const kgU=LANG==='ru'?'кг':LANG==='en'?'kg':'kq', lU=LANG==='ru'?'л':'l';
@@ -1510,9 +1512,9 @@ function amount(code,g){
   if(g>=1000) return fmt1(Math.ceil(g/100)/10)+' '+kgU;
   return (Math.ceil(g/10)*10)+' '+T('g');
 }
-function shopGroups(w,scope){
+function shopGroups(w,scope,n){
   const tot={}, mem=scope==='me'?[member()]:S.members;
-  for(let k=0;k<7;k++){ const d=addDays(w,k), p=pref(d); if(p.i<0) continue; const day=p.P[p.i]; mem.forEach(m=>{const fast=fasting(m,d), di=dayInfo(day,m,fast); mealsFor(fast).forEach(x=>{ if(day[x+'_L']) return; adj(slotRec(day,x,fast),m).ing.forEach(([c,g])=>{tot[c]=(tot[c]||0)+g*di.f;}); });}); }
+  for(let k=0;k<(n||7);k++){ const d=addDays(w,k), p=pref(d); if(p.i<0) continue; const day=p.P[p.i]; mem.forEach(m=>{const fast=fasting(m,d), di=dayInfo(day,m,fast); mealsFor(fast).forEach(x=>{ if(day[x+'_L']) return; adj(slotRec(day,x,fast),m).ing.forEach(([c,g])=>{tot[c]=(tot[c]||0)+g*di.f;}); });}); }
   const groups={}; Object.entries(tot).forEach(([c,g])=>{if(g<1) return; const gr=ING[c].g; (groups[gr]=groups[gr]||[]).push([c,g]);});
   Object.values(groups).forEach(a=>a.sort((x,y)=>y[1]-x[1]));
   return groups;
@@ -1521,19 +1523,31 @@ function shopGroups(w,scope){
 function itemCost(c,g){ const p=(S.prices||{})[c]; if(!(p>0)) return null; if(c==='yumurta') return Math.ceil(g/55)/10*p; return g/1000*p; }
 const priceUnit=c=>c==='yumurta'?T('per10'):['sud','kefir'].includes(c)?T('perL'):T('perKg');
 const azn=v=>fmt1(Math.round(v*10)/10)+' ₼';
+// the shopping period: from today for one week by default; the person can set any dates (up to 31 days)
+const SHOP_MAX=31;
+function shopRange(){
+  const t=todayISO(), r=S.prefs.shop||{};
+  let a=r.from, b=r.to;
+  if(!a||!b||b<t){ a=t; b=addDays(t,6); }
+  if(b<a) b=a; if(diffDays(a,b)+1>SHOP_MAX) b=addDays(a,SHOP_MAX-1);
+  return {a,b,n:diffDays(a,b)+1};
+}
 function renderShop(){
-  const t=todayISO(), nW=Math.ceil(planLen()/7), i=Math.max(0,Math.min(planLen()-1,dayIdx(t)));
-  if(shopWeek===null||shopWeek>=nW) shopWeek=Math.floor(i/7);
-  const base=0, wStart=addDays(S.prefs.start,shopWeek*7);
-  const key=wStart+'|'+shopScope; const bought=S.bought[key]||{}, pan=S.pantry||{};
-  const raw=shopGroups(wStart,shopScope), groups={}, home=[];
+  const t=todayISO(), R=shopRange(), wStart=R.a, mEnd=addDays(S.prefs.start,planLen()-1);
+  const key=R.a+'_'+R.b+'|'+shopScope; const bought=S.bought[key]||{}, pan=S.pantry||{};
+  const raw=shopGroups(R.a,shopScope,R.n), groups={}, home=[];
   Object.entries(raw).forEach(([g,list])=>list.forEach(it=>{ if(pan[it[0]]) home.push(it); else (groups[g]=groups[g]||[]).push(it); }));
   const all=Object.values(groups).flat(), got=all.filter(([c])=>bought[c]).length;
   let total=0, priced=0; all.forEach(([c,g])=>{const v=itemCost(c,g); if(v!=null){ total+=v; priced++; }});
   const li=(c,gr)=>{const v=itemCost(c,gr); return `<li class="${bought[c]?'got':''}"><label class="row" style="flex:1;cursor:pointer"><input type="checkbox" data-c="${c}" ${bought[c]?'checked':''}><span>${esc(inm(c))}</span></label><span class="row" style="gap:4px"><button class="lnk num" data-pr="${c}" title="${esc(T('price'))}">${amount(c,gr)}${v!=null?' · '+azn(v):''}</button><button class="ic" data-home="${c}" aria-label="${esc(T('atHome'))}" title="${esc(T('atHome'))}">🏠</button></span></li>`;};
   view.innerHTML=`<div class="stack">
     <h2>${esc(T('shopTitle'))}</h2>
-    <div class="chips">${Array.from({length:nW},(_,w)=>w).map(w=>`<button class="chip" data-w="${w}" aria-pressed="${w===shopWeek}">${dShort(addDays(S.prefs.start,w*7))} – ${dShort(addDays(S.prefs.start,Math.min(planLen()-1,w*7+6)))}</button>`).join('')}</div>
+    <div class="card stack">
+      <div class="grid2"><div><label class="f" for="shf">${esc(T('rangeFrom'))}</label><input id="shf" type="date" value="${R.a}"></div><div><label class="f" for="sht">${esc(T('rangeTo'))}</label><input id="sht" type="date" value="${R.b}" min="${R.a}" max="${addDays(R.a,SHOP_MAX-1)}"></div></div>
+      <div class="chips">${[[7,T('w1')],[14,T('w2')],[30,T('m1')]].map(([n,l])=>`<button class="chip" data-sn="${n}" aria-pressed="${R.n===n}">${esc(l)}</button>`).join('')}</div>
+      <div class="small muted">${dShort(R.a)} – ${dShort(R.b)} · ${esc(T('nDays',{n:R.n}))}</div>
+      ${R.b>mEnd?`<div class="tipbox small">${esc(T('shopOut',{d:dShort(mEnd)}))}</div>`:''}
+    </div>
     ${S.members.length>1?`<div class="chips"><button class="chip" data-s="fam" aria-pressed="${shopScope==='fam'}">${esc(T('wholeFamily',{n:S.members.length}))}</button><button class="chip" data-s="me" aria-pressed="${shopScope==='me'}">${esc(T('onlyX',{n:member().name}))}</button></div>`:''}
     ${priced?`<div class="tipbox small">${esc(T('costTotal',{s:azn(total),n:priced,m:all.length}))}</div>`:''}
     <div class="row between"><span class="small muted">${esc(T('bought',{a:got,b:all.length}))}</span><span class="row" style="gap:6px"><button class="btn plain sm" id="chkall">${esc(T(all.length&&got===all.length?'uncheckAll':'checkAll'))}</button><button class="btn plain sm" id="copy">${esc(T('copy'))}</button></span></div>
@@ -1541,7 +1555,10 @@ function renderShop(){
     ${home.length?`<details class="card"><summary>🏠 ${esc(T('homeList',{n:home.length}))}</summary><ul class="list">${home.map(([c,gr])=>`<li><span>${esc(inm(c))}</span><span class="row" style="gap:4px"><span class="small muted num">${amount(c,gr)}</span><button class="btn plain sm" data-unhome="${c}">${esc(T('notAtHome'))}</button></span></li>`).join('')}</ul></details>`:''}
     <p class="tiny muted">${esc(T('shopNote'))} ${esc(T('shopNote2'))}</p>
   </div>`;
-  view.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{shopWeek=+b.dataset.w; renderShop();});
+  const setR=(a,b)=>{ if(!a) return; if(!b||b<a) b=a; if(diffDays(a,b)+1>SHOP_MAX){ b=addDays(a,SHOP_MAX-1); toast(T('shopMax',{n:SHOP_MAX})); } S.prefs.shop={from:a,to:b}; save(); renderShop(); };
+  document.getElementById('shf').onchange=e=>{ const a=e.target.value, n=R.n; setR(a,addDays(a,n-1)); };
+  document.getElementById('sht').onchange=e=>setR(R.a,e.target.value);
+  view.querySelectorAll('[data-sn]').forEach(b=>b.onclick=()=>setR(R.a,addDays(R.a,+b.dataset.sn-1)));
   view.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{shopScope=b.dataset.s; renderShop();});
   view.querySelectorAll('[data-c]').forEach(cb=>cb.onchange=()=>{S.bought[key]=S.bought[key]||{}; S.bought[key][cb.dataset.c]=cb.checked; save(); renderShop();});
   const keep=fn=>{ const sc=view.scrollTop; fn(); save(); renderShop(); view.scrollTop=sc; };
@@ -1555,7 +1572,7 @@ function renderShop(){
       sb.querySelector('#prs').onclick=()=>{ const v=+String(sb.querySelector('#prv').value).replace(',','.'); S.prices=S.prices||{}; if(v>0) S.prices[c]=v; else delete S.prices[c]; save(); closeSheet(w); };
     }); });
   document.getElementById('copy').onclick=async()=>{
-    const txt=T('shopFor',{a:dShort(wStart),b:dShort(addDays(wStart,6))})+'\n'+ORDER.filter(g=>groups[g]).map(g=>`\n${grn(g)}:\n`+groups[g].map(([c,gr])=>`${bought[c]?'✓':'-'} ${inm(c)}: ${amount(c,gr)}`).join('\n')).join('\n')+(priced?'\n\n'+T('costTotal',{s:azn(total),n:priced,m:all.length}):'');
+    const txt=T('shopFor',{a:dShort(R.a),b:dShort(R.b)})+'\n'+ORDER.filter(g=>groups[g]).map(g=>`\n${grn(g)}:\n`+groups[g].map(([c,gr])=>`${bought[c]?'✓':'-'} ${inm(c)}: ${amount(c,gr)}`).join('\n')).join('\n')+(priced?'\n\n'+T('costTotal',{s:azn(total),n:priced,m:all.length}):'');
     try{await navigator.clipboard.writeText(txt); toast(T('copied'));}catch(e){toast(T('copyFail'));}
   };
 }
