@@ -48,7 +48,7 @@ jobs:
           npx cap add android
           npx capacitor-assets generate --android --iconBackgroundColor '#a3263b' --iconBackgroundColorDark '#a3263b' --splashBackgroundColor '#a3263b' --splashBackgroundColorDark '#a3263b'
           npx cap sync android
-          cp native/MainActivity.java android/app/src/main/java/az/sufre/app/MainActivity.java
+          python3 native/patch_android.py
           printf '\nsocialLogin.facebook.include=false\n' >> android/gradle.properties
 
       - name: APK yığ
