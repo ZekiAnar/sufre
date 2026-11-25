@@ -1,6 +1,6 @@
 # Süfrə — ailə arıqlama menyusu
 
-Şəxsi və ailəvi arıqlama menyusu: 8 mətbəx (Azərbaycan, Türk, Gürcü, İtalyan, Yunan, Çin, Hind, Meksika), 100-dən çox resept, tarixli 28 günlük menyu, hər gün üçün mətbəx seçimi, ailə porsiyaları, alış-veriş siyahısı, su və çəki izləmə.
+Şəxsi və ailəvi arıqlama menyusu: 8 mətbəx (Azərbaycan, Türk, Gürcü, İtalyan, Yunan, Çin, Hind, Meksika), 100-dən çox resept, tarixli 28 günlük menyu, hər gün üçün mətbəx seçimi, ailə porsiyaları, alış-veriş siyahısı, su və çəki izləmə, şəkilli məşq planı (həftədə 3 gün, 13 həftəlik mərhələlər, avtomatik çəki tövsiyəsi və məşqdə yandırılan kalorinin günün hədəfinə əlavəsi).
 
 ## Quraşdırma
 

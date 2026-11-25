@@ -57,7 +57,7 @@ header.bar .brand{line-height:1.3;font-family:var(--display);font-weight:700;fon
 .who button{flex:none;max-width:9em;overflow:hidden;text-overflow:ellipsis;line-height:1.3;box-sizing:border-box;min-height:34px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;white-space:nowrap;cursor:pointer}
 .who button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 28px}
-nav.tabs{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);background:var(--surface);padding-bottom:var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))}
+nav.tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid var(--line);background:var(--surface);padding-bottom:var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))}
 nav.tabs button{border:0;background:none;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;font-weight:600;color:var(--muted);cursor:pointer}
 nav.tabs button svg{width:22px;height:22px}
 nav.tabs button[aria-current="page"]{color:var(--accent)}
@@ -213,6 +213,180 @@ details summary{cursor:pointer;font-weight:600}
 .cookl li{font-size:1.05rem}
 .famcode{font-size:2rem;font-weight:800;letter-spacing:.18em;text-align:center;font-variant-numeric:tabular-nums;color:var(--accent);padding:6px 0}
 .water-toast{bottom:auto;top:calc(70px + var(--safe-area-inset-top, env(safe-area-inset-top, 0px)));text-align:center;padding:12px 16px;min-width:260px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+/* ===== Məşq (gym) ===== */
+:root{--mb:#ece7e0;--mi:#d8d0c5;--ms:#fbfaf8;--gy-a:var(--accent);--gy-b:var(--sky)}
+:root[data-theme="dark"]{--mb:#262a30;--mi:#3a4049;--ms:#1e2125}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--mb:#262a30;--mi:#3a4049;--ms:#1e2125}}
+.gy{display:flex;flex-direction:column;gap:14px}
+.gy-hero{position:relative;overflow:hidden;border-radius:22px;padding:20px 18px 18px;color:#fff;background:#17191d}
+.gy-hero::before{content:"";position:absolute;inset:auto -30% -55% auto;width:90%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--hc,var(--accent)) 70%,transparent),transparent 68%);opacity:.75;pointer-events:none}
+.gy-hero>*{position:relative}
+.gy-hero .k{font-size:.8rem;font-weight:600;opacity:.75;letter-spacing:.01em}
+.gy-hero h2{font-family:var(--display);font-size:1.9rem;line-height:1.1;margin:6px 0 4px;color:#fff}
+.gy-hero p{margin:0;opacity:.85;font-size:.92rem}
+.gy-hero .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.gy-btn{border:0;border-radius:14px;padding:12px 18px;min-height:46px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none}
+.gy-btn.w{background:#fff;color:#17191d}
+.gy-btn.g{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.gy-btn.t{background:color-mix(in srgb,#fff 14%,transparent);color:#fff}
+.gy-btn:disabled{opacity:.45}
+.gy-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
+.gy-stats div{background:color-mix(in srgb,#fff 9%,transparent);border-radius:14px;padding:10px 12px}
+.gy-stats b{display:block;font-size:1.25rem;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.gy-stats span{font-size:.72rem;opacity:.75}
+.gy-seg{display:grid;grid-template-columns:repeat(36,minmax(0,1fr));gap:3px;margin-top:14px}
+.gy-seg i{height:7px;border-radius:4px;background:color-mix(in srgb,#fff 16%,transparent)}
+.gy-seg i.A{background:var(--gy-a)}.gy-seg i.B{background:var(--gy-b)}.gy-seg i.n{background:#fff}
+.gy-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.gy-day{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:8px 2px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:.72rem;color:var(--muted);cursor:default}
+.gy-day.tr{cursor:pointer;color:var(--ink)}
+.gy-day.now{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.gy-day b{font-size:.95rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.gy-pl{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.85rem;box-shadow:inset 0 0 0 3px color-mix(in srgb,#000 16%,transparent),inset 0 0 0 7px color-mix(in srgb,#fff 16%,transparent)}
+.gy-pl.A{background:var(--gy-a)}.gy-pl.B{background:var(--gy-b)}.gy-pl.r{background:var(--line);box-shadow:none;width:8px;height:8px;margin:10px 0}
+.gy-pl.ok{position:relative}.gy-pl.ok::after{content:"✓";position:absolute;right:-6px;top:-6px;width:16px;height:16px;border-radius:50%;background:var(--good);color:#fff;font-size:.62rem;display:grid;place-items:center;box-shadow:0 0 0 2px var(--surface)}
+.gy-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:4px 2px -4px}
+.gy-h h3{font-size:1.1rem}
+.gy-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.gy-wk{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:8px;padding:16px 16px 6px;align-items:center}
+.gy-wk h3{font-size:1.35rem;display:flex;align-items:center;gap:10px}
+.gy-wk p{margin:6px 0 0;font-size:.85rem;color:var(--muted)}
+.gy-thumbs{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 16px 4px;scrollbar-width:none}
+.gy-thumbs::-webkit-scrollbar{display:none}
+.gy-thumb{flex:0 0 132px;scroll-snap-align:start;border:0;background:none;padding:0;text-align:left;cursor:pointer;color:inherit}
+.gy-thumb img{width:132px;height:92px;object-fit:cover;border-radius:12px;display:block;background:var(--line)}
+.gy-thumb span{display:block;font-size:.78rem;font-weight:600;line-height:1.25;margin-top:6px}
+.gy-thumb em{display:block;font-style:normal;font-size:.7rem;color:var(--muted)}
+.gy-card .foot{display:flex;gap:8px;padding:10px 16px 16px}
+.gy-card .foot .gy-btn{flex:1}
+.bmap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
+.bmap figure{margin:0;text-align:center}
+.bmap svg{width:100%;height:auto;display:block}
+.bmap figcaption{font-size:.66rem;color:var(--muted);margin-top:2px}
+.gy-cal{display:grid;grid-template-columns:auto repeat(7,minmax(0,1fr));gap:3px;font-size:.7rem;padding:4px 12px 14px}
+.gy-cal .hd{text-align:center;color:var(--muted);font-weight:600;padding:4px 0}
+.gy-cal .w{color:var(--muted);font-weight:600;padding:0 6px 0 2px;align-self:center;white-space:nowrap}
+.gy-cal .c{border-radius:9px;background:var(--bg);min-height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-variant-numeric:tabular-nums}
+.gy-cal .c .gy-pl{width:20px;height:20px;font-size:.66rem;box-shadow:none}
+.gy-cal .c.now{outline:2px solid var(--ink);outline-offset:-2px}
+.gy-cal .c.ok{background:color-mix(in srgb,var(--good) 18%,var(--surface))}
+.gy-ph{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
+details.gy-card>summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+details.gy-card>summary::-webkit-details-marker{display:none}
+details.gy-card>summary::after{content:"›";font-size:1.3rem;color:var(--muted);transition:transform .2s}
+details.gy-card[open]>summary::after{transform:rotate(90deg)}
+.gy-note{font-size:.78rem;color:var(--muted);line-height:1.45}
+.gy-note a{color:inherit}
+.gy-intro .bl{display:grid;gap:10px;margin:14px 0}
+.gy-intro .bl div{display:flex;gap:10px;align-items:flex-start;font-size:.92rem}
+.gy-intro .bl i{flex:none;width:26px;height:26px;border-radius:9px;background:color-mix(in srgb,#fff 14%,transparent);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.8rem}
+.gy-intro input{background:#fff;color:#17191d;border:0;border-radius:12px;padding:10px 12px;min-height:46px;font-size:16px}
+/* session */
+.gs{display:flex;flex-direction:column;gap:14px}
+.sheet .sb:has(> .gs){padding-bottom:0}
+.gs-prog{display:grid;gap:3px;margin:-2px 0 2px}
+.gs-prog i{height:4px;border-radius:3px;background:var(--line)}
+.gs-prog i.on{background:var(--hc,var(--accent))}
+.gs-shots{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;border-radius:20px;scrollbar-width:none}
+.gs-shots::-webkit-scrollbar{display:none}
+.gs-shots figure{flex:0 0 100%;scroll-snap-align:center;margin:0;position:relative}
+.gs-shots img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:20px;display:block;background:var(--line)}
+.gs-shots figcaption{position:absolute;left:10px;top:10px;background:rgba(15,17,20,.72);color:#fff;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+.gs-dots{display:flex;justify-content:center;gap:6px;margin-top:-4px}
+.gs-dots button{width:30px;height:6px;border-radius:4px;border:0;background:var(--line);padding:0;cursor:pointer}
+.gs-dots button.on{background:var(--ink)}
+.gs-title h2{font-size:1.55rem;line-height:1.15}
+.gs-title p{margin:4px 0 0;color:var(--muted);font-size:.85rem}
+.gs-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gs-chips div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 12px}
+.gs-chips b{display:block;font-size:1.05rem;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.gs-chips span{font-size:.72rem;color:var(--muted)}
+.gs-mus{display:grid;grid-template-columns:132px minmax(0,1fr);gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px 14px}
+.gs-mus h3{font-size:1rem;margin-bottom:8px}
+.mt{display:flex;align-items:center;gap:8px;font-size:.85rem;margin:5px 0}
+.mt i{flex:none;width:12px;height:12px;border-radius:4px}
+.mt b{font-weight:700}
+.mt small{color:var(--muted);font-size:.72rem}
+.gs-log{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px 14px}
+.gs-log .hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.gs-log .hd span{font-size:.75rem;color:var(--muted)}
+.gs-set{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,1fr) 46px;gap:8px;align-items:center;padding:6px 0;border-top:1px dashed var(--line)}
+.gs-set:first-of-type{border-top:0}
+.gs-set .n{font-weight:800;color:var(--muted);text-align:center}
+.gs-set label{display:flex;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:0 10px;min-height:46px}
+.gs-set input{width:100%;border:0;background:none;font-size:16px;font-weight:700;padding:8px 0;min-width:0;outline:none;font-variant-numeric:tabular-nums}
+.gs-set label span{font-size:.72rem;color:var(--muted);margin-left:4px}
+.gs-set label:focus-within{border-color:var(--ink)}
+.gs-set .ck{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:var(--bg);cursor:pointer;display:grid;place-items:center;color:var(--muted)}
+.gs-set .ck[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.gs-set .ck svg{width:20px;height:20px}
+.gs-prev{font-size:.78rem;color:var(--muted);margin:2px 0 4px}
+.gs-acc{background:var(--surface);border:1px solid var(--line);border-radius:18px}
+.gs-acc summary{list-style:none;cursor:pointer;padding:13px 14px;font-weight:700;display:flex;justify-content:space-between}
+.gs-acc summary::-webkit-details-marker{display:none}
+.gs-acc summary::after{content:"+";color:var(--muted);font-size:1.2rem;line-height:1}
+.gs-acc[open] summary::after{content:"−"}
+.gs-acc>div{padding:0 14px 14px;font-size:.92rem}
+.gs-acc ol,.gs-acc ul{margin:0;padding-left:20px}
+.gs-acc li{margin:5px 0}
+.gs-acc ul.er li::marker{content:"✕  ";color:var(--accent)}
+.gs-nav{position:sticky;bottom:0;margin:0 -16px;padding:10px 16px calc(12px + var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)));background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--line);display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.gs-nav .c{text-align:center;font-size:.8rem;color:var(--muted);font-weight:600}
+.gs-nav .c b{display:block;color:var(--ink);font-size:1rem}
+.gs-opt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.gs-opt button{border:2px solid var(--line);background:var(--surface);border-radius:16px;padding:0 0 8px;cursor:pointer;overflow:hidden;text-align:center;font-weight:700;font-size:.8rem}
+.gs-opt button img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;margin-bottom:6px}
+.gs-opt button[aria-pressed="true"]{border-color:var(--hc,var(--accent))}
+.gs-step{display:flex;align-items:center;gap:10px}
+.gs-step button{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:1.3rem;font-weight:700;cursor:pointer}
+.gs-step b{font-size:1.6rem;min-width:3.2em;text-align:center;font-variant-numeric:tabular-nums}
+.gs-big{border-radius:22px;padding:18px;background:var(--surface);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.gs-big b{font-size:2rem;font-family:var(--display);line-height:1;color:var(--hc,var(--accent));font-variant-numeric:tabular-nums}
+.gs-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 14px;cursor:pointer;font-weight:600;width:100%;text-align:left}
+.gs-toggle .sw{flex:none;width:48px;height:28px;border-radius:99px;background:var(--line);position:relative;transition:background .2s}
+.gs-toggle .sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.gs-toggle[aria-pressed="true"] .sw{background:var(--good)}
+.gs-toggle[aria-pressed="true"] .sw::after{transform:translateX(20px)}
+.gs-sum{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.gs-sum div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+.gs-sum b{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.gs-sum span{font-size:.75rem;color:var(--muted)}
+.gs-list li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.gs-list{list-style:none;margin:0;padding:0}
+.td-wo{display:flex;gap:12px;align-items:center;border-radius:18px;padding:12px 14px;color:#fff;background:#17191d;cursor:pointer;border:0;width:100%;text-align:left}
+.td-wo .gy-pl{flex:none;width:40px;height:40px;font-size:1.05rem}
+.td-wo b{display:block;font-size:1rem}
+.td-wo span{font-size:.8rem;opacity:.8}
+.td-wo em{margin-left:auto;font-style:normal;font-weight:800;white-space:nowrap}
+@media (max-width:380px){.gy-wk{grid-template-columns:minmax(0,1fr) 96px}.gs-mus{grid-template-columns:104px minmax(0,1fr)}.gy-hero h2{font-size:1.6rem}}
+@media (prefers-reduced-motion:no-preference){.gs-shots{scroll-behavior:smooth}}
+.gs-adv{display:flex;gap:12px;align-items:center;justify-content:space-between;border-radius:18px;padding:12px 14px;background:var(--surface);border:1px solid var(--line)}
+.gs-adv>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.gs-adv b{font-size:1rem}
+.gs-adv span{font-size:.85rem;color:var(--muted)}
+.gs-adv.up{background:color-mix(in srgb,var(--good) 14%,var(--surface));border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
+.gs-adv.up b{color:var(--good)}
+.gs-adv.down,.gs-adv.stall{background:color-mix(in srgb,var(--warn) 14%,var(--surface));border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}
+.gs-adv.dl{background:color-mix(in srgb,var(--herb) 12%,var(--surface))}
+.gs-adv .gy-btn{flex:none;min-height:42px;padding:8px 14px}
+.gy-thumb .im{position:relative;display:block}
+.gy-thumb .im .up{position:absolute;left:6px;top:6px;background:var(--good);color:#fff;font-style:normal;font-size:.68rem;font-weight:800;padding:2px 7px;border-radius:999px}
+.gy-sw{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.gy-sw img{width:56px;height:42px;object-fit:cover;border-radius:10px}
+.gy-sw div{display:flex;flex-direction:column;line-height:1.3}
+.gy-sw b{font-size:.92rem}
+.gy-sw .chip[aria-pressed="false"]{background:color-mix(in srgb,var(--good) 16%,var(--surface));border-color:color-mix(in srgb,var(--good) 40%,var(--line))}
+.gs-set .n small{display:block;font-size:.58rem;font-weight:700;color:var(--hc,var(--accent));line-height:1}
+.gs-set.xt label{border-style:dashed}
+.gs-more{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.gs-more .gy-btn{flex:1;min-height:44px;padding:8px 12px;font-size:.88rem}
+.gs-ask{margin-top:10px;border-radius:16px;padding:12px 14px;background:color-mix(in srgb,var(--hc,var(--accent)) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--hc,var(--accent)) 35%,var(--line));display:flex;flex-direction:column;gap:4px}
+.gs-ask span{font-size:.85rem;color:var(--muted)}
+.gs-ask .row{gap:8px;margin-top:6px}
+.gs-ask .gy-btn{flex:1;min-height:42px;padding:8px 12px}
+.gs-opttag{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;border:1px dashed var(--muted);color:var(--muted);margin-bottom:6px}
+.gy-thumb.op img{opacity:.85;outline:2px dashed var(--line);outline-offset:-2px}
+.gy-thumb .im .ot{position:absolute;left:6px;top:6px;background:rgba(15,17,20,.7);color:#fff;font-style:normal;font-size:.66rem;font-weight:700;padding:2px 7px;border-radius:999px}
 </style>
 </head>
 <body>
@@ -900,9 +1074,436 @@ function nextMeal(date,fast){
 }
 const waterGoal=m=>{ const ml=S.prefs.waterGoal>0?S.prefs.waterGoal:Math.round(m.w*30/250)*250+(has(m,'breast')?600:0)+(has(m,'gout')?300:0); return Math.min(16,Math.max(4,Math.round(ml/(S.prefs.glass||250)))); };
 
+/* ================= Məşq (gym plan) ================= */
+// 12-week, 3-day full-body plan (A/B alternating on days 1, 3, 5). Logged per member in S.log[id][date].wo.
+// Calories: net MET method, (MET−1) × kg × hours, values from the 2024 Adult Compendium of Physical Activities.
+const GW={
+az:{tab_gym:'Məşq',gy_opt:'İstəyə bağlı',gy_optT:'vaxtın yoxdursa, Növbəti ilə keç',gy_addSet:'Dəstə əlavə et',gy_delSet:'Son dəstəni sil',gy_extra:'əlavə',gy_askT:'Bir dəstə də əlavə edək?',gy_askS:'Bütün dəstələrdə {r} {u2} etdin — bu gün yaxşı gedir. Əlavə dəstə əzələyə daha çox stimul verir. Texnika pozulursa, etmə.',gy_yes:'Bəli, əlavə et',gy_no:'Yox, bəsdir',gy_block:'Mərhələ {n}',gy_wkB:'Mərhələ {b} · həftə {w}/13',gy_all:'Mərhələnin bütün həftələri',gy_newB:'Mərhələ {n}: yeni hərəkətlər',gy_newBsoon:'Gələn həftədən Mərhələ {n}: yeni hərəkətlər',gy_newBT:'Hər mərhələdə (13 həftə) bəzi hərəkətlər oxşar variantla əvəz olunur ki, əzələlər yeni stimul alsın. İstəmədiyini saxla.',gy_keep:'Köhnəni saxla',gy_swapOn:'Dəyişdirilir',gy_upT:'↑ Çəkini artır',gy_upS:'Keçən dəfə bütün dəstələrdə {r} {u2} etdin. Bu gün: {a} → {b} {u}',gy_repsT:'↑ Təkrarı artır',gy_repsS:'Keçən dəfə bütün dəstələrdə {r} {u2} etdin. Bu gün hər dəstədə {n} {u2} et.',gy_holdT:'Eyni çəki',gy_holdS:'Keçən dəfə: {s}. Bu gün eyni çəki ilə təkrarı artırmağa çalış.',gy_downT:'↓ Çəkini azalt',gy_downS:'Son iki məşqdə {lo} təkrara çatmadın. Bu gün: {a} → {b} {u}',gy_stallT:'Durğunluq',gy_stallS:'3 məşqdir irəliləyiş yoxdur. Yuxu və proteinə bax; bu gün çəkini azalt: {b} {u}, sonra yenidən artır.',gy_dlT:'Yüngül həftə',gy_dlS:'Bu həftə çəki 10% az: {b} {u}',gy_apply:'Tətbiq et',gy_sec:'san',gy_upBadge:'artır',gy_title:'12 həftəlik məşq planı',gy_intro:'Həftədə 3 gün, 45–60 dəqiqə: güc hərəkətləri, sonra yüngül kardio. Məşq etdiyin gün yandırılan kalori bu günün hədəfinə əlavə olunur.',
+gy_b1:'1-ci, 3-cü və 5-ci gün (B.e, Ç, C) — Məşq A və B növbə ilə',gy_b2:'Hər hərəkət ayrıca səhifədə: foto, işləyən əzələlər, addım-addım icra',gy_b3:'Etdiyin dəstə və kardio qeyd olunur, kalori hədəfi avtomatik artır',
+gy_start:'Başlama tarixi',gy_go:'Planı başlat',gy_for:'Plan {n} üçün',gy_week:'Həftə {n} / 12',gy_today:'Bu gün: Məşq {t}',gy_rest:'Bu gün istirahət',gy_notyet:'Plan {d} başlayır',gy_over:'12 həftə tamamlandı',
+gy_next:'Növbəti: Məşq {t}, {d}',gy_startW:'Məşq {t}-ya başla',gy_cont:'Davam et',gy_fdone:'Bu günkü məşq bitdi ✓',gy_done:'bitirilmiş məşq',gy_burn:'bu gün yandırıldı',gy_wk:'həftə',gy_thisweek:'Bu həftə',gy_wA:'Məşq A',gy_wB:'Məşq B',
+gy_wAsub:'Ayaq press, sinə, kürək, arxa bud, qarın',gy_wBsub:'Oturub-qalxma, çiyin, kürək, sağrı, qarın',gy_open:'Bax',gy_begin:'Başla',gy_settings:'Plan ayarları',gy_change:'Tarixi dəyiş',gy_stop:'Planı dayandır',gy_stopQ:'Məşq planı dayandırılsın? Qeydlər silinmir.',
+gy_how:'Kalori necə hesablanır',gy_howT:'Xalis MET üsulu: (MET − 1) × çəki (kq) × saat. Güc məşqi 3,5 MET (hər dəstə ≈ 2 dəq, istirahətlə), velotrenajor yüngül 4,0 / orta 6,0, ellips 5,0, meyilli yeriş 5,3 / 7,0 MET.',
+gy_src:'Mənbə: 2024 Adult Compendium of Physical Activities',gy_photos:'Fotolar: free-exercise-db (ictimai mülkiyyət)',
+gy_warm:'İsinmə',gy_cardio:'Kardio',gy_finish:'Nəticə',gy_sets:'dəstə × təkrar',gy_rir:'ehtiyat təkrar',gy_restS:'istirahət',gy_mus:'İşləyən əzələlər',gy_main:'əsas',gy_help:'köməkçi',
+gy_log:'Dəstələr',gy_logH:'çəki və təkrarı yaz, ✓ bas',gy_prevT:'Keçən dəfə: {s}',gy_kg:'kq',gy_reps:'təkrar',gy_tool:'Alət',gy_setup:'Qurmaq',gy_do:'İcra',gy_err:'Səhvlər',gy_tip:'Çəki',gy_video:'Videoda bax',
+gy_up:'Çəki bütün dəstələrdə {n} təkrara çatanda 2–5% artır.',gy_prev:'Əvvəlki',gy_nextB:'Növbəti',gy_fin:'Bitir',gy_of:'{a} / {b}',gy_shot1:'Başlanğıc',gy_shot2:'Son',
+gy_warmDone:'İsinməni etdim',gy_warmT:'Velotrenajor 5 dəqiqə: 2 dəq yüngül (səviyyə 2–4), sonra orta (4–6). Oturacağı elə qur ki, pedal aşağıda olanda diz bir az bükülü qalsın.',gy_mob:'Oynaq hərəkətləri — 2 dəq',
+gy_mobL:['Çiyin dövrəsi: geri 10, irəli 10 dəfə','Çanaq dövrəsi: hər tərəfə 8 dəfə','Divara dayanaraq dizi sinəyə çəkmə: hər ayaq 8 dəfə','Gövdəni sağa-sola döndərmə: 10 dəfə'],
+gy_warmSet:'İsinmə dəstəsi: birinci hərəkəti işlək çəkinin yarısı ilə 12 dəfə et. Bu dəstə sayılmır.',
+gy_pick:'Alət seç',gy_bike:'Velotrenajor',gy_ell:'Ellips',gy_tread:'Meyilli yeriş',gy_int:'Səviyyə',gy_light:'Yüngül',gy_mod:'Orta',gy_g15:'Meyil 1–5%',gy_g610:'Meyil 6–10%',gy_minT:'Müddət',gy_cDone:'Kardionu etdim',
+gy_cNote:'Danışa bilirsən, amma mahnı oxuya bilmirsən — temp düzgündür. İlk 3 ay qaçış və tullanma yoxdur.',gy_cool:'Soyuma: arxa bud, ön bud, sinə və kürək dartması, hər biri 20–30 san.',
+gy_estK:'təxmini yandırılan',gy_sumEx:'hərəkət',gy_sumSets:'dəstə',gy_sumMin:'dəqiqə',gy_sumK:'kkal yandırıldı',gy_sumT:'Bu günün kalori hədəfi {n} kkal artdı.',gy_sumNone:'Hələ heç nə qeyd olunmayıb. Dəstələri ✓ ilə işarələ.',gy_saved:'Məşq yadda saxlandı',
+gy_tdCard:'Məşq {t} · {n} hərəkət',gy_tdBurn:'Məşq: +{n} kkal',gy_tdGo:'Məşq {t} bu gün',gy_tdOpen:'Aç',gy_each:'hər tərəf',gy_note5:'Fotoda ştanqla; sən 1–2-ci həftə çəkisiz, sonra qarnın üstündə hantellə et.',gy_note1:'Fotoda girya ilə; sən hantellə və arxanda skamya ilə et.',
+gy_dn:['B.e','Ç.a','Ç','C.a','C','Ş','B'],gy_ph:['Uyğunlaşma','Əsas','Yüngül həftə','Güclənmə'],gy_phT:['2 dəstə, ehtiyat 3–4, kardio 10 dəq','3 dəstə, ehtiyat 2–3, kardio 15 dəq','2 dəstə, çəki 10% az, kardio 15 dəq','3–4 dəstə, ehtiyat 1–2, kardio 20 dəq'],
+gy_front:'Öndən',gy_back:'Arxadan',gy_min:'dəq',gy_s:'san'},
+ru:{tab_gym:'Зал',gy_opt:'По желанию',gy_optT:'нет времени — жми Далее',gy_addSet:'Добавить подход',gy_delSet:'Удалить последний',gy_extra:'доп.',gy_askT:'Добавим ещё подход?',gy_askS:'Во всех подходах {r} {u2} — сегодня хорошо идёт. Дополнительный подход даёт мышцам больше стимула. Если техника страдает — не надо.',gy_yes:'Да, добавить',gy_no:'Нет, хватит',gy_block:'Этап {n}',gy_wkB:'Этап {b} · неделя {w}/13',gy_all:'Все недели этапа',gy_newB:'Этап {n}: новые упражнения',gy_newBsoon:'Со следующей недели этап {n}: новые упражнения',gy_newBT:'На каждом этапе (13 недель) часть упражнений меняется на похожие, чтобы мышцы получили новый стимул. Ненужную замену можно отменить.',gy_keep:'Оставить старое',gy_swapOn:'Заменяется',gy_upT:'↑ Добавь вес',gy_upS:'В прошлый раз во всех подходах {r} {u2}. Сегодня: {a} → {b} {u}',gy_repsT:'↑ Больше повторов',gy_repsS:'В прошлый раз во всех подходах {r} {u2}. Сегодня по {n} {u2}.',gy_holdT:'Тот же вес',gy_holdS:'Прошлый раз: {s}. Сегодня с тем же весом попробуй больше повторов.',gy_downT:'↓ Сбавь вес',gy_downS:'Две тренировки подряд меньше {lo} повторов. Сегодня: {a} → {b} {u}',gy_stallT:'Застой',gy_stallS:'3 тренировки без прогресса. Проверь сон и белок; сегодня сбавь вес: {b} {u}, потом снова добавляй.',gy_dlT:'Лёгкая неделя',gy_dlS:'На этой неделе вес −10%: {b} {u}',gy_apply:'Применить',gy_sec:'с',gy_upBadge:'добавь',gy_title:'План тренировок на 12 недель',gy_intro:'3 дня в неделю по 45–60 минут: силовые упражнения, затем лёгкое кардио. В день тренировки сожжённые калории добавляются к цели дня.',
+gy_b1:'1-й, 3-й и 5-й день (Пн, Ср, Пт) — тренировки A и B по очереди',gy_b2:'Каждое упражнение на отдельной странице: фото, работающие мышцы, техника по шагам',gy_b3:'Подходы и кардио записываются, цель по калориям растёт автоматически',
+gy_start:'Дата начала',gy_go:'Начать план',gy_for:'План для {n}',gy_week:'Неделя {n} / 12',gy_today:'Сегодня: тренировка {t}',gy_rest:'Сегодня отдых',gy_notyet:'План начнётся {d}',gy_over:'12 недель пройдено',
+gy_next:'Следующая: тренировка {t}, {d}',gy_startW:'Начать тренировку {t}',gy_cont:'Продолжить',gy_fdone:'Тренировка сегодня завершена ✓',gy_done:'тренировок выполнено',gy_burn:'сожжено сегодня',gy_wk:'неделя',gy_thisweek:'Эта неделя',gy_wA:'Тренировка A',gy_wB:'Тренировка B',
+gy_wAsub:'Жим ногами, грудь, спина, бицепс бедра, пресс',gy_wBsub:'Присед, плечи, спина, ягодицы, пресс',gy_open:'Открыть',gy_begin:'Начать',gy_settings:'Настройки плана',gy_change:'Изменить дату',gy_stop:'Остановить план',gy_stopQ:'Остановить план тренировок? Записи не удаляются.',
+gy_how:'Как считаются калории',gy_howT:'Метод чистых MET: (MET − 1) × вес (кг) × часы. Силовая 3,5 MET (подход ≈ 2 мин с отдыхом), велотренажёр лёгко 4,0 / средне 6,0, эллипс 5,0, ходьба в горку 5,3 / 7,0 MET.',
+gy_src:'Источник: 2024 Adult Compendium of Physical Activities',gy_photos:'Фото: free-exercise-db (общественное достояние)',
+gy_warm:'Разминка',gy_cardio:'Кардио',gy_finish:'Итог',gy_sets:'подходы × повторы',gy_rir:'запас повторов',gy_restS:'отдых',gy_mus:'Работающие мышцы',gy_main:'основные',gy_help:'вспомогательные',
+gy_log:'Подходы',gy_logH:'запиши вес и повторы, нажми ✓',gy_prevT:'Прошлый раз: {s}',gy_kg:'кг',gy_reps:'повт.',gy_tool:'Тренажёр',gy_setup:'Настройка',gy_do:'Выполнение',gy_err:'Ошибки',gy_tip:'Вес',gy_video:'Смотреть видео',
+gy_up:'Когда во всех подходах выходит {n} повторов, добавь 2–5% веса.',gy_prev:'Назад',gy_nextB:'Далее',gy_fin:'Готово',gy_of:'{a} / {b}',gy_shot1:'Начало',gy_shot2:'Конец',
+gy_warmDone:'Разминка сделана',gy_warmT:'Велотренажёр 5 минут: 2 мин легко (уровень 2–4), затем средне (4–6). Сиденье так, чтобы в нижней точке колено было слегка согнуто.',gy_mob:'Суставная разминка — 2 мин',
+gy_mobL:['Вращения плечами: 10 назад, 10 вперёд','Вращения тазом: по 8 в каждую сторону','У стены подтягивать колено к груди: по 8','Повороты корпуса: 10 раз'],
+gy_warmSet:'Разминочный подход: первое упражнение с половиной рабочего веса, 12 раз. Этот подход не считается.',
+gy_pick:'Выбери тренажёр',gy_bike:'Велотренажёр',gy_ell:'Эллипс',gy_tread:'Ходьба в горку',gy_int:'Уровень',gy_light:'Лёгкий',gy_mod:'Средний',gy_g15:'Наклон 1–5%',gy_g610:'Наклон 6–10%',gy_minT:'Время',gy_cDone:'Кардио сделано',
+gy_cNote:'Можешь говорить, но не петь — темп правильный. Первые 3 месяца без бега и прыжков.',gy_cool:'Заминка: растяжка задней и передней поверхности бедра, груди и спины, по 20–30 сек.',
+gy_estK:'примерно сожжено',gy_sumEx:'упражнений',gy_sumSets:'подходов',gy_sumMin:'минут',gy_sumK:'ккал сожжено',gy_sumT:'Цель по калориям на сегодня выросла на {n} ккал.',gy_sumNone:'Пока ничего не записано. Отмечай подходы ✓.',gy_saved:'Тренировка сохранена',
+gy_tdCard:'Тренировка {t} · {n} упражнений',gy_tdBurn:'Тренировка: +{n} ккал',gy_tdGo:'Сегодня тренировка {t}',gy_tdOpen:'Открыть',gy_each:'на сторону',gy_note5:'На фото со штангой; ты 1–2 недели без веса, потом с гантелью на животе.',gy_note1:'На фото с гирей; ты с гантелью и скамьёй сзади.',
+gy_dn:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],gy_ph:['Адаптация','Основной','Лёгкая неделя','Усиление'],gy_phT:['2 подхода, запас 3–4, кардио 10 мин','3 подхода, запас 2–3, кардио 15 мин','2 подхода, вес −10%, кардио 15 мин','3–4 подхода, запас 1–2, кардио 20 мин'],
+gy_front:'Спереди',gy_back:'Сзади',gy_min:'мин',gy_s:'с'},
+en:{tab_gym:'Gym',gy_opt:'Optional',gy_optT:'short on time? tap Next to skip',gy_addSet:'Add a set',gy_delSet:'Remove last set',gy_extra:'extra',gy_askT:'Add one more set?',gy_askS:'Every set reached {r} {u2} — today is going well. An extra set gives your muscles more stimulus. Skip it if your form slips.',gy_yes:'Yes, add it',gy_no:'No, done',gy_block:'Block {n}',gy_wkB:'Block {b} · week {w}/13',gy_all:'All weeks of this block',gy_newB:'Block {n}: new exercises',gy_newBsoon:'From next week, block {n}: new exercises',gy_newBT:'Each block (13 weeks) swaps a few exercises for close variations so your muscles get a new stimulus. Keep any you prefer.',gy_keep:'Keep the old one',gy_swapOn:'Swapping',gy_upT:'↑ Add weight',gy_upS:'Last time every set reached {r} {u2}. Today: {a} → {b} {u}',gy_repsT:'↑ Add reps',gy_repsS:'Last time every set reached {r} {u2}. Today aim for {n} {u2} each.',gy_holdT:'Same weight',gy_holdS:'Last time: {s}. Today keep the weight and try for more reps.',gy_downT:'↓ Lower the weight',gy_downS:'Two sessions in a row under {lo} reps. Today: {a} → {b} {u}',gy_stallT:'Stalled',gy_stallS:'No progress for 3 sessions. Check sleep and protein; today drop to {b} {u}, then build up again.',gy_dlT:'Easy week',gy_dlS:'This week 10% lighter: {b} {u}',gy_apply:'Apply',gy_sec:'s',gy_upBadge:'up',gy_title:'12-week gym plan',gy_intro:'3 days a week, 45–60 minutes: strength exercises, then light cardio. On a training day the calories you burn are added to that day’s target.',
+gy_b1:'Days 1, 3 and 5 (Mon, Wed, Fri) — Workouts A and B alternate',gy_b2:'Each exercise on its own page: photos, muscles worked, step-by-step form',gy_b3:'Your sets and cardio are logged and the calorie target rises automatically',
+gy_start:'Start date',gy_go:'Start the plan',gy_for:'Plan for {n}',gy_week:'Week {n} / 12',gy_today:'Today: Workout {t}',gy_rest:'Rest day today',gy_notyet:'The plan starts {d}',gy_over:'All 12 weeks done',
+gy_next:'Next: Workout {t}, {d}',gy_startW:'Start Workout {t}',gy_cont:'Continue',gy_fdone:'Today’s workout done ✓',gy_done:'workouts done',gy_burn:'burned today',gy_wk:'week',gy_thisweek:'This week',gy_wA:'Workout A',gy_wB:'Workout B',
+gy_wAsub:'Leg press, chest, back, hamstrings, core',gy_wBsub:'Squat, shoulders, back, glutes, core',gy_open:'View',gy_begin:'Start',gy_settings:'Plan settings',gy_change:'Change date',gy_stop:'Stop the plan',gy_stopQ:'Stop the gym plan? Your logs are kept.',
+gy_how:'How calories are counted',gy_howT:'Net MET method: (MET − 1) × weight (kg) × hours. Strength training 3.5 MET (each set ≈ 2 min with rest), stationary bike light 4.0 / moderate 6.0, elliptical 5.0, incline walking 5.3 / 7.0 MET.',
+gy_src:'Source: 2024 Adult Compendium of Physical Activities',gy_photos:'Photos: free-exercise-db (public domain)',
+gy_warm:'Warm-up',gy_cardio:'Cardio',gy_finish:'Summary',gy_sets:'sets × reps',gy_rir:'reps in reserve',gy_restS:'rest',gy_mus:'Muscles worked',gy_main:'main',gy_help:'assisting',
+gy_log:'Sets',gy_logH:'enter weight and reps, tap ✓',gy_prevT:'Last time: {s}',gy_kg:'kg',gy_reps:'reps',gy_tool:'Equipment',gy_setup:'Setup',gy_do:'How to do it',gy_err:'Mistakes',gy_tip:'Weight',gy_video:'Watch a video',
+gy_up:'When every set reaches {n} reps, add 2–5% weight.',gy_prev:'Back',gy_nextB:'Next',gy_fin:'Finish',gy_of:'{a} of {b}',gy_shot1:'Start',gy_shot2:'End',
+gy_warmDone:'Warm-up done',gy_warmT:'Stationary bike 5 minutes: 2 min easy (level 2–4), then moderate (4–6). Set the seat so the knee stays slightly bent at the bottom.',gy_mob:'Joint mobility — 2 min',
+gy_mobL:['Shoulder circles: 10 back, 10 forward','Hip circles: 8 each way','Knee to chest against a wall: 8 each leg','Trunk rotations: 10'],
+gy_warmSet:'Warm-up set: first exercise at half your working weight, 12 reps. It does not count.',
+gy_pick:'Pick a machine',gy_bike:'Bike',gy_ell:'Elliptical',gy_tread:'Incline walk',gy_int:'Level',gy_light:'Light',gy_mod:'Moderate',gy_g15:'Incline 1–5%',gy_g610:'Incline 6–10%',gy_minT:'Duration',gy_cDone:'Cardio done',
+gy_cNote:'You can talk but not sing — that is the right pace. No running or jumping for the first 3 months.',gy_cool:'Cool-down: hamstring, quad, chest and back stretches, 20–30 s each.',
+gy_estK:'estimated burn',gy_sumEx:'exercises',gy_sumSets:'sets',gy_sumMin:'minutes',gy_sumK:'kcal burned',gy_sumT:'Today’s calorie target went up by {n} kcal.',gy_sumNone:'Nothing logged yet. Tick your sets with ✓.',gy_saved:'Workout saved',
+gy_tdCard:'Workout {t} · {n} exercises',gy_tdBurn:'Workout: +{n} kcal',gy_tdGo:'Workout {t} today',gy_tdOpen:'Open',gy_each:'each side',gy_note5:'Shown with a barbell; do it unloaded for weeks 1–2, then with a dumbbell on your hips.',gy_note1:'Shown with a kettlebell; use a dumbbell with a bench behind you.',
+gy_dn:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],gy_ph:['Adaptation','Main','Easy week','Build'],gy_phT:['2 sets, 3–4 in reserve, cardio 10 min','3 sets, 2–3 in reserve, cardio 15 min','2 sets, weight −10%, cardio 15 min','3–4 sets, 1–2 in reserve, cardio 20 min'],
+gy_front:'Front',gy_back:'Back',gy_min:'min',gy_s:'s'}};
+Object.keys(GW).forEach(l=>{ if(L[l]) Object.assign(L[l],GW[l]); });
+
+const GMN={az:{chest:'Sinə',shoulders:'Çiyin (deltaşəkilli)',biceps:'Biseps',triceps:'Triseps',forearms:'Bilək',abdominals:'Qarın',lats:'Enli kürək əzələsi','middle back':'Kürəyin ortası',
+'lower back':'Bel',glutes:'Sağrı',quadriceps:'Ön bud',hamstrings:'Arxa bud',calves:'Baldır'},
+ru:{chest:'Грудь',shoulders:'Плечи (дельты)',biceps:'Бицепс',triceps:'Трицепс',forearms:'Предплечья',abdominals:'Пресс',lats:'Широчайшие','middle back':'Середина спины','lower back':'Поясница',glutes:'Ягодицы',quadriceps:'Квадрицепс',hamstrings:'Бицепс бедра',calves:'Икры'},
+en:{chest:'Chest',shoulders:'Shoulders (delts)',biceps:'Biceps',triceps:'Triceps',forearms:'Forearms',abdominals:'Abs',lats:'Lats','middle back':'Middle back','lower back':'Lower back',glutes:'Glutes',quadriceps:'Quads',hamstrings:'Hamstrings',calves:'Calves'}};
+const gmn=k=>(GMN[LANG]||GMN.az)[k];
+
+// exercise text: [name, tool, setup[], do[], mistakes[], weight tip] per language
+const GX={
+a1:{r:'10–12',mp:['quadriceps'],ms:['glutes','hamstrings','calves'],q:'leg press proper form',sub:'Leg press · Жим ногами',
+az:['Ayaq press','Maili oturacaq, qarşıda böyük metal platforma, oturacağın yanında tutacaqlar.',['Söyənəcəyi orta bucaqda saxla.','Otur: bel və kürək söyənəcəyə yapışsın, yan tutacaqları tut.','Ayaqları platformanın ortasına, çiyin enində qoy; barmaqlar bir az çölə.','Platformanı bir az itələ və təhlükəsizlik kilidini aç.'],['Nəfəs al, platformanı 2–3 saniyəyə endir — dizlər təxminən 90°.','Nəfəsi ver, dabanla 1–2 saniyəyə yuxarı itələ.','Yuxarıda diz bir az bükülü qalır, dayanmadan davam et.','Sonda əvvəl kilidi bağla, sonra ayaqları götür.'],['Dizlərin içəri yığılması','Aşağıda çanağın oturacaqdan qopması','Yuxarıda dizin tam kilidlənməsi'],'İlk gün yüngül: 12 təkrar 10 ballıq şkalada 6 kimi olmalıdır.'],
+ru:['Жим ногами','Наклонное сиденье, большая платформа впереди, ручки по бокам.',['Спинку поставь под средним углом.','Сядь: поясница и спина прижаты, держись за ручки.','Стопы в центре платформы на ширине плеч, носки чуть врозь.','Чуть выжми платформу и сними стопор.'],['Вдох — опускай платформу 2–3 сек до угла в колене ≈ 90°.','Выдох — выжимай пятками 1–2 сек.','Вверху колено слегка согнуто, продолжай без паузы.','В конце сначала закрой стопор, потом убери ноги.'],['Колени сводятся внутрь','Таз отрывается от сиденья внизу','Колено полностью выпрямляется вверху'],'В первый день легко: 12 повторов на 6 из 10 по усилию.'],
+en:['Leg press','Reclined seat with a big metal platform in front and handles at the sides.',['Set the backrest to a middle angle.','Sit with your lower back and back flat on the pad, hold the handles.','Feet mid-platform, shoulder-width, toes slightly out.','Push the platform up a little and release the safety lock.'],['Breathe in and lower for 2–3 s until knees are about 90°.','Breathe out and push through your heels for 1–2 s.','Keep a slight bend at the top and go straight into the next rep.','Lock the safety before taking your feet off.'],['Knees caving in','Hips lifting off the seat at the bottom','Locking the knees at the top'],'Go light on day one: 12 reps should feel like 6 out of 10.']},
+a2:{r:'8–12',mp:['chest'],ms:['shoulders','triceps'],q:'machine chest press proper form',sub:'Chest press · Жим от груди',
+az:['Sinə press trenajoru','Şaquli oturacaq, sinə qarşısında iki tutacaq; tutacaqlar irəli itələnir.',['Oturacağı elə qur ki, tutacaqlar sinənin ortasına düşsün.','Kürəyi və başı söyənəcəyə yapışdır, ayaqlar yerdə.','Tutacaqları şaquli və ya üfüqi tut — hansı çiyinə rahatdırsa.'],['Nəfəsi ver, 1–2 saniyəyə irəli itələ.','Sonda qollar düz, dirsək kilidlənmir.','Nəfəs al, 2–3 saniyəyə geri gətir; plitkalar dəyməsin.'],['Çiyinləri qulaqlara qaldırmaq','Kürəyi söyənəcəkdən ayırmaq','Dirsəkləri çiyindən yuxarı açmaq'],'Alət məşğuldursa: skamyada hantel press.'],
+ru:['Жим от груди в тренажёре','Вертикальное сиденье, две ручки перед грудью, жмутся вперёд.',['Сиденье так, чтобы ручки были на середине груди.','Спина и голова прижаты, ноги на полу.','Хват вертикальный или горизонтальный — как удобнее плечам.'],['Выдох — жми вперёд 1–2 сек.','В конце руки прямые, локти не замыкай.','Вдох — возвращай 2–3 сек, плиты не стучат.'],['Поднимать плечи к ушам','Отрывать спину от спинки','Разводить локти выше плеч'],'Если тренажёр занят — жим гантелей лёжа.'],
+en:['Machine chest press','Upright seat with two handles in front of the chest that push forward.',['Set the seat so the handles line up with mid-chest.','Back and head on the pad, feet flat.','Use a neutral or flat grip — whichever suits your shoulders.'],['Breathe out and press forward for 1–2 s.','Arms straight at the end without locking the elbows.','Breathe in and return for 2–3 s without letting the plates touch.'],['Shrugging the shoulders','Lifting the back off the pad','Flaring elbows above shoulder level'],'If the machine is busy: dumbbell bench press.']},
+a3:{r:'10–12',mp:['lats'],ms:['middle back','biceps','shoulders'],q:'lat pulldown proper form',sub:'Lat pulldown · Тяга верхнего блока',
+az:['Yuxarı blokdan dartma','Oturacaq, diz yastığı və yuxarıdan trosla asılan uzun dəstək.',['Diz yastığını budlarına möhkəm oturacaq kimi qur.','Dəstəyi çiyindən bir az geniş tut, ovuclar irəli.','Dəstəyi tutaraq otur, dizləri yastığın altına sal.'],['Sinəni qabarda, 10–15° arxaya meyillət.','Nəfəsi ver, dəstəyi sinənin üst hissəsinə çək — dirsəklər aşağı.','Aşağıda 1 saniyə kürəkləri sıx.','Nəfəs al, 2–3 saniyəyə qollar düz olana qədər burax.'],['Bədəni yelləmək','Boyun arxasına çəkmək','Yalnız qollarla çəkmək'],'Son 2 təkrar çətin olmalıdır, amma yelləmədən.'],
+ru:['Тяга верхнего блока','Сиденье, валик для колен, длинная рукоять на тросе сверху.',['Валик плотно фиксирует бёдра.','Хват чуть шире плеч, ладони вперёд.','Сядь с рукоятью, колени под валик.'],['Грудь вперёд, наклон назад 10–15°.','Выдох — тяни к верху груди, локти вниз.','Внизу сведи лопатки на 1 сек.','Вдох — отпускай 2–3 сек до прямых рук.'],['Раскачиваться','Тянуть за голову','Тянуть только руками'],'Последние 2 повтора тяжёлые, но без раскачки.'],
+en:['Lat pulldown','Seat with a knee pad and a long bar hanging from a cable above.',['Set the pad so it pins your thighs.','Grip the bar a little wider than shoulders, palms forward.','Sit down holding the bar, knees under the pad.'],['Chest up, lean back 10–15°.','Breathe out and pull to your upper chest, elbows down.','Squeeze your shoulder blades for 1 s.','Breathe in and let it up for 2–3 s until arms are straight.'],['Swinging the body','Pulling behind the neck','Pulling only with the arms'],'The last 2 reps should be hard, without swinging.']},
+a4:{r:'10–12',mp:['hamstrings'],ms:['glutes','lower back'],q:'dumbbell romanian deadlift proper form',sub:'Romanian deadlift · Румынская тяга',
+az:['Hantellə rumın dartması','İki hantel. Güzgüyə yanı dur ki, belini görəsən.',['Hantelləri götürəndə dizləri bük, bel düz.','Ayaqlar çanaq enində, dizlər bir az bükülü.','Çiyinləri geri-aşağı çək, qarnı gərginləşdir.'],['Nəfəs al, çanağı geri ver — sanki arxadakı qapını bağlayırsan.','Hantellər budun üstündən sürüşüb enir, bel düz.','Arxa budda dartılma hiss edəndə dayan.','Nəfəsi ver, sağrını sıxıb dik qalx.'],['Beli dairələmək','Hantelləri bədəndən uzaqlaşdırmaq','Dizləri çox bükmək'],'İlk 2 həftə 8–12 kq. Beldə ağrı olarsa, gluteus körpüsü ilə əvəz et.'],
+ru:['Румынская тяга с гантелями','Две гантели. Встань боком к зеркалу, чтобы видеть спину.',['Бери гантели с согнутыми коленями и прямой спиной.','Стопы на ширине таза, колени чуть согнуты.','Плечи назад-вниз, пресс напряжён.'],['Вдох — отводи таз назад, будто закрываешь дверь ягодицами.','Гантели скользят по бёдрам вниз, спина прямая.','Остановись, когда тянет заднюю поверхность бедра.','Выдох — сжимая ягодицы, выпрямись.'],['Круглая спина','Гантели далеко от ног','Слишком сгибать колени'],'Первые 2 недели 8–12 кг. При боли в пояснице замени ягодичным мостиком.'],
+en:['Dumbbell Romanian deadlift','Two dumbbells. Stand side-on to a mirror to watch your back.',['Pick up the dumbbells with bent knees and a flat back.','Feet hip-width, knees softly bent.','Shoulders back and down, brace your core.'],['Breathe in and push your hips back as if closing a door behind you.','Dumbbells slide down your thighs, back flat.','Stop when you feel a strong hamstring stretch.','Breathe out, squeeze your glutes and stand tall.'],['Rounding the back','Letting the dumbbells drift away','Bending the knees too much'],'Weeks 1–2: 8–12 kg. If your lower back hurts, swap for a hip thrust.']},
+a5:{r:'10–12',mp:['middle back'],ms:['lats','biceps','shoulders'],q:'seated cable row proper form',sub:'Seated cable row · Тяга нижнего блока',
+az:['Oturaraq aşağı blok dartması','Yerə yaxın oturacaq, ayaq dayaqları, aşağıdan gələn trosda V-dəstək.',['V-dəstəyi trosa tax.','Otur, ayaqları dayaqlara qoy, dizlər bir az bükülü.','Dəstəyi tut, gövdəni şaquli et — bel düz, sinə açıq.'],['Nəfəsi ver: kürəkləri sıx, dəstəyi qarnın yuxarısına çək.','1 saniyə saxla.','Nəfəs al, 2–3 saniyəyə qolları irəli burax; gövdə yerində.','Sonda dizləri bükərək dəstəyi yerə qoy.'],['Gövdəni yelləmək','Çiyinləri qaldırmaq','Beli dairələmək'],'Gövdə demək olar şaquli qalmalıdır.'],
+ru:['Тяга нижнего блока сидя','Низкое сиденье, упоры для ног, V-рукоять на нижнем тросе.',['Пристегни V-рукоять.','Сядь, стопы на упоры, колени чуть согнуты.','Возьми рукоять, корпус вертикально, спина прямая.'],['Выдох — сведи лопатки и тяни к верху живота.','Задержи 1 сек.','Вдох — отпускай руки вперёд 2–3 сек, корпус на месте.','В конце согни колени и поставь рукоять.'],['Раскачивать корпус','Поднимать плечи','Круглая спина'],'Корпус остаётся почти вертикальным.'],
+en:['Seated cable row','Low seat, foot plates and a V-handle on a low cable.',['Clip the V-handle to the cable.','Sit with feet on the plates, knees slightly bent.','Hold the handle and sit tall — flat back, chest open.'],['Breathe out, squeeze your shoulder blades and pull to your upper stomach.','Hold 1 s.','Breathe in and let your arms go forward for 2–3 s, torso still.','Bend your knees to set the handle down.'],['Rocking the torso','Shrugging','Rounding the back'],'Keep your torso almost upright.']},
+a6:{r:'12–15',mp:['hamstrings'],ms:['calves'],q:'seated leg curl proper form',sub:'Seated leg curl · Сгибание ног',
+az:['Ayaq bükmə trenajoru','Oturacaq, bud yastığı və topuğun altında fırlanan yastıq.',['Dizin fırlanma nöqtəsi alətin oxu ilə bir xətdə olsun.','Aşağı yastığı topuğun bir az yuxarısına qoy.','Bud yastığını endir, budu möhkəm sıxsın.'],['Nəfəsi ver, dabanı 1–2 saniyəyə aşağı-geri çək — diz ≈ 90°.','1 saniyə arxa budu sıx.','Nəfəs al, 2–3 saniyəyə geri qaytar.'],['Çanağı qaldırmaq','Sıçrayışla çəkmək','Plitkaları dəydirmək'],'Yüngül-orta çəki.'],
+ru:['Сгибание ног сидя','Сиденье, валик на бёдра и валик под голенью.',['Ось колена напротив оси тренажёра.','Нижний валик чуть выше пятки.','Опусти валик на бёдра, чтобы фиксировал.'],['Выдох — тяни пятки вниз-назад 1–2 сек, колено ≈ 90°.','Сожми бицепс бедра 1 сек.','Вдох — возвращай 2–3 сек.'],['Поднимать таз','Рывки','Стук плит'],'Лёгкий-средний вес.'],
+en:['Seated leg curl','Seat with a thigh pad and a rotating pad under the lower leg.',['Line your knee up with the machine’s pivot.','Set the lower pad just above your heels.','Lower the thigh pad so it holds you firmly.'],['Breathe out and curl your heels down and back for 1–2 s to about 90°.','Squeeze your hamstrings for 1 s.','Breathe in and return for 2–3 s.'],['Lifting the hips','Jerking the weight','Letting the plates crash'],'Light to moderate weight.']},
+a7:{r:'8–10',each:1,mp:['abdominals'],ms:[],q:'dead bug exercise proper form',sub:'Dead bug · Мёртвый жук',
+az:['Dead bug (ölü böcək)','Yalnız idman döşəyi.',['Kürək üstə uzan.','Qolları tavana doğru qaldır.','Dizlər və omba 90° bükülü.','Belin altını yerə sıx.'],['Nəfəsi ver: sağ qolu başın arxasına, sol ayağı irəli yavaş uzat.','Bel yerdən qopmadan gedə bildiyin qədər.','Nəfəs al, qayıt.','Sonra sol qol və sağ ayaq — bu 1 təkrardır.'],['Belin yerdən qopması','Tələsmək','Nəfəsi saxlamaq'],'Çətin olsa, yalnız dabanı yerə toxundur.'],
+ru:['Мёртвый жук','Только коврик.',['Лёжа на спине.','Руки вверх к потолку.','Колени и таз под 90°.','Поясница прижата к полу.'],['Выдох — правую руку за голову, левую ногу вперёд, медленно.','Насколько можешь, не отрывая поясницу.','Вдох — вернись.','Затем левая рука и правая нога — это 1 повтор.'],['Поясница отрывается','Спешка','Задержка дыхания'],'Если тяжело — только касайся пола пяткой.'],
+en:['Dead bug','Just an exercise mat.',['Lie on your back.','Arms straight up to the ceiling.','Hips and knees at 90°.','Press your lower back into the floor.'],['Breathe out and slowly reach your right arm back and left leg out.','Go as far as you can without your back lifting.','Breathe in and return.','Then left arm and right leg — that is one rep.'],['Lower back lifting','Rushing','Holding your breath'],'If it is too hard, just tap your heel down.']},
+b1:{r:'8–12',mp:['quadriceps'],ms:['glutes','hamstrings','calves'],q:'goblet box squat proper form',sub:'Goblet box squat · Присед с гантелью',note:'gy_note1',
+az:['Skamyaya oturub-qalxma','Bir hantel və düz skamya.',['Skamyanı arxana qoy, bir addım irəli dur.','Ayaqlar çiyindən bir az geniş, barmaqlar azca çölə.','Hanteli şaquli tut, sinəyə sıx.'],['Nəfəs al, çanağı geri-aşağı apar — stula oturan kimi.','2–3 saniyəyə en, skamyaya yüngül toxun.','Nəfəsi ver, dabanla bas, qalx; sağrını sıx.'],['Dizlərin içəri yığılması','Dabanların qalxması','Çox irəli əyilmək'],'10–16 kq; əvvəlcə hantelsiz də olar.'],
+ru:['Присед с гантелью на скамью','Гантель и ровная скамья.',['Скамья сзади, шаг вперёд от неё.','Стопы чуть шире плеч, носки врозь.','Гантель вертикально у груди.'],['Вдох — таз назад-вниз, как на стул.','Опускайся 2–3 сек, слегка коснись скамьи.','Выдох — дави пятками, встань, сожми ягодицы.'],['Колени внутрь','Пятки отрываются','Сильный наклон вперёд'],'10–16 кг; можно начать без веса.'],
+en:['Goblet box squat','One dumbbell and a flat bench.',['Bench behind you, one step in front of it.','Feet a bit wider than shoulders, toes slightly out.','Hold the dumbbell upright against your chest.'],['Breathe in and sit your hips back and down as if onto a chair.','Lower for 2–3 s and lightly touch the bench.','Breathe out, drive through your heels and stand; squeeze your glutes.'],['Knees caving in','Heels lifting','Leaning too far forward'],'10–16 kg; bodyweight is fine to start.']},
+b2:{r:'8–12',mp:['chest'],ms:['shoulders','triceps'],q:'incline dumbbell press proper form',sub:'Incline dumbbell press · Жим на наклонной',
+az:['Meyilli skamyada hantel press','Bucağı dəyişilən skamya və iki hantel.',['Söyənəcəyi 30–45°-yə qaldır.','Hantelləri budlarının üstünə qoyub otur.','Uzanarkən dizlərlə hantelləri çiyin səviyyəsinə qaldır.'],['Hantellər çiyin yanında, dirsəklər 45–60° açıq.','Nəfəsi ver, 1–2 saniyəyə yuxarı itələ.','Nəfəs al, 2–3 saniyəyə endir.','Sonda hantelləri sinəyə gətirib otur, yana atma.'],['Dirsəkləri 90° açmaq','Beli qaldırmaq','Hantelləri vurmaq'],'Hər əldə 8–12 kq.'],
+ru:['Жим гантелей на наклонной','Регулируемая скамья и две гантели.',['Спинка 30–45°.','Сядь, гантели на бёдрах.','Ложась, подбрось гантели коленями к плечам.'],['Гантели у плеч, локти на 45–60°.','Выдох — жми вверх 1–2 сек.','Вдох — опускай 2–3 сек.','В конце гантели к груди и садись, не бросай в стороны.'],['Локти на 90°','Отрыв поясницы','Стук гантелей'],'8–12 кг в каждой руке.'],
+en:['Incline dumbbell press','Adjustable bench and two dumbbells.',['Set the backrest to 30–45°.','Sit with the dumbbells on your thighs.','Kick them up to shoulder level as you lie back.'],['Dumbbells by your shoulders, elbows 45–60° out.','Breathe out and press up for 1–2 s.','Breathe in and lower for 2–3 s.','Finish by bringing them to your chest and sitting up — don’t drop them sideways.'],['Elbows flared to 90°','Arching off the bench','Clanking the dumbbells'],'8–12 kg per hand.']},
+b3:{r:'10–12',each:1,mp:['middle back'],ms:['lats','biceps','shoulders'],q:'one arm dumbbell row proper form',sub:'One-arm dumbbell row · Тяга гантели',
+az:['Tək əllə hantel dartması','Düz skamya və bir hantel.',['Sol diz və sol ovuc skamyada, sağ ayaq yerdə.','Bel düz, döşəməyə paralel.','Sağ əllə hanteli tut, qol aşağı sallansın.'],['Nəfəsi ver, dirsəyi tavana çək; hantel ombaya gəlir.','1 saniyə kürəyi sıx.','Nəfəs al, 2–3 saniyəyə burax.','Təkrarları bitir, tərəfi dəyiş.'],['Gövdəni döndərmək','Silkələmək','Beli sallamaq'],'12–16 kq.'],
+ru:['Тяга гантели одной рукой','Ровная скамья и гантель.',['Левое колено и ладонь на скамье, правая нога на полу.','Спина ровная, параллельно полу.','Правой рукой возьми гантель, рука висит.'],['Выдох — тяни локоть к потолку, гантель к тазу.','Сожми спину 1 сек.','Вдох — опускай 2–3 сек.','Закончи повторы и смени сторону.'],['Скручивать корпус','Рывки','Провисание спины'],'12–16 кг.'],
+en:['One-arm dumbbell row','Flat bench and one dumbbell.',['Left knee and left hand on the bench, right foot on the floor.','Back flat, parallel to the floor.','Hold the dumbbell in your right hand, arm hanging.'],['Breathe out and drive your elbow to the ceiling; the dumbbell comes to your hip.','Squeeze your back for 1 s.','Breathe in and lower for 2–3 s.','Finish the reps, then switch sides.'],['Twisting the torso','Yanking the weight','Sagging back'],'12–16 kg.']},
+b4:{r:'8–12',mp:['shoulders'],ms:['triceps'],q:'machine shoulder press proper form',sub:'Shoulder press · Жим вверх',
+az:['Çiyin press trenajoru','Sinə pressinə oxşayır, tutacaqlar çiyin üstündədir və yuxarı itələnir.',['Oturacağı elə qur ki, tutacaqlar çənə səviyyəsində olsun.','Bel və kürək söyənəcəkdə.','Tutacaqları çiyindən bir az geniş tut.'],['Nəfəsi ver, 1–2 saniyəyə yuxarı itələ.','Yuxarıda dirsək kilidlənmir.','Nəfəs al, 2–3 saniyəyə endir.'],['Beli əymək','Çiyinləri qaldırmaq','Sıçrayışla itələmək'],'Çiyində kəskin ağrı olarsa, dayandır.'],
+ru:['Жим вверх в тренажёре','Похож на жим от груди, ручки над плечами, жмутся вверх.',['Сиденье так, чтобы ручки были на уровне подбородка.','Спина прижата.','Хват чуть шире плеч.'],['Выдох — жми вверх 1–2 сек.','Вверху локти не замыкай.','Вдох — опускай 2–3 сек.'],['Прогиб в пояснице','Плечи к ушам','Рывки'],'При острой боли в плече остановись.'],
+en:['Machine shoulder press','Like the chest press, but the handles sit above the shoulders and press up.',['Set the seat so the handles are at chin level.','Back flat on the pad.','Grip a little wider than shoulders.'],['Breathe out and press up for 1–2 s.','Don’t lock the elbows at the top.','Breathe in and lower for 2–3 s.'],['Arching the back','Shrugging','Jerking the weight'],'Stop if you feel sharp shoulder pain.']},
+b5:{r:'10–12',mp:['glutes'],ms:['hamstrings','calves'],q:'bench hip thrust beginner proper form',sub:'Hip thrust · Ягодичный мостик',note:'gy_note5',
+az:['Gluteus körpüsü','Düz skamya (divara dayalı), sonra hantel.',['Yerdə otur, kürəyin üst hissəsini skamyanın kənarına dayaq.','Ayaqlar çanaq enində, dizlər ≈ 90°.','Qollar skamyada və ya hantel qarnın üstündə.'],['Nəfəsi ver, dabanla bas, çanağı qaldır.','Yuxarıda çiyin, çanaq, diz bir xətdə; 1 saniyə sıx.','Nəfəs al, 2 saniyəyə endir, yerə oturma.'],['Beli çox əymək','Barmaqlarla itələmək','Dizlərin içəri yığılması'],'1–2-ci həftə çəkisiz, sonra 10–20 kq.'],
+ru:['Ягодичный мостик','Ровная скамья у стены, потом гантель.',['Сядь на пол, верх спины на край скамьи.','Стопы на ширине таза, колени ≈ 90°.','Руки на скамье или гантель на животе.'],['Выдох — дави пятками, поднимай таз.','Вверху плечи, таз и колени на одной линии; сожми 1 сек.','Вдох — опускай 2 сек, не садясь на пол.'],['Сильный прогиб','Толчок носками','Колени внутрь'],'1–2 недели без веса, потом 10–20 кг.'],
+en:['Hip thrust','Flat bench against a wall, later a dumbbell.',['Sit on the floor with your upper back on the edge of the bench.','Feet hip-width, knees about 90°.','Arms on the bench, or a dumbbell on your hips.'],['Breathe out, push through your heels and lift your hips.','At the top shoulders, hips and knees in line; squeeze 1 s.','Breathe in and lower for 2 s without sitting down.'],['Over-arching','Pushing through the toes','Knees caving in'],'Weeks 1–2 unloaded, then 10–20 kg.']},
+b6:{r:'12–15',mp:['quadriceps'],ms:[],q:'leg extension machine proper form',sub:'Leg extension · Разгибание ног',
+az:['Ayaq açma trenajoru','Oturacaq və topuğun önünə düşən yastıqlı rıçaq.',['Dizin arxası oturacağın kənarına toxunsun, diz alətin oxu ilə bir xətdə.','Yastığı ayaqqabının üstünə yerləşdir.','Yan tutacaqları tut.'],['Nəfəsi ver, 1–2 saniyəyə ayağı düz qaldır.','1 saniyə ön budu sıx.','Nəfəs al, 2–3 saniyəyə endir.'],['Sıçrayışla atmaq','Çanağı qaldırmaq','Plitkaları dəydirmək'],'Yüngül-orta çəki. Dizdə ağrı olarsa, çıxar.'],
+ru:['Разгибание ног сидя','Сиденье и рычаг с валиком перед голеностопом.',['Подколенная ямка у края сиденья, колено напротив оси.','Валик на подъёме стопы.','Держись за ручки.'],['Выдох — выпрями ноги 1–2 сек.','Сожми квадрицепс 1 сек.','Вдох — опускай 2–3 сек.'],['Рывки','Отрыв таза','Стук плит'],'Лёгкий-средний вес. При боли в колене убери.'],
+en:['Leg extension','Seat and a padded lever in front of the ankles.',['Back of the knee at the seat edge, knee in line with the pivot.','Pad on top of your shoes.','Hold the side handles.'],['Breathe out and straighten your legs for 1–2 s.','Squeeze your quads for 1 s.','Breathe in and lower for 2–3 s.'],['Kicking the weight up','Hips lifting','Plates crashing'],'Light to moderate. Drop it if your knee hurts.']},
+b7:{r:'10',each:1,mp:['abdominals'],ms:['shoulders','triceps'],q:'pallof press proper form',sub:'Pallof press · Паллоф-пресс',
+az:['Pallof press','Kabel qurğusu və tək tutacaq. Gövdənin dönməməsini öyrədir.',['Karabini sinə hündürlüyünə qaldır.','Tutacağı iki əllə tut, yana 2–3 addım uzaqlaş.','Ayaqlar çiyin enində, tutacaq sinədə.'],['Nəfəsi ver, qolları düz irəli itələ — dönmə.','2 saniyə saxla.','Nəfəs al, sinəyə qaytar.','Sonra o biri tərəfə dön.'],['Kabelə tərəf dönmək','Ağır çəki','Nəfəsi saxlamaq'],'5–15 kq.'],
+ru:['Паллоф-пресс','Кроссовер и одиночная рукоять. Учит не скручиваться.',['Блок на уровне груди.','Возьми рукоять двумя руками, отойди вбок на 2–3 шага.','Стопы на ширине плеч, рукоять у груди.'],['Выдох — выжми руки вперёд, не поворачиваясь.','Держи 2 сек.','Вдох — верни к груди.','Потом встань другим боком.'],['Поворот к тросу','Большой вес','Задержка дыхания'],'5–15 кг.'],
+en:['Pallof press','Cable station and a single handle. Teaches your core not to rotate.',['Set the pulley to chest height.','Hold the handle with both hands and step 2–3 steps to the side.','Feet shoulder-width, handle at your chest.'],['Breathe out and press straight forward — don’t rotate.','Hold 2 s.','Breathe in and bring it back.','Then turn and do the other side.'],['Turning toward the cable','Too much weight','Holding your breath'],'5–15 kg.']}};
+Object.assign(GX,{
+v1:{r:'10–12',mp:['lats'],ms:['middle back','biceps','shoulders'],q:'close grip v bar lat pulldown proper form',sub:'V-bar pulldown · Тяга узким хватом',
+az:['Dar tutuşla yuxarı blok dartması','Yuxarı blok trenajoru, V-şəkilli dar dəstək.',['V-dəstəyi yuxarı trosa tax.','Diz yastığını budlara möhkəm otur.','Dəstəyi tutub otur, qollar yuxarıda düz.'],['Sinəni qabarda, bir az arxaya meyillət.','Nəfəsi ver, dəstəyi sinənin üstünə çək; dirsəklər bədənə yaxın.','1 saniyə kürəkləri sıx.','Nəfəs al, 2–3 saniyəyə yuxarı burax.'],['Bədəni yelləmək','Dirsəkləri yana açmaq','Çiyinləri qaldırmaq'],'Geniş tutuşdan bir az yüngül başla.'],
+ru:['Тяга верхнего блока узким хватом','Верхний блок, узкая V-рукоять.',['Пристегни V-рукоять к верхнему тросу.','Валик плотно на бёдрах.','Сядь с рукоятью, руки прямые вверху.'],['Грудь вперёд, лёгкий наклон назад.','Выдох — тяни к верху груди, локти у корпуса.','Сведи лопатки 1 сек.','Вдох — отпускай 2–3 сек.'],['Раскачка','Локти в стороны','Плечи к ушам'],'Начни чуть легче, чем широким хватом.'],
+en:['Close-grip (V-bar) pulldown','Lat pulldown station with a narrow V-handle.',['Clip the V-handle to the top cable.','Pin your thighs under the pad.','Sit holding the handle, arms straight up.'],['Chest up, lean back slightly.','Breathe out and pull to your upper chest, elbows close to your body.','Squeeze your shoulder blades for 1 s.','Breathe in and let it up for 2–3 s.'],['Swinging','Flaring the elbows','Shrugging'],'Start a little lighter than the wide-grip version.']},
+v2:{r:'12–15',mp:['hamstrings'],ms:['calves'],q:'lying leg curl proper form',sub:'Lying leg curl · Сгибание ног лёжа',
+az:['Uzanaraq ayaq bükmə','Üzüstə uzanılan trenajor, topuğun arxasında yastıq.',['Üzüstə uzan, dizlər skamyanın kənarından bir az kənarda.','Yastıq topuğun bir az yuxarısında.','Tutacaqları tut, çanaq skamyaya sıxılı.'],['Nəfəsi ver, dabanları sağrıya doğru 1–2 saniyəyə çək.','1 saniyə sıx.','Nəfəs al, 2–3 saniyəyə endir.'],['Çanağı qaldırmaq','Sıçrayışla çəkmək','Aşağıda plitkaları dəydirmək'],'Oturaraq versiyadan bir az yüngül başla.'],
+ru:['Сгибание ног лёжа','Тренажёр лёжа на животе, валик за пятками.',['Ляг на живот, колени чуть за краем скамьи.','Валик чуть выше пяток.','Держись за ручки, таз прижат.'],['Выдох — тяни пятки к ягодицам 1–2 сек.','Сожми 1 сек.','Вдох — опускай 2–3 сек.'],['Поднимать таз','Рывки','Стук плит'],'Начни чуть легче, чем сидя.'],
+en:['Lying leg curl','Face-down machine with a pad behind the heels.',['Lie face down, knees just past the bench edge.','Pad just above your heels.','Hold the handles, hips pressed down.'],['Breathe out and curl your heels toward your glutes for 1–2 s.','Squeeze 1 s.','Breathe in and lower for 2–3 s.'],['Hips lifting','Jerking','Plates crashing'],'Start a bit lighter than the seated version.']},
+v3:{r:'20–40',u:'s',mp:['abdominals'],ms:['shoulders'],q:'plank proper form beginner',sub:'Plank · Планка',
+az:['Planka','İdman döşəyi.',['Dirsəkləri çiyinlərin altına qoy.','Ayaqları geri uzat, ayaq barmaqları yerdə.','Başdan dabana bir düz xətt.'],['Qarnı və sağrını sıx, nəfəsi normal al-ver.','Vaxt bitənə qədər saxla.','Bel aşağı düşməyə başlayanda dayan.'],['Belin aşağı sallanması','Çanağın çox qalxması','Nəfəsi saxlamaq'],'Çətin olsa, dizlər yerdə et.'],
+ru:['Планка','Коврик.',['Локти под плечами.','Ноги назад, упор на носки.','Прямая линия от головы до пяток.'],['Напряги пресс и ягодицы, дыши ровно.','Держи до конца времени.','Остановись, когда поясница начнёт провисать.'],['Провисшая поясница','Таз слишком высоко','Задержка дыхания'],'Если тяжело — с колен.'],
+en:['Plank','Exercise mat.',['Elbows under your shoulders.','Legs back, on your toes.','One straight line from head to heels.'],['Brace your abs and glutes, breathe normally.','Hold for the set time.','Stop when your lower back starts to sag.'],['Sagging lower back','Hips too high','Holding your breath'],'If it is too hard, do it from your knees.']},
+v4:{r:'8–12',mp:['chest'],ms:['shoulders','triceps'],q:'dumbbell bench press proper form',sub:'Dumbbell bench press · Жим гантелей лёжа',
+az:['Düz skamyada hantel press','Düz skamya və iki hantel.',['Hantelləri budlarının üstünə qoyub otur.','Uzanarkən dizlərlə hantelləri sinə səviyyəsinə qaldır.','Ayaqlar yerdə, kürəklər skamyaya sıxılı.'],['Hantellər sinənin yanında, dirsəklər 45–60° açıq.','Nəfəsi ver, 1–2 saniyəyə yuxarı itələ.','Nəfəs al, 2–3 saniyəyə endir.'],['Dirsəkləri 90° açmaq','Beli qaldırmaq','Hantelləri vurmaq'],'Meyilli versiyadakı çəki ilə başla.'],
+ru:['Жим гантелей лёжа','Ровная скамья и две гантели.',['Сядь, гантели на бёдрах.','Ложась, подбрось их коленями к груди.','Ноги на полу, лопатки прижаты.'],['Гантели у груди, локти на 45–60°.','Выдох — жми вверх 1–2 сек.','Вдох — опускай 2–3 сек.'],['Локти на 90°','Отрыв поясницы','Стук гантелей'],'Начни с веса из жима на наклонной.'],
+en:['Dumbbell bench press','Flat bench and two dumbbells.',['Sit with the dumbbells on your thighs.','Kick them up to chest level as you lie back.','Feet down, shoulder blades pinned.'],['Dumbbells beside your chest, elbows 45–60° out.','Breathe out and press up for 1–2 s.','Breathe in and lower for 2–3 s.'],['Elbows flared to 90°','Arching off the bench','Clanking'],'Start with your incline-press weight.']},
+v5:{r:'20–30',u:'s',each:1,mp:['abdominals'],ms:['shoulders'],q:'side plank proper form beginner',sub:'Side plank · Боковая планка',
+az:['Yan planka','İdman döşəyi.',['Böyrü üstə uzan, dirsək çiyinin altında.','Ayaqlar üst-üstə və ya biri qabaqda.','Bədən bir düz xətt.'],['Çanağı qaldır, qarnın yanlarını sıx.','Vaxt bitənə qədər saxla, nəfəsi normal al.','Tərəfi dəyiş.'],['Çanağın aşağı düşməsi','Çiyinə yığılmaq','Nəfəsi saxlamaq'],'Çətin olsa, aşağıdakı diz yerdə et.'],
+ru:['Боковая планка','Коврик.',['Ляг на бок, локоть под плечом.','Ноги вместе или одна впереди.','Тело одной линией.'],['Подними таз, напряги косые мышцы.','Держи до конца времени, дыши.','Смени сторону.'],['Таз проваливается','Заваливание на плечо','Задержка дыхания'],'Если тяжело — нижнее колено на полу.'],
+en:['Side plank','Exercise mat.',['Lie on your side, elbow under your shoulder.','Feet stacked or one in front.','Body in one straight line.'],['Lift your hips and brace your side abs.','Hold for the time, breathing normally.','Switch sides.'],['Hips dropping','Sinking into the shoulder','Holding your breath'],'If it is too hard, keep the bottom knee down.']},
+v6:{r:'8–12',mp:['quadriceps'],ms:['glutes','hamstrings','calves'],q:'hack squat machine proper form',sub:'Hack squat · Гакк-присед',
+az:['Hak-çömbəlmə trenajoru','Maili trenajor, çiyin yastıqları və ayaq platforması.',['Kürəyi söyənəcəyə, çiyinləri yastıqların altına qoy.','Ayaqlar platformanın ortasında, çiyin enində.','Qalx və kilidi aç.'],['Nəfəs al, 2–3 saniyəyə dizlər ≈ 90° olana qədər en.','Nəfəsi ver, dabanla itələyib qalx.','Yuxarıda diz bir az bükülü.','Sonda kilidi bağla.'],['Dizlərin içəri yığılması','Dabanların qalxması','Çanağın söyənəcəkdən qopması'],'Ayaq pressdəki çəkinin təxminən yarısı ilə başla.'],
+ru:['Гакк-присед','Наклонный тренажёр с упорами для плеч и платформой.',['Спина на спинке, плечи под упорами.','Стопы в центре платформы на ширине плеч.','Выпрямись и сними стопор.'],['Вдох — опускайся 2–3 сек до ≈ 90° в коленях.','Выдох — дави пятками и вставай.','Вверху колено слегка согнуто.','В конце закрой стопор.'],['Колени внутрь','Пятки отрываются','Таз отрывается от спинки'],'Начни примерно с половины веса из жима ногами.'],
+en:['Hack squat','Angled machine with shoulder pads and a foot platform.',['Back on the pad, shoulders under the pads.','Feet mid-platform, shoulder-width.','Stand up and release the lock.'],['Breathe in and lower for 2–3 s to about 90° at the knee.','Breathe out and drive up through your heels.','Keep a slight bend at the top.','Lock it when done.'],['Knees caving in','Heels lifting','Hips leaving the pad'],'Start at about half your leg-press weight.']},
+v7:{r:'8–10',flip:1,mp:['hamstrings'],ms:['glutes','lower back','calves'],q:'barbell romanian deadlift proper form',sub:'Barbell Romanian deadlift · Румынская тяга',
+az:['Ştanqla rumın dartması','Ştanq. Güzgüyə yanı dur.',['Ştanqı dayaqdan və ya yerdən düz bellə götür.','Ayaqlar çanaq enində, tutuş çiyindən bir az geniş.','Dik dur, dizlər bir az bükülü.'],['Nəfəs al, çanağı geri ver; ştanq budun üstündən sürüşüb enir.','Arxa budda güclü dartılmada dayan.','Nəfəsi ver, sağrını sıxıb qalx.'],['Beli dairələmək','Ştanqı bədəndən uzaqlaşdırmaq','Çömbəlmək'],'Hantel versiyasındakı iki hantelin cəmindən bir az az başla.'],
+ru:['Румынская тяга со штангой','Штанга. Встань боком к зеркалу.',['Возьми штангу с прямой спиной.','Стопы на ширине таза, хват чуть шире плеч.','Стой прямо, колени чуть согнуты.'],['Вдох — таз назад, гриф скользит по бёдрам вниз.','Остановись при сильном натяжении бедра.','Выдох — сожми ягодицы и встань.'],['Круглая спина','Гриф далеко от ног','Приседать'],'Начни чуть легче суммы двух гантелей.'],
+en:['Barbell Romanian deadlift','Barbell. Stand side-on to a mirror.',['Lift the bar with a flat back.','Feet hip-width, grip a bit wider than shoulders.','Stand tall, knees softly bent.'],['Breathe in and push your hips back; the bar slides down your thighs.','Stop at a strong hamstring stretch.','Breathe out, squeeze your glutes and stand.'],['Rounding the back','Bar drifting away','Squatting it'],'Start a little under the total of your two dumbbells.']},
+v8:{r:'8–12',flip:1,mp:['quadriceps'],ms:['glutes','hamstrings','lower back'],q:'smith machine squat proper form',sub:'Smith machine squat · Присед в Смите',
+az:['Smit trenajorunda çömbəlmə','Smit trenajoru (relslə hərəkət edən ştanq).',['Ştanqı çiyin hündürlüyünə qoy, kürəyin üst hissəsinə yerləşdir.','Ayaqlar bir az qabaqda, çiyin enində.','Ştanqı çevirib qarmaqdan çıxar.'],['Nəfəs al, çanağı geri-aşağı apar, bud paralelə yaxın olana qədər en.','Nəfəsi ver, dabanla itələyib qalx.','Sonda ştanqı çevirib qarmağa as.'],['Dizlərin içəri yığılması','Beli dairələmək','Dabanların qalxması'],'Boş ştanqla texnikanı öyrən, sonra 5 kq-lıq addımlarla artır.'],
+ru:['Присед в Смите','Тренажёр Смита (гриф на направляющих).',['Гриф на уровне плеч, положи на верх спины.','Стопы чуть впереди, на ширине плеч.','Поверни гриф и сними с крюков.'],['Вдох — таз назад-вниз, до почти параллели бедра.','Выдох — дави пятками и вставай.','В конце поверни гриф на крюки.'],['Колени внутрь','Круглая спина','Пятки отрываются'],'Освой технику с пустым грифом, потом +5 кг.'],
+en:['Smith machine squat','Smith machine (a bar on guide rails).',['Set the bar at shoulder height and rest it on your upper back.','Feet slightly forward, shoulder-width.','Twist the bar off the hooks.'],['Breathe in and sit back and down until thighs are near parallel.','Breathe out and drive up through your heels.','Twist the bar back onto the hooks.'],['Knees caving in','Rounding the back','Heels lifting'],'Learn it with the empty bar, then add 5 kg at a time.']},
+v9:{r:'8–12',mp:['shoulders'],ms:['triceps'],q:'seated dumbbell shoulder press proper form',sub:'Seated dumbbell press · Жим гантелей сидя',
+az:['Oturaraq hantel çiyin press','Söyənəcəyi şaquli skamya və iki hantel.',['Söyənəcəyi şaquli qaldır, otur.','Hantelləri dizlərlə çiyin səviyyəsinə qaldır.','Kürək söyənəcəkdə, ayaqlar yerdə.'],['Nəfəsi ver, hantelləri 1–2 saniyəyə yuxarı itələ.','Yuxarıda dirsək kilidlənmir.','Nəfəs al, 2–3 saniyəyə çiyin səviyyəsinə endir.'],['Beli əymək','Hantelləri bir-birinə vurmaq','Çiyinləri qaldırmaq'],'Trenajordakı çəkinin təxminən yarısı (hər əldə) ilə başla.'],
+ru:['Жим гантелей сидя','Скамья с вертикальной спинкой и две гантели.',['Подними спинку вертикально, сядь.','Подними гантели коленями к плечам.','Спина прижата, ноги на полу.'],['Выдох — жми вверх 1–2 сек.','Вверху локти не замыкай.','Вдох — опускай 2–3 сек к плечам.'],['Прогиб в пояснице','Стук гантелей','Плечи к ушам'],'Начни примерно с половины веса тренажёра в каждой руке.'],
+en:['Seated dumbbell shoulder press','Upright bench and two dumbbells.',['Set the backrest upright and sit.','Kick the dumbbells up to shoulder level.','Back on the pad, feet flat.'],['Breathe out and press up for 1–2 s.','Don’t lock the elbows at the top.','Breathe in and lower to shoulder level for 2–3 s.'],['Arching the back','Clanking the dumbbells','Shrugging'],'Start at about half the machine weight per hand.']}});
+const GEQ={a1:'m',a2:'m',a3:'c',a4:'d',a5:'c',a6:'m',a7:'b',b1:'d',b2:'d',b3:'d',b4:'m',b5:'d',b6:'m',b7:'c',v1:'c',v2:'m',v3:'b',v4:'d',v5:'b',v6:'m',v7:'bb',v8:'bb',v9:'d'};
+
+Object.assign(GX,{
+v10:{r:'6–10',mp:['chest'],ms:['shoulders','triceps'],q:'barbell bench press proper form beginner',sub:'Barbell bench press · Жим штанги лёжа',
+az:['Ştanqla jim (skamyada)','Düz skamya, ştanq dayaqları. İlk dəfə trenerdən və ya yanındakından sığorta (страховка) istə.',['Skamyaya uzan, gözlər ştanqın altında olsun.','Ştanqı çiyindən bir az geniş tut; kürəkləri bir-birinə sıx, ayaqlar yerdə möhkəm.','Ştanqı dayaqdan qaldır, düz qollarla çiyinlərin üstünə gətir.'],['Nəfəs al, ştanqı 2–3 saniyəyə sinənin aşağı hissəsinə endir; dirsəklər bədəndən 45–70°.','Sinəyə yüngül toxun (zərbə yox).','Nəfəsi ver, yuxarı itələ.','Sonda ştanqı dayağa qoyub buraxırsan.'],['Ştanqı sinədən sıçratmaq','Sağrını skamyadan qaldırmaq','Dirsəkləri 90° yana açmaq'],'İlk həftələr boş ştanqla (20 kq) texnika, sonra hər dəfə 2,5–5 kq.'],
+ru:['Жим штанги лёжа','Ровная скамья со стойками. В первый раз попроси тренера или соседа подстраховать.',['Ляг, глаза под грифом.','Хват чуть шире плеч; сведи лопатки, ноги твёрдо на полу.','Сними гриф со стоек и выведи над плечами.'],['Вдох — опускай 2–3 сек к низу груди, локти на 45–70° от корпуса.','Легко коснись груди, без отбива.','Выдох — жми вверх.','В конце поставь гриф на стойки.'],['Отбив от груди','Отрыв таза от скамьи','Локти в стороны на 90°'],'Первые недели — пустой гриф (20 кг), потом +2,5–5 кг.'],
+en:['Barbell bench press','Flat bench with a rack. Ask a trainer or someone nearby to spot you the first time.',['Lie down with your eyes under the bar.','Grip a bit wider than shoulders; pinch your shoulder blades, feet planted.','Unrack and bring the bar over your shoulders with straight arms.'],['Breathe in and lower for 2–3 s to your lower chest, elbows 45–70° from your body.','Touch lightly — no bounce.','Breathe out and press up.','Rack the bar when done.'],['Bouncing off the chest','Lifting your hips','Elbows flared to 90°'],'Weeks 1–2: empty bar (20 kg) for technique, then +2.5–5 kg.']},
+v11:{r:'6–10',mp:['quadriceps'],ms:['glutes','hamstrings','lower back','calves'],q:'barbell back squat proper form beginner',sub:'Barbell back squat · Приседания со штангой',
+az:['Ştanqla çömbəlmə (prisedaniye)','Çömbəlmə rami (рама) — mütləq qoruyucu dayaqları (страховочные упоры) qur.',['Qoruyucu dayaqları ən aşağı nöqtəndən bir az aşağı qoy.','Ştanq kürəyin üst hissəsində, tutuş çiyindən geniş, dirsəklər aşağı.','Ştanqı dayaqdan götür, 2 addım geri çəkil; ayaqlar çiyin enində, barmaqlar azca çölə.'],['Dərin nəfəs al, qarnı gərginləşdir, çanağı geri-aşağı apar.','Bud paralel və ya bir az aşağı olana qədər 2–3 saniyəyə en; dizlər barmaqlar istiqamətində.','Nəfəsi ver, dabanla itələyib qalx.'],['Dizlərin içəri yığılması','Beli dairələmək','Dabanların qalxması'],'Boş ştanqla başla, sonra hər dəfə +5 kq.'],
+ru:['Приседания со штангой','Силовая рама — обязательно выставь страховочные упоры.',['Упоры чуть ниже твоей нижней точки.','Гриф на верхней части спины, хват шире плеч, локти вниз.','Сними гриф, 2 шага назад; стопы на ширине плеч, носки чуть врозь.'],['Глубокий вдох, напряги пресс, таз назад-вниз.','Опускайся 2–3 сек до параллели или чуть ниже; колени по линии носков.','Выдох — дави пятками и вставай.'],['Колени внутрь','Круглая спина','Пятки отрываются'],'Начни с пустого грифа, потом +5 кг.'],
+en:['Barbell back squat','Squat rack — always set the safety bars.',['Set the safeties just below your lowest point.','Bar on your upper back, grip wider than shoulders, elbows down.','Unrack, take 2 steps back; feet shoulder-width, toes slightly out.'],['Big breath, brace, sit your hips back and down.','Lower for 2–3 s to parallel or a bit below; knees track over toes.','Breathe out and drive up through your heels.'],['Knees caving in','Rounding the back','Heels lifting'],'Start with the empty bar, then +5 kg each time.']},
+v12:{r:'5–8',mp:['quadriceps','glutes','hamstrings'],ms:['lower back','middle back','forearms'],q:'trap bar deadlift proper form beginner',sub:'Trap bar deadlift · Становая тяга',
+az:['Tyaga (становая) — trap-bar ilə','Altıbucaq ştanq (trap-bar). Yoxdursa, adi ştanqla et — onda ştanq ayağın ortasının üstündə olur.',['Ştanqın içində dur, ayaqlar çanaq enində.','Çanağı geri verib çömbəl, tutacaqları ortadan tut.','Bel düz, sinə yuxarı, qollar düz; ştanqı bir az özünə "dartıb" boşluğu götür.'],['Dərin nəfəs al, qarnı gərginləşdir.','Ayaqlarla yeri it, dizlər və çanaq birlikdə açılır; düz dur.','Yuxarıda sağrını sıx, bellə arxaya əyilmə.','Eyni yolla, bel düz, ştanqı yerə qoy.'],['Beli dairələmək','Ştanqı qollarla dartmaq','Yuxarıda arxaya əyilmək'],'Trap-bar (təxminən 25 kq) və ya ştanqla 40–50 kq-dan başla, hər dəfə +5 kq. Hər dəstədən əvvəl ştanqı yerə tam qoy.'],
+ru:['Становая тяга с трэп-грифом','Шестигранный гриф. Если нет — классический гриф над серединой стопы.',['Встань внутрь грифа, стопы на ширине таза.','Таз назад, присядь, возьми ручки посередине.','Спина прямая, грудь вверх, руки прямые; «выбери слабину».'],['Глубокий вдох, напряги пресс.','Толкай пол ногами, колени и таз разгибаются вместе; встань прямо.','Вверху сожми ягодицы, не отклоняйся назад.','Опускай тем же путём, спина прямая.'],['Круглая спина','Тянуть руками','Отклоняться назад вверху'],'Трэп-гриф (около 25 кг) или штанга 40–50 кг, потом +5 кг. Перед каждым повтором ставь гриф полностью.'],
+en:['Trap bar deadlift','Hex (trap) bar. If there is none, use a straight bar over mid-foot.',['Stand inside the bar, feet hip-width.','Push your hips back, squat down and grip the handles in the middle.','Back flat, chest up, arms straight; pull the slack out of the bar.'],['Big breath, brace your core.','Push the floor away; knees and hips straighten together; stand tall.','Squeeze your glutes at the top — don’t lean back.','Lower the same way with a flat back.'],['Rounding the back','Yanking with the arms','Leaning back at the top'],'Trap bar (about 25 kg) or 40–50 kg on a barbell, then +5 kg. Set the bar fully down between reps.']}});
+GEQ.v10='bb'; GEQ.v11='bb'; GEQ.v12='bb';
+
+Object.assign(GX,{
+o1:{r:'10–15',mp:['biceps'],ms:['forearms'],q:'dumbbell bicep curl proper form',sub:'Dumbbell curl · Подъём гантелей на бицепс',
+az:['Biseps üçün hantel qaldırma','İki hantel.',['Dik dur, hantellər yanlarda, ovuclar irəli.','Dirsəklər bədənə yaxın, yerində qalır.'],['Nəfəsi ver, hantelləri çiyinə doğru qaldır.','Yuxarıda 1 saniyə sıx.','Nəfəs al, 2–3 saniyəyə tam aşağı endir.'],['Bədəni yelləmək','Dirsəkləri irəli aparmaq','Yarımçıq endirmək'],'8–10 kq-dan başla.'],
+ru:['Подъём гантелей на бицепс','Две гантели.',['Встань прямо, гантели по бокам, ладони вперёд.','Локти прижаты и неподвижны.'],['Выдох — поднимай гантели к плечам.','Сожми вверху 1 сек.','Вдох — опускай 2–3 сек до конца.'],['Раскачка','Локти уходят вперёд','Неполная амплитуда'],'Начни с 8–10 кг.'],
+en:['Dumbbell biceps curl','Two dumbbells.',['Stand tall, dumbbells at your sides, palms forward.','Elbows tucked and still.'],['Breathe out and curl to your shoulders.','Squeeze 1 s at the top.','Breathe in and lower fully for 2–3 s.'],['Swinging','Elbows drifting forward','Half reps'],'Start with 8–10 kg.']},
+o2:{r:'12–15',mp:['shoulders'],ms:[],q:'dumbbell lateral raise proper form',sub:'Lateral raise · Махи гантелями в стороны',
+az:['Hantelləri yana qaldırma','İki yüngül hantel.',['Dik dur, hantellər budun yanında.','Dirsəklər bir az bükülü.'],['Nəfəsi ver, qolları yana çiyin hündürlüyünə qədər qaldır.','Yuxarıda bir an saxla.','Nəfəs al, 2–3 saniyəyə yavaş endir.'],['Çiyinləri qulaqlara qaldırmaq','Yelləmək','Çiyindən yuxarı qaldırmaq'],'Yüngül: 4–6 kq. Burada ağır çəki lazım deyil.'],
+ru:['Махи гантелями в стороны','Две лёгкие гантели.',['Встань прямо, гантели у бёдер.','Локти слегка согнуты.'],['Выдох — разведи руки в стороны до уровня плеч.','Задержись на миг.','Вдох — медленно опускай 2–3 сек.'],['Плечи к ушам','Раскачка','Выше плеч'],'Легко: 4–6 кг. Тяжёлый вес не нужен.'],
+en:['Dumbbell lateral raise','Two light dumbbells.',['Stand tall, dumbbells by your thighs.','Elbows softly bent.'],['Breathe out and raise your arms out to shoulder height.','Pause briefly.','Breathe in and lower slowly for 2–3 s.'],['Shrugging','Swinging','Going above shoulder height'],'Light: 4–6 kg. Heavy weight isn’t needed here.']},
+o3:{r:'10–15',mp:['triceps'],ms:[],q:'triceps pushdown proper form',sub:'Triceps pushdown · Разгибание рук на блоке',
+az:['Blokda qolu aşağı açma (triseps)','Yuxarı kabel blok, düz və ya kəndir dəstək.',['Bloka üzü dur, dəstəyi tut.','Dirsəklər bədənə sıxılı, bir az irəli əyil.'],['Nəfəsi ver, dəstəyi qollar düz olana qədər aşağı it.','1 saniyə sıx.','Nəfəs al, dirsəklər yerindən tərpənmədən yuxarı qaytar.'],['Dirsəkləri qaldırıb-endirmək','Bədənlə itələmək','Çiyinləri irəli vermək'],'Yüngül-orta çəki.'],
+ru:['Разгибание рук на верхнем блоке','Верхний блок, прямая рукоять или канат.',['Встань лицом к блоку, возьми рукоять.','Локти прижаты, лёгкий наклон вперёд.'],['Выдох — разгибай руки вниз до прямых.','Сожми 1 сек.','Вдох — верни вверх, локти на месте.'],['Локти гуляют','Давить корпусом','Плечи вперёд'],'Лёгкий-средний вес.'],
+en:['Triceps pushdown','High cable with a straight bar or rope.',['Face the cable and take the handle.','Elbows pinned to your sides, lean forward slightly.'],['Breathe out and push down until your arms are straight.','Squeeze 1 s.','Breathe in and let it up, elbows still.'],['Elbows moving','Pushing with your body','Rolling the shoulders forward'],'Light to moderate weight.']},
+o4:{r:'12–20',mp:['calves'],ms:[],q:'standing calf raise proper form',sub:'Standing calf raise · Подъём на носки',
+az:['Barmaqlar üstə qalxma (baldır)','Baldır trenajoru. Yoxdursa, pilləkənin kənarında, çəkisiz.',['Çiyin yastıqlarının altına gir, ayaq barmaqları platformanın kənarında.','Dizlər düz, amma kilidli deyil.'],['Dabanları aşağı endir, baldırda dartılma hiss et.','Nəfəsi ver, barmaqların üstünə mümkün qədər yüksək qalx.','Yuxarıda 1 saniyə saxla, yavaş en.'],['Yaylanmaq','Yarımçıq hərəkət','Dizləri bükmək'],'Çəkisiz və ya yüngül başla.'],
+ru:['Подъём на носки стоя','Тренажёр для икр. Если нет — на краю ступеньки без веса.',['Встань под упоры, носки на краю платформы.','Колени прямые, но не замкнуты.'],['Опусти пятки, почувствуй растяжение.','Выдох — поднимись на носки как можно выше.','Задержи 1 сек, медленно опускайся.'],['Пружинить','Неполная амплитуда','Сгибать колени'],'Начни без веса или с лёгким.'],
+en:['Standing calf raise','Calf raise machine. If there is none, a step edge with bodyweight.',['Step under the pads, balls of your feet on the edge.','Knees straight but not locked.'],['Lower your heels to feel a stretch.','Breathe out and rise as high as you can.','Hold 1 s at the top, lower slowly.'],['Bouncing','Partial reps','Bending the knees'],'Start with bodyweight or light.']},
+o5:{r:'12–15',mp:['shoulders'],ms:['middle back'],q:'cable face pull proper form',sub:'Face pull · Тяга к лицу',
+az:['Kabellə üzə doğru dartma (face pull)','Kabel blok göz hündürlüyündə, kəndir dəstək.',['Kəndiri iki əllə tut, bir addım geri çəkil.','Qollar irəlidə düz.'],['Nəfəsi ver, kəndiri üzünə doğru çək, əlləri yana aç; dirsəklər yuxarıda.','Kürəkləri sıx, 1 saniyə saxla.','Nəfəs al, yavaş qaytar.'],['Bədənlə dartmaq','Dirsəkləri aşağı salmaq','Ağır çəki'],'Yüngül çəki. Duruş və çiyin sağlamlığı üçündür.'],
+ru:['Тяга каната к лицу','Блок на уровне глаз, канат.',['Возьми канат двумя руками, шаг назад.','Руки прямые впереди.'],['Выдох — тяни канат к лицу, разводя руки; локти высоко.','Сведи лопатки, задержи 1 сек.','Вдох — медленно верни.'],['Тянуть корпусом','Опускать локти','Большой вес'],'Лёгкий вес. Для осанки и здоровья плеч.'],
+en:['Cable face pull','Cable at eye height with a rope.',['Hold the rope with both hands, step back.','Arms straight in front.'],['Breathe out and pull the rope to your face, hands apart, elbows high.','Squeeze your shoulder blades for 1 s.','Breathe in and return slowly.'],['Pulling with your body','Dropping the elbows','Too much weight'],'Light weight. It is for posture and healthy shoulders.']}});
+GEQ.o1='d'; GEQ.o2='d'; GEQ.o3='c'; GEQ.o4='m'; GEQ.o5='c';
+const gyOpt=(t,b)=>t==='A'?['o1','o2']:(b>=2?['o3','o4','o5']:['o3','o4']);
+// block swaps: block 1 = base; even blocks use SW2, odd blocks from 3 use SW3
+// block 2 brings the barbell bench press; block 3 the barbell squat and trap-bar deadlift; once added they stay, accessories rotate
+const GSW2={a3:'v1',a6:'v2',a7:'v3',b2:'v10',b7:'v5'}, GSW3={a1:'v6',a4:'v12',b1:'v11',b4:'v9',b2:'v10'};
+const gySwaps=b=>b<=1?{}:b===2?GSW2:b===3?GSW3:(b%2===0?{...GSW2,a4:'v12',b1:'v11'}:GSW3);
+const gyKeep=(m,b,slot)=>!!(((m.wo||{}).keep||{})[b]||{})[slot];
+const gyOrder=(m,t,b)=>GORD[t].map(sl=>{ const v=gySwaps(b)[sl]; return v&&!gyKeep(m,b,sl)?v:sl; });
+
+const GORD={A:['a1','a2','a3','a4','a5','a6','a7'],B:['b1','b2','b3','b4','b5','b6','b7']};
+const gxt=id=>GX[id][LANG]||GX[id].az;
+const GIMG='mesq/';
+
+/* ---- plan math: endless 13-week blocks (12 weeks + easy week), G = week number since start ---- */
+const gyBW=G=>({b:Math.floor((G-1)/13)+1,wb:(G-1)%13+1});
+const gyPh=G=>{ const {b,wb}=gyBW(G); if(wb===13||wb===8) return 2; if(b===1&&wb<=2) return 0; return wb<=7?1:3; };
+const gySets=(G,i)=>[2,3,2,i<=3?4:3][gyPh(G)];
+const gyRir=G=>['3–4','2–3','3–4','1–2'][gyPh(G)];
+const gyCmin=G=>[10,15,15,20][gyPh(G)];
+const gyPhC=['#d99a1e','var(--sky)','var(--herb)','var(--accent)'];
+function gyPlan(m,b){ const s=m.wo.start, out=[]; for(let G=(b-1)*13+1;G<=b*13;G++){ const t=G%2?['A','B','A']:['B','A','B']; for(let d=0;d<7;d++){ const k=[0,2,4].indexOf(d); out.push({G,wb:gyBW(G).wb,d,date:addDays(s,(G-1)*7+d),type:k>=0?t[k]:null}); } } return out; }
+function gyNow(m){ const t=todayISO(), df=diffDays(m.wo.start,t), G=df<0?1:Math.floor(df/7)+1, {b,wb}=gyBW(G), p=gyPlan(m,b);
+  const today=p.find(x=>x.date===t)||null, next=[...p,...gyPlan(m,b+1)].find(x=>x.type&&x.date>t)||null;
+  return {p,t,today,next,G,b,wb,before:df<0}; }
+const gyWo=(m,d)=>getLog(m.id,d).wo||null;
+const gyDone=(m,d)=>{ const o=gyWo(m,d); return !!(o&&(o.fin||gyBurn(m,d)>0)); };
+/* ---- progression advice from the last sessions of an exercise ---- */
+const gyRng=id=>{ const p=GX[id].r.split('–').map(Number); return {lo:p[0],hi:p[p.length-1]}; };
+const gyU2=id=>GX[id].u==='s'?T('gy_sec'):T('gy_reps');
+const gyFmtSet=(x,id)=>x.kg?`${x.kg}×${x.r||'–'}`:`${x.r||'–'} ${gyU2(id)}`;
+const gyRnd=(id,v)=>GEQ[id]==='d'?Math.max(1,Math.round(v)):Math.max(2.5,Math.round(v/2.5)*2.5);
+const gyStep=(id,kg)=>GEQ[id]==='d'?2:GEQ[id]==='bb'?5:Math.max(2.5,Math.round(kg*0.05/2.5)*2.5);
+function gyHist(m,id){ const t=todayISO(), L1=S.log[m.id]||{}; return Object.keys(L1).filter(d=>d<t&&((L1[d].wo||{}).ex||{})[id]).sort().reverse()
+  .map(d=>L1[d].wo.ex[id].filter(x=>x&&x.ok)).filter(a=>a.length); }
+function gyAdvice(m,id,G){
+  const H=gyHist(m,id); if(!H.length) return null; const last=H[0], {lo,hi}=gyRng(id), u=GX[id].u==='s'?'':T('gy_kg');
+  const kgOf=a=>Math.max(0,...a.map(x=>+String(x.kg||0).replace(',','.')||0)), kg=kgOf(last), reps=a=>a.map(x=>+x.r||0);
+  if(gyPh(G)===2) return kg?{k:'dl',kg:gyRnd(id,kg*0.9),t:T('gy_dlT'),s:T('gy_dlS',{b:fmt1(gyRnd(id,kg*0.9)),u})}:null;
+  const allTop=last.length>=2&&reps(last).every(r=>r>=hi);
+  if(allTop&&kg) { const nk=kg+gyStep(id,kg); return {k:'up',kg:nk,t:T('gy_upT'),s:T('gy_upS',{r:hi,u2:gyU2(id),a:fmt1(kg),b:fmt1(nk),u})}; }
+  if(allTop) { const n=GX[id].u==='s'?hi+10:hi+2; return {k:'up',t:T('gy_repsT'),s:T('gy_repsS',{r:hi,n,u2:gyU2(id)})}; }
+  const low=a=>reps(a).some(r=>r<lo);
+  if(kg&&H.length>=3&&H.slice(0,3).every(a=>kgOf(a)===kg)&&!(reps(H[0]).reduce((x,y)=>x+y,0)>reps(H[2]).reduce((x,y)=>x+y,0))) { const nk=gyRnd(id,kg*0.9); return {k:'stall',kg:nk,t:T('gy_stallT'),s:T('gy_stallS',{b:fmt1(nk),u})}; }
+  if(kg&&H.length>=2&&low(H[0])&&low(H[1])) { const nk=gyRnd(id,kg*0.9); return {k:'down',kg:nk,t:T('gy_downT'),s:T('gy_downS',{lo,a:fmt1(kg),b:fmt1(nk),u})}; }
+  return {k:'hold',kg:kg||null,t:T('gy_holdT'),s:T('gy_holdS',{s:last.map(x=>gyFmtSet(x,id)).join(', ')})};
+}
+/* calories: net MET × kg × h */
+const GMET={bike:[4.0,6.0],ell:[5.0,5.0],tread:[5.3,7.0]};
+function gyParts(m,d){ const o=gyWo(m,d); if(!o) return {ex:0,sets:0,min:0,k:0};
+  const kg=m.w, net=(met,min)=>(met-1)*kg*min/60; let sets=0, ex=0, min=0, k=0;
+  Object.keys(o.ex||{}).forEach(id=>{ const n=(o.ex[id]||[]).filter(s=>s&&s.ok).length; if(n){ ex++; sets+=n; } });
+  if(sets){ min+=sets*2; k+=net(3.5,sets*2); }
+  if(o.w){ min+=5; k+=net(4.0,5); }
+  if(o.c&&o.c.ok&&o.c.min>0){ const met=(GMET[o.c.k]||GMET.bike)[o.c.i?1:0]; min+=o.c.min; k+=net(met,o.c.min); }
+  return {ex,sets,min,k:Math.round(k)}; }
+const gyBurn=(m,d)=>gyParts(m,d).k;
+const actBonus=(m,d)=>stepBonus(m,d)+gyBurn(m,d);
+
+/* ---- body map ---- */
+const GSIL='M100 50 L91 54 C84 60 74 62 64 66 C54 70 50 80 49 92 C47 108 45 124 43 138 C41 152 38 168 36 182 C35 190 34 196 36 202 L42 204 C44 196 46 188 48 180 C51 166 55 150 58 136 L62 120 C63 134 64 150 66 164 C67 176 66 186 66 196 C65 210 66 226 68 240 C70 262 72 284 76 302 C78 314 78 326 77 340 C76 360 76 380 78 398 L80 408 L94 408 L93 396 C93 380 94 360 95 342 C96 326 96 310 97 296 C98 276 99 256 100 236 Z';
+const GMF={front:[['middle back','M92 57 C86 62 78 64 71 66 L88 69 Z'],['shoulders','M70 67 C58 69 51 79 52 92 C54 100 58 102 62 98 C64 88 68 78 77 72 Z'],['chest','M98 72 C88 70 78 72 73 78 C67 88 67 98 71 104 C79 110 90 110 98 106 Z'],['biceps','M55 101 C51 111 50 122 52 133 C55 137 59 135 61 129 C63 119 63 109 61 102 Z'],['forearms','M51 140 C47 152 44 166 42 180 C43 186 47 186 49 182 C53 168 56 156 58 142 Z'],['abdominals','M88 112h10v15h-10z M88 130h10v15h-10z M88 148h10v15h-10z M89 166h9v14h-9z'],['abdominals','M86 112 C78 118 73 132 73 148 C73 162 77 176 84 184 L86 182 Z'],['quadriceps','M73 198 C67 214 67 240 71 262 C74 276 79 288 85 294 C89 296 93 292 95 284 C98 266 98 240 97 216 C95 206 87 198 73 198 Z'],['calves','M79 314 C75 330 75 350 79 368 C81 374 85 374 87 368 C91 350 92 332 91 316 Z']],
+back:[['middle back','M100 50 L92 56 C84 62 74 64 70 68 C80 74 90 84 96 104 L100 110 Z'],['shoulders','M70 67 C58 69 51 79 52 92 C54 100 58 102 62 98 C64 88 68 78 77 72 Z'],['lats','M86 92 C78 96 71 104 69 118 C69 134 75 150 85 162 L93 160 C91 144 91 124 93 106 Z'],['lower back','M91 162 C89 172 89 182 91 192 L99 194 L99 160 Z'],['triceps','M55 101 C51 111 50 122 52 133 C55 137 59 135 61 129 C63 119 63 109 61 102 Z'],['forearms','M51 140 C47 152 44 166 42 180 C43 186 47 186 49 182 C53 168 56 156 58 142 Z'],['glutes','M99 197 C88 195 76 199 71 209 C67 221 71 233 81 237 C91 239 97 233 99 225 Z'],['hamstrings','M72 241 C68 257 70 277 76 293 C80 299 86 299 90 293 C94 277 96 259 96 243 C90 239 80 237 72 241 Z'],['calves','M77 312 C71 326 71 344 77 358 C81 364 87 362 89 354 C93 340 93 324 89 312 C85 306 81 306 77 312 Z']]};
+function gyBody(pm,sm,col){
+  const half=d=>`<path d="${d}"/><path d="${d}" transform="translate(200 0) scale(-1 1)"/>`;
+  const f=k=>pm.includes(k)?col:sm.includes(k)?`color-mix(in srgb, ${col} 45%, var(--mb))`:'var(--mi)';
+  const one=(v,c)=>`<figure><svg viewBox="22 6 156 410" role="img" aria-label="${esc(c)}"><ellipse cx="100" cy="30" rx="15" ry="18" fill="var(--mb)"/><g fill="var(--mb)">${half(GSIL)}</g>${GMF[v].map(([k,d])=>`<g fill="${f(k)}" stroke="var(--ms)" stroke-width="1.3" stroke-linejoin="round">${half(d)}</g>`).join('')}</svg><figcaption>${esc(c)}</figcaption></figure>`;
+  return `<div class="bmap">${one('front',T('gy_front'))}${one('back',T('gy_back'))}</div>`; }
+const gyCol=t=>t==='B'?'var(--gy-b)':'var(--gy-a)';
+const gyDow=d=>{ const x=parseISO(d).getDay(); return T('gy_dn')[(x+6)%7]; };
+
+/* ---- tab ---- */
+function renderGym(){
+  const m=member();
+  if(!m.wo){ let d=todayISO(); const g=(parseISO(d).getDay()+6)%7; if(g) d=addDays(d,7-g);
+    view.innerHTML=`<div class="gy"><section class="gy-hero gy-intro" style="--hc:var(--accent)"><div class="k">${esc(T('gy_for',{n:m.name}))}</div><h2>${esc(T('gy_title'))}</h2><p>${esc(T('gy_intro'))}</p>
+      <div class="bl"><div><i>1</i><span>${esc(T('gy_b1'))}</span></div><div><i>2</i><span>${esc(T('gy_b2'))}</span></div><div><i>3</i><span>${esc(T('gy_b3'))}</span></div></div>
+      <label class="k" for="gyst">${esc(T('gy_start'))}</label><div class="acts" style="margin-top:6px"><input type="date" id="gyst" value="${d}"><button class="gy-btn w" id="gygo">${esc(T('gy_go'))}</button></div></section>
+      ${gyWorkCards(m,1,1)}</div>`;
+    document.getElementById('gygo').onclick=()=>{ const v=document.getElementById('gyst').value||d; m.wo={start:v,keep:{}}; save(); render(); };
+    gyBindCards(); return; }
+  const N=gyNow(m), G=N.G, burn=gyBurn(m,N.t), cur=N.today&&N.today.type?N.today:null;
+  const total=N.p.filter(x=>x.type).length, doneN=N.p.filter(x=>x.type&&gyDone(m,x.date)).length, nxt=cur||N.next;
+  const title=cur?T('gy_today',{t:cur.type}):N.before?T('gy_notyet',{d:dLong(m.wo.start)}):T('gy_rest');
+  const sub=!cur&&N.next?T('gy_next',{t:N.next.type,d:dLong(N.next.date)}):cur?`${T('gy_ph')[gyPh(G)]} · ${T('gy_phT')[gyPh(G)]}`:'';
+  const lw=gyWo(m,N.t), goT=lw&&lw.t?lw.t:(nxt?nxt.type:'A'), started=!!lw, fin=!!(lw&&lw.fin);
+  const wk=N.p.filter(x=>x.G===G);
+  const nb=N.wb>=12?N.b+1:(N.wb===1&&N.b>1?N.b:0);
+  view.innerHTML=`<div class="gy">
+   <section class="gy-hero" style="--hc:${gyCol(goT)}"><div class="k">${esc(T('gy_wkB',{b:N.b,w:N.wb}))} · ${esc(T('gy_ph')[gyPh(G)])}</div><h2>${esc(title)}</h2><p>${esc(sub)}</p>
+    <div class="acts"><button class="gy-btn w" data-sess="${goT}">${esc(fin?T('gy_fdone'):started?T('gy_cont'):T('gy_startW',{t:goT}))} →</button></div>
+    <div class="gy-stats"><div><b>${doneN}/${total}</b><span>${esc(T('gy_done'))}</span></div><div><b>${N.wb}/13</b><span>${esc(T('gy_wk'))} · ${esc(T('gy_block',{n:N.b}))}</span></div><div><b>${burn?'+'+fmt(burn):'0'}</b><span>${esc(T('kcal'))} · ${esc(T('gy_burn'))}</span></div></div>
+    <div class="gy-seg" style="grid-template-columns:repeat(${total},minmax(0,1fr))">${N.p.filter(x=>x.type).map(x=>`<i class="${gyDone(m,x.date)?x.type:''}${nxt&&x.date===nxt.date&&!gyDone(m,x.date)?' n':''}"></i>`).join('')}</div></section>
+   ${nb?gySwapCard(m,nb,N.wb>=12):''}
+   <div class="gy-h"><h3>${esc(T('gy_thisweek'))}</h3><span class="small muted">${esc(T('gy_wkB',{b:N.b,w:N.wb}))}</span></div>
+   <div class="gy-week">${wk.map(x=>`<${x.type?'button':'div'} class="gy-day${x.type?' tr':''}${x.date===N.t?' now':''}" ${x.type?`data-sess="${x.type}"`:''}><span>${esc(gyDow(x.date))}</span><b>${parseISO(x.date).getDate()}</b>${x.type?`<span class="gy-pl ${x.type}${gyDone(m,x.date)?' ok':''}">${x.type}</span>`:'<span class="gy-pl r"></span>'}</${x.type?'button':'div'}>`).join('')}</div>
+   ${gyWorkCards(m,G,N.b)}
+   <details class="gy-card"><summary>${esc(T('gy_all'))} · ${esc(T('gy_block',{n:N.b}))}</summary>
+    <div class="gy-cal"><div></div>${T('gy_dn').map(d=>`<div class="hd">${esc(d)}</div>`).join('')}
+    ${Array.from({length:13},(_,i)=>{ const Gw=(N.b-1)*13+i+1; return `<div class="w"><span class="gy-ph" style="background:${gyPhC[gyPh(Gw)]}"></span>${i+1}</div>`+N.p.filter(x=>x.G===Gw).map(x=>`<div class="c${x.date===N.t?' now':''}${x.type&&gyDone(m,x.date)?' ok':''}">${x.type?`<span class="gy-pl ${x.type}">${x.type}</span>`:''}<span>${parseISO(x.date).getDate()}</span></div>`).join(''); }).join('')}</div>
+    <div style="padding:0 16px 14px" class="gy-note">${[0,1,2,3].map(k=>`<div><span class="gy-ph" style="background:${gyPhC[k]}"></span><b>${esc(T('gy_ph')[k])}</b> — ${esc(T('gy_phT')[k])}</div>`).join('')}</div></details>
+   <details class="gy-card"><summary>${esc(T('gy_settings'))}</summary><div class="stack" style="padding:0 16px 16px">
+    <div class="row" style="flex-wrap:wrap"><input type="date" id="gyst" value="${m.wo.start}" style="border:1px solid var(--line);border-radius:12px;padding:9px 10px;min-height:44px;background:var(--bg);font-size:16px"><button class="gy-btn g" id="gych">${esc(T('gy_change'))}</button></div>
+    <button class="gy-btn g" id="gystop">${esc(T('gy_stop'))}</button>
+    <p class="gy-note" style="margin:0"><b>${esc(T('gy_how'))}.</b> ${esc(T('gy_howT'))} <a href="https://pacompendium.com/">${esc(T('gy_src'))}</a>. ${esc(T('gy_photos'))}.</p></div></details>
+  </div>`;
+  gyBindCards();
+  view.querySelectorAll('[data-sess]').forEach(b=>b.onclick=()=>gySession(b.dataset.sess,0));
+  view.querySelectorAll('[data-keep]').forEach(b=>b.onclick=()=>{ const [bk,sl]=b.dataset.keep.split(':'); m.wo.keep=m.wo.keep||{}; const k=m.wo.keep[bk]=m.wo.keep[bk]||{}; k[sl]=!k[sl]; save(); render(); });
+  document.getElementById('gych').onclick=()=>{ const v=document.getElementById('gyst').value; if(v){ m.wo.start=v; save(); render(); } };
+  document.getElementById('gystop').onclick=()=>confirmBox(T('gy_stopQ'),()=>{ delete m.wo; save(); render(); });
+}
+function gySwapCard(m,b,soon){
+  const sw=gySwaps(b), base=gySwaps(b-1), rows=Object.keys(sw).filter(sl=>(base[sl]||sl)!==sw[sl]).map(sl=>{ const keep=gyKeep(m,b,sl), from=base[sl]||sl, to=sw[sl];
+    return `<div class="gy-sw"><img src="${GIMG}${to}-0.jpg" alt="" loading="lazy"><div><span class="small muted">${esc(gxt(from)[0])} →</span><b>${esc(gxt(to)[0])}</b></div><button class="chip" data-keep="${b}:${sl}" aria-pressed="${keep}">${esc(keep?T('gy_keep'):T('gy_swapOn'))}</button></div>`; });
+  const back=Object.keys(base).filter(sl=>!sw[sl]);
+  return `<section class="gy-card" style="padding:14px 16px"><h3 style="margin-bottom:4px">${esc(T(soon?'gy_newBsoon':'gy_newB',{n:b}))}</h3><p class="gy-note" style="margin:0 0 8px">${esc(T('gy_newBT'))}</p>${rows.join('')}
+    ${back.length?`<p class="gy-note" style="margin:8px 0 0">↺ ${back.map(sl=>esc(gxt(sl)[0])).join(', ')}</p>`:''}</section>`;
+}
+function gyWorkCards(m,G,b){
+  return ['A','B'].map(t=>{ const ids=gyOrder(m,t,b), pm=[...new Set(ids.flatMap(k=>GX[k].mp))], sm=[...new Set(ids.flatMap(k=>GX[k].ms))].filter(k=>!pm.includes(k));
+    return `<section class="gy-card"><div class="gy-wk"><div><h3><span class="gy-pl ${t}">${t}</span>${esc(T('gy_w'+t))}</h3><p>${ids.map(id=>esc(gxt(id)[0])).join(' · ')}</p><p>${ids.length} + ${gyOpt(t,b).length} ${esc(T('gy_opt').toLowerCase())} · ~55–65 ${esc(T('gy_min'))}</p></div>${gyBody(pm,sm,gyCol(t))}</div>
+    <div class="gy-thumbs">${ids.map((id,i)=>{ const a=m.wo?gyAdvice(m,id,G):null; return `<button class="gy-thumb" data-ex="${t}:${i+1}"><span class="im"><img src="${GIMG}${id}-${GX[id].flip?1:0}.jpg" alt="" loading="lazy">${a&&a.k==='up'?`<i class="up">↑ ${esc(T('gy_upBadge'))}</i>`:''}</span><span>${i+1}. ${esc(gxt(id)[0])}</span><em>${gySets(G,i+1)} × ${GX[id].r}${GX[id].u==='s'?' '+esc(T('gy_sec')):''}</em></button>`; }).join('')}${gyOpt(t,b).map((id,k)=>`<button class="gy-thumb op" data-ex="${t}:${ids.length+k+1}"><span class="im"><img src="${GIMG}${id}-0.jpg" alt="" loading="lazy"><i class="ot">${esc(T('gy_opt'))}</i></span><span>${ids.length+k+1}. ${esc(gxt(id)[0])}</span><em>2 × ${GX[id].r}</em></button>`).join('')}</div>
+    <div class="foot"><button class="gy-btn" style="background:${gyCol(t)}" data-sess2="${t}">${esc(T('gy_begin'))}</button></div></section>`; }).join('');
+}
+function gyBindCards(){
+  view.querySelectorAll('[data-ex]').forEach(b=>b.onclick=()=>{ const [t,i]=b.dataset.ex.split(':'); gySession(t,+i); });
+  view.querySelectorAll('[data-sess2]').forEach(b=>b.onclick=()=>gySession(b.dataset.sess2,0));
+}
+
+/* ---- extra sets: planned + user-added; ask to add one when every set reached the top of the range ---- */
+const gyXs=(o,id)=>((o&&o.xs)||{})[id]||0;
+function gyAsk(o,id,P0,G){ const S2=P0+gyXs(o,id), a=((o&&o.ex)||{})[id]||[], hi=gyRng(id).hi, done=a.slice(0,S2).filter(x=>x&&x.ok);
+  return gyPh(G)!==2&&S2<P0+2&&S2>0&&done.length===S2&&done.every(x=>(+x.r||0)>=hi)&&((o.nx||{})[id]!==S2); }
+/* ---- session (each exercise on its own page) ---- */
+function gySession(t,start){
+  const m=member(); const d=todayISO();
+  const NN=m.wo?gyNow(m):null, w=NN?NN.G:1, ORD=NN?gyOrder(m,t,NN.b):GORD[t], OPT=gyOpt(t,NN?NN.b:1), EXS=[...ORD,...OPT];
+  const steps=['warm',...EXS,'cardio','sum']; let i=Math.max(0,Math.min(steps.length-1,start||0));
+  const L0=()=>{ const l=log(m.id,d); if(!l.wo||l.wo.t!==t&&!gyParts(m,d).k) l.wo={t,ex:{},w:false,c:{k:'bike',i:0,min:gyCmin(w),ok:false}}; l.wo.t=t; l.wo.ex=l.wo.ex||{}; l.wo.c=l.wo.c||{k:'bike',i:0,min:gyCmin(w),ok:false}; return l.wo; };
+  const wr=openSheet(T('gy_w'+t),`<div class="gs" id="gsb" style="--hc:${gyCol(t)}"></div>`,(sb,wrap)=>{ wrap.classList.add('cookwrap'); });
+  const box=wr.querySelector('#gsb'), sc=wr.querySelector('.sb');
+  const prevOf=id=>{ const ds=Object.keys(S.log[m.id]||{}).filter(x=>x<d&&((S.log[m.id][x].wo||{}).ex||{})[id]).sort(); if(!ds.length) return ''; const a=S.log[m.id][ds[ds.length-1]].wo.ex[id].filter(s=>s&&s.ok&&(s.kg||s.r)); return a.map(x=>gyFmtSet(x,id)).join(', '); };
+  const nav=()=>`<nav class="gs-nav"><button class="gy-btn g" data-g="-1" ${i===0?'disabled':''}>← ${esc(T('gy_prev'))}</button><div class="c"><b>${esc(T('gy_of',{a:i+1,b:steps.length}))}</b>${esc(stepName(steps[i]))}</div>${i<steps.length-1?`<button class="gy-btn" style="background:${gyCol(t)}" data-g="1">${esc(T('gy_nextB'))} →</button>`:`<button class="gy-btn" style="background:${gyCol(t)}" data-fin>${esc(T('gy_fin'))} ✓</button>`}</nav>`;
+  const stepName=s=>s==='warm'?T('gy_warm'):s==='cardio'?T('gy_cardio'):s==='sum'?T('gy_finish'):gxt(s)[0];
+  const bar=()=>`<div class="gs-prog" style="grid-template-columns:repeat(${steps.length},minmax(0,1fr))">${steps.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>`;
+  const shots=(a,b)=>`<div class="gs-shots">${[a,b].map((s,k)=>`<figure><img src="${GIMG}${s}.jpg" alt="${esc(k?T('gy_shot2'):T('gy_shot1'))}"><figcaption>${k+1} · ${esc(k?T('gy_shot2'):T('gy_shot1'))}</figcaption></figure>`).join('')}</div><div class="gs-dots"><button class="on" data-shot="0" aria-label="1"></button><button data-shot="1" aria-label="2"></button></div>`;
+  const tog=(id,on,label)=>`<button class="gs-toggle" id="${id}" aria-pressed="${!!on}"><span>${esc(label)}</span><span class="sw"></span></button>`;
+  function draw(){
+    const s=steps[i], o=gyWo(m,d)||{ex:{},c:{k:'bike',i:0,min:gyCmin(w)}}; let h=bar();
+    if(s==='warm'){
+      h+=shots('a0-0','a0-1')+`<div class="gs-title"><h2>${esc(T('gy_warm'))}</h2><p>7 ${esc(T('gy_min'))}</p></div>
+      <div class="gs-acc" style="padding:12px 14px">${esc(T('gy_warmT'))}</div>
+      <details class="gs-acc" open><summary>${esc(T('gy_mob'))}</summary><div><ul>${T('gy_mobL').map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></details>
+      <div class="gy-note">${esc(T('gy_warmSet'))}</div>${tog('gsw',o.w,T('gy_warmDone'))}`;
+    } else if(s==='cardio'){
+      const c=o.c||{k:'bike',i:0,min:gyCmin(w)}, met=(GMET[c.k]||GMET.bike)[c.i?1:0], est=Math.round((met-1)*m.w*c.min/60);
+      const lv=c.k==='bike'?[T('gy_light'),T('gy_mod')]:c.k==='tread'?[T('gy_g15'),T('gy_g610')]:null;
+      h+=`<div class="gs-title"><h2>${esc(T('gy_cardio'))}</h2><p>${esc(T('gy_cNote'))}</p></div><b>${esc(T('gy_pick'))}</b>
+      <div class="gs-opt">${[['bike','a0-1','gy_bike'],['ell','el-0','gy_ell'],['tread','tr-1','gy_tread']].map(([k,im,l])=>`<button data-ck="${k}" aria-pressed="${c.k===k}"><img src="${GIMG}${im}.jpg" alt="">${esc(T(l))}</button>`).join('')}</div>
+      ${lv?`<div><b>${esc(T('gy_int'))}</b><div class="chips" style="margin-top:6px">${lv.map((x,k)=>`<button class="chip" data-ci="${k}" aria-pressed="${(c.i||0)===k}">${esc(x)}</button>`).join('')}</div></div>`:''}
+      <div class="row between"><b>${esc(T('gy_minT'))}</b><div class="gs-step"><button data-cm="-5" aria-label="−5">−</button><b>${c.min}</b><button data-cm="5" aria-label="+5">+</button></div></div>
+      <div class="gs-big"><span class="small muted">${esc(T('gy_estK'))}<br>${c.min} ${esc(T('gy_min'))} · ${fmt1(met)} MET</span><b>~${fmt(est)} ${esc(T('kcal'))}</b></div>
+      ${tog('gsc',c.ok,T('gy_cDone'))}<div class="gy-note">${esc(T('gy_cool'))}</div>`;
+    } else if(s==='sum'){
+      const P=gyParts(m,d);
+      h+=`<div class="gs-title"><h2>${esc(T('gy_finish'))}</h2><p>${esc(T('gy_w'+t))} · ${dLong(d)}</p></div>
+      <div class="gs-big"><span>${esc(P.k?T('gy_sumT',{n:fmt(P.k)}):T('gy_sumNone'))}</span><b>${P.k?'+'+fmt(P.k):'0'}</b></div>
+      <div class="gs-sum"><div><b>${P.ex}/${EXS.length}</b><span>${esc(T('gy_sumEx'))}</span></div><div><b>${P.sets}</b><span>${esc(T('gy_sumSets'))}</span></div><div><b>${P.min}</b><span>${esc(T('gy_sumMin'))}</span></div><div><b>${fmt(P.k)}</b><span>${esc(T('gy_sumK'))}</span></div></div>
+      <ul class="gs-list">${EXS.map(id=>{ const a=((o.ex||{})[id]||[]).filter(x=>x&&x.ok); return `<li><span>${esc(gxt(id)[0])}</span><span class="muted">${a.length?a.map(x=>gyFmtSet(x,id)).join(', '):'—'}</span></li>`; }).join('')}</ul>
+      <p class="gy-note">${esc(T('gy_howT'))}</p>`;
+    } else {
+      const X=GX[s], tx=gxt(s), op=OPT.includes(s), n=EXS.indexOf(s)+1, P0=op?2:gySets(w,n), S2=P0+gyXs(o,s), ask=gyAsk(o,s,P0,w), sets=((o.ex||{})[s])||[], pv=prevOf(s), top=X.r.split('–').pop(), adv=m.wo?gyAdvice(m,s,w):null, sec=X.u==='s', ukg=T('gy_kg'), ur=sec?T('gy_sec'):T('gy_reps'), phk=adv&&adv.kg?fmt1(adv.kg).replace(',','.'):'';
+      h+=(X.flip?shots(s+'-1',s+'-0'):shots(s+'-0',s+'-1'))+(X.note?`<div class="gy-note">${esc(T(X.note))}</div>`:'')+
+      `<div class="gs-title">${op?`<span class="gs-opttag">${esc(T('gy_opt'))}</span>`:''}<h2>${n}. ${esc(tx[0])}</h2><p>${esc(X.sub)}${op?' · '+esc(T('gy_optT')):''}</p></div>
+      <div class="gs-chips"><div><b>${P0} × ${X.r}${sec?' '+esc(T('gy_sec')):''}</b><span>${esc(T('gy_sets'))}${X.each?' · '+esc(T('gy_each')):''}</span></div><div><b>${gyRir(w)}</b><span>${esc(T('gy_rir'))}</span></div><div><b>60–90 ${esc(T('gy_s'))}</b><span>${esc(T('gy_restS'))}</span></div></div>
+      <div class="gs-mus">${gyBody(X.mp,X.ms,gyCol(t))}<div><h3>${esc(T('gy_mus'))}</h3>${X.mp.map(k=>`<div class="mt"><i style="background:${gyCol(t)}"></i><b>${esc(gmn(k))}</b><small>${esc(T('gy_main'))}</small></div>`).join('')}${X.ms.map(k=>`<div class="mt"><i style="background:color-mix(in srgb, ${gyCol(t)} 45%, var(--mb))"></i><span>${esc(gmn(k))}</span><small>${esc(T('gy_help'))}</small></div>`).join('')}</div></div>
+      ${adv?`<div class="gs-adv ${adv.k}"><div><b>${esc(adv.t)}</b><span>${esc(adv.s)}</span></div>${adv.kg?`<button class="gy-btn g" id="gsap" data-kgv="${phk}">${esc(T('gy_apply'))}</button>`:''}</div>`:''}
+      <div class="gs-log"><div class="hd"><b>${esc(T('gy_log'))}</b><span>${esc(T('gy_logH'))}</span></div>${pv?`<div class="gs-prev">${esc(T('gy_prevT',{s:pv}))}</div>`:''}
+      ${Array.from({length:S2},(_,k)=>{ const v=sets[k]||{}; return `<div class="gs-set${k>=P0?' xt':''}"><span class="n">${k+1}${k>=P0?`<small>${esc(T('gy_extra'))}</small>`:''}</span><label><input inputmode="decimal" type="number" step="0.5" min="0" data-kg="${k}" value="${esc(v.kg||'')}" placeholder="${esc(k>0&&(sets[k-1]||{}).kg||phk)}" aria-label="${k+1} ${esc(ukg)}"><span>${esc(ukg)}</span></label><label><input inputmode="numeric" type="number" min="0" data-r="${k}" value="${esc(v.r||'')}" placeholder="${esc(top)}" aria-label="${k+1} ${esc(ur)}"><span>${esc(ur)}</span></label><button class="ck" data-ok="${k}" aria-pressed="${!!v.ok}" aria-label="✓">${ICONS.ok}</button></div>`; }).join('')}
+      ${ask?`<div class="gs-ask"><b>${esc(T('gy_askT'))}</b><span>${esc(T('gy_askS',{r:gyRng(s).hi,u2:gyU2(s)}))}</span><div class="row"><button class="gy-btn" style="background:${gyCol(t)}" id="gsyes">${esc(T('gy_yes'))}</button><button class="gy-btn g" id="gsno">${esc(T('gy_no'))}</button></div></div>`:''}
+      <div class="gs-more"><button class="gy-btn g" id="gsadd" ${S2>=P0+3?'disabled':''}>＋ ${esc(T('gy_addSet'))}</button>${S2>P0&&!((sets[S2-1]||{}).ok)?`<button class="gy-btn g" id="gsdel">− ${esc(T('gy_delSet'))}</button>`:''}</div></div>
+      <details class="gs-acc" open><summary>${esc(T('gy_do'))}</summary><div><ol>${tx[3].map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></details>
+      <details class="gs-acc"><summary>${esc(T('gy_setup'))}</summary><div><p style="margin:0 0 6px"><b>${esc(T('gy_tool'))}:</b> ${esc(tx[1])}</p><ol>${tx[2].map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div></details>
+      <details class="gs-acc"><summary>${esc(T('gy_err'))}</summary><div><ul class="er">${tx[4].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></details>
+      <div class="gs-acc" style="padding:12px 14px"><b>${esc(T('gy_tip'))}:</b> ${esc(tx[5])} ${esc(T('gy_up',{n:top}))}</div>
+      <a class="gy-btn g" href="https://www.youtube.com/results?search_query=${encodeURIComponent(X.q)}" target="_blank" rel="noopener">▶ ${esc(T('gy_video'))}</a>`;
+    }
+    box.innerHTML=h+nav(); bind();
+  }
+  function bind(){
+    const s=steps[i], sh=box.querySelector('.gs-shots');
+    if(sh){ const dots=box.querySelectorAll('[data-shot]'); dots.forEach(b=>b.onclick=()=>sh.scrollTo({left:+b.dataset.shot*sh.clientWidth,behavior:'smooth'})); sh.addEventListener('scroll',()=>{ const k=Math.round(sh.scrollLeft/Math.max(1,sh.clientWidth)); dots.forEach((b,j)=>b.classList.toggle('on',j===k)); },{passive:true}); }
+    box.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{ i+=+b.dataset.g; draw(); sc.scrollTop=0; });
+    const f=box.querySelector('[data-fin]'); if(f) f.onclick=()=>{ const o=L0(); o.fin=true; save(); toast(T('gy_saved')); closeSheet(wr); };
+    const gw=box.querySelector('#gsw'); if(gw) gw.onclick=()=>{ const o=L0(); o.w=!o.w; save(); draw(); };
+    const gc=box.querySelector('#gsc'); if(gc) gc.onclick=()=>{ const o=L0(); o.c.ok=!o.c.ok; save(); draw(); };
+    box.querySelectorAll('[data-ck]').forEach(b=>b.onclick=()=>{ const o=L0(); o.c.k=b.dataset.ck; if(o.c.k==='ell') o.c.i=0; save(); draw(); });
+    box.querySelectorAll('[data-ci]').forEach(b=>b.onclick=()=>{ const o=L0(); o.c.i=+b.dataset.ci; save(); draw(); });
+    box.querySelectorAll('[data-cm]').forEach(b=>b.onclick=()=>{ const o=L0(); o.c.min=Math.max(5,Math.min(90,(+o.c.min||0)+(+b.dataset.cm))); save(); draw(); });
+    if(GX[s]){ const op=OPT.includes(s), n=EXS.indexOf(s)+1, P0=op?2:gySets(w,n), S2=P0+gyXs(gyWo(m,d),s);
+      const arr=()=>{ const o=L0(); const a=o.ex[s]=o.ex[s]||[]; for(let k=0;k<S2;k++) a[k]=a[k]||{}; return a; };
+      box.querySelectorAll('[data-kg]').forEach(inp=>inp.oninput=()=>{ const a=arr(); a[+inp.dataset.kg].kg=inp.value; save(); });
+      const ap=box.querySelector('#gsap'); if(ap) ap.onclick=()=>{ const a=arr(); box.querySelectorAll('[data-kg]').forEach(inp=>{ inp.value=ap.dataset.kgv; a[+inp.dataset.kg].kg=ap.dataset.kgv; }); save(); };
+      box.querySelectorAll('[data-r]').forEach(inp=>inp.oninput=()=>{ const a=arr(); a[+inp.dataset.r].r=inp.value; save(); });
+      box.querySelectorAll('[data-ok]').forEach(b=>b.onclick=()=>{ const a=arr(), k=+b.dataset.ok; a[k].ok=!a[k].ok; if(a[k].ok&&!a[k].r){ const ri=box.querySelector(`[data-r="${k}"]`); a[k].r=ri&&ri.placeholder||''; ri.value=a[k].r; } if(a[k].ok&&!a[k].kg){ const ki=box.querySelector(`[data-kg="${k}"]`); if(ki&&ki.placeholder){ a[k].kg=ki.placeholder; ki.value=a[k].kg; } } b.setAttribute('aria-pressed',a[k].ok); save(); if(gyAsk(L0(),s,P0,w)||box.querySelector('.gs-ask')) draw(); });
+      const xsSet=v=>{ const o=L0(); o.xs=o.xs||{}; o.xs[s]=Math.max(0,v); save(); draw(); };
+      const ad=box.querySelector('#gsadd'); if(ad) ad.onclick=()=>xsSet(S2-P0+1);
+      const dl=box.querySelector('#gsdel'); if(dl) dl.onclick=()=>{ const o=L0(); if(o.ex[s]) o.ex[s].length=Math.min(o.ex[s].length,S2-1); xsSet(S2-P0-1); };
+      const ys=box.querySelector('#gsyes'); if(ys) ys.onclick=()=>xsSet(S2-P0+1);
+      const no=box.querySelector('#gsno'); if(no) no.onclick=()=>{ const o=L0(); o.nx=o.nx||{}; o.nx[s]=S2; save(); draw(); };
+    }
+  }
+  draw();
+}
+/* today screen card */
+function gyTodayCard(m,t){
+  if(!m.wo) return ''; const N=gyNow(m), cur=N.today&&N.today.type?N.today:null, b=gyBurn(m,t);
+  if(!cur&&!b) return '';
+  const ty=(gyWo(m,t)||{}).t||(cur?cur.type:'A');
+  return `<button class="td-wo" id="tdwo" data-t="${ty}"><span class="gy-pl ${ty}${gyDone(m,t)?' ok':''}">${ty}</span><span><b>${esc(T('gy_tdGo',{t:ty}))}</b><span>${esc(T('gy_wkB',{b:N.b,w:N.wb}))} · ${esc(T('gy_ph')[gyPh(N.G)])}</span></span><em>${b?esc(T('gy_tdBurn',{n:fmt(b)})):esc(T('gy_tdOpen'))+' →'}</em></button>`;
+}
+
+document.addEventListener('click',e=>{ const b=e.target.closest('#tdwo'); if(b&&S.members.length) gySession(b.dataset.t,0); });
+
 /* ================= UI shell ================= */
 const view=document.getElementById('view');
 const ICONS={
+ gym:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
  today:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>',
@@ -914,8 +1515,8 @@ const ICONS={
  x:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
  ok:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg>'
 };
-const TABS=[['today','today'],['menu','cal'],['recipes','book'],['shop','cart'],['progress','chart'],['family','user']];
-const VIEWS=['today','menu','recipes','shop','progress','family','settings'];
+const TABS=[['today','today'],['menu','cal'],['gym','gym'],['recipes','book'],['shop','cart'],['progress','chart'],['family','user']];
+const VIEWS=['today','menu','gym','recipes','shop','progress','family','settings'];
 let tab='today', tabHist=[];
 function setTab(t,fromBack){
   if(t===tab){ view.scrollTop=0; return; }
@@ -951,7 +1552,7 @@ function render(){
   if(noM){ document.getElementById('who').innerHTML=''; renderWelcome(); return; }
   if(!S.plan) {generate(); save();}
   renderWho();
-  ({today:renderToday,menu:renderMenu,recipes:renderRecipes,shop:renderShop,progress:renderProgress,family:renderFamily,settings:renderSettings}[tab]||renderToday)();
+  ({today:renderToday,menu:renderMenu,gym:renderGym,recipes:renderRecipes,shop:renderShop,progress:renderProgress,family:renderFamily,settings:renderSettings}[tab]||renderToday)();
 }
 function setLang(l){ S.prefs.lang=l; LANG=l; ADJ_CACHE.clear(); applyTheme(); renderTabs(); save(); render(); }
 const langChips=id=>`<div class="chips" id="${id}">${LANGS.map(l=>`<button class="chip" data-lang="${l}" aria-pressed="${LANG===l}">${L[l].langName}</button>`).join('')}</div>`;
@@ -1062,7 +1663,7 @@ let eatScope='me';
 // how many family members have eaten meal x on date d (only those whose day has that meal)
 function famEat(d,x){ let n=0, of=0; S.members.forEach(z=>{ if(!mealsFor(fasting(z,d)).includes(x)) return; of++; if(getLog(z.id,d).e[x]) n++; }); return {n,of,all:of>0&&n===of}; }
 function renderToday(){
-  const m=member(), t=todayISO(), p=pref(t), tg=target(m)+stepBonus(m,t);
+  const m=member(), t=todayISO(), p=pref(t), tg=target(m)+actBonus(m,t);
   if(p.i<0){ const i=dayIdx(t), over=i>=planLen();
     view.innerHTML=`<div class="card stack"><div class="datebig">${dLong(t)}</div><p>${esc(over?T('menuEnded',{d:dLong(S.prefs.end)}):T('notStarted',{d:dLong(S.prefs.start),n:-i}))}</p>
       ${over?`<div class="chips">${[7,14,28].map(n=>`<button class="chip" data-ext="${n}">+ ${esc(T('nDays',{n}))}</button>`).join('')}</div><button class="btn plain" id="newmenu">${esc(T('newRange'))}</button>`:`<button class="btn" id="startnow">${esc(T('startToday'))}</button>`}</div>`;
@@ -1097,8 +1698,10 @@ function renderToday(){
        <div class="small" style="margin-top:4px">${cuTag(day.cu)} ${esc(T('cuisineOf',{c:cuN(day.cu)}))} · <button class="btn plain sm" id="chcu" style="padding:2px 8px">${esc(T('change'))}</button></div>
        <div class="small" style="margin-top:6px">${esc(T('left'))}: <b class="num">${fmt(Math.max(0,tg-eaten))} ${T('kcal')}</b> · ${esc(T('proteinGoal'))} <b class="num">${fmt(di.p)} ${T('g')}</b></div>
        ${st?`<div class="small" style="margin-top:4px">${esc(T('streak',{n:st}))}</div>`:''}
+       ${gyBurn(m,t)?`<div class="small" style="margin-top:4px">🏋 ${esc(T('gy_tdBurn',{n:fmt(gyBurn(m,t))}))}</div>`:''}
      </div>
    </div>
+   ${gyTodayCard(m,t)}
    ${ci?`<div class="card stack ci"><b>📊 ${esc(T('ciTitle'))}</b><div class="small">${esc(T('ciText',{r:sg(wOut(ci.rate)),u:wU(),e:fmt(ci.est)}))}</div>
      ${Math.abs(ci.newT-ci.oldT)>=30?`<div class="small"><b>${esc(T('ciChange',{a:fmt(ci.oldT),b:fmt(ci.newT)}))}</b></div><div class="row"><button class="btn sm" id="ciok">${esc(T('ciApply'))}</button><button class="btn plain sm" id="cino">${esc(T('ciSkip'))}</button></div>`:`<div class="small">${esc(T('ciSame'))}</div><div><button class="btn plain sm" id="cino">OK</button></div>`}
      ${ci.logged<7?`<p class="tiny muted" style="margin:0">${esc(T('ciFewLogs'))}</p>`:''}</div>`:''}
@@ -2157,7 +2760,7 @@ function updateWidget(){
       const st=stepsOf(m,t); if(st) extra+=' · 👣 '+fmt(st);
       if(f==='ram'){ const rt=ramTimes(t); extra+=' · 🌙 '+rt.iftar; } }
     W.update({date:t,mid:m.id,title:'Süfrə · '+m.name,stale:T('widgetStale'),done:p.i>=0?T('allDone'):T('widgetStale'),plus:T('wr_plus'),eat:T('wEat'),
-      wa:Lg.w||0,wb:waterGoal(m),ek:Math.round(eatenK(m,t)),tk:Math.round(target(m)+stepBonus(m,t)),kcal:T('kcal'),extra,meals:JSON.stringify(meals)});
+      wa:Lg.w||0,wb:waterGoal(m),ek:Math.round(eatenK(m,t)),tk:Math.round(target(m)+actBonus(m,t)),kcal:T('kcal'),extra,meals:JSON.stringify(meals)});
   }catch(e){} },400);
 }
 async function takeWidgetWater(){
